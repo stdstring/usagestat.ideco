@@ -22,11 +22,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="data2xml_processor.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="data2xml_processor.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/data_processor/data2xml_processor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="39" selection-start="0" selection-end="39" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="4" column="0" selection-start="137" selection-end="137" vertical-scroll-proportion="0.075282305">
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -44,15 +46,6 @@
         <entry file="file://$PROJECT_DIR$/stat_send_task.py">
           <provider selected="true" editor-type-id="text-editor">
             <state line="17" column="47" selection-start="579" selection-end="579" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/unittests/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="28" selection-start="28" selection-end="28" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -76,15 +69,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="storage.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/storage/storage.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="13" selection-start="191" selection-end="196" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -95,22 +79,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/storage/__init__.py" />
         <option value="$PROJECT_DIR$/storage/istorage.py" />
         <option value="$PROJECT_DIR$/common/__init__.py" />
         <option value="$PROJECT_DIR$/common/stat_data.py" />
         <option value="$PROJECT_DIR$/endpoint/__init__.py" />
         <option value="$PROJECT_DIR$/endpoint/iendpoint.py" />
         <option value="$PROJECT_DIR$/endpoint/endpoint.py" />
-        <option value="$PROJECT_DIR$/storage/storage.py" />
         <option value="$PROJECT_DIR$/data_processor/__init__.py" />
         <option value="$PROJECT_DIR$/data_processor/data_processor.py" />
-        <option value="$PROJECT_DIR$/data_processor/data2xml_processor.py" />
         <option value="$PROJECT_DIR$/endpoint/endpoint_impl.py" />
-        <option value="$PROJECT_DIR$/storage/sqlite_storage_impl.py" />
         <option value="$PROJECT_DIR$/entry_point.py" />
         <option value="$PROJECT_DIR$/stat_send_task.py" />
         <option value="$PROJECT_DIR$/unittests/__init__.py" />
+        <option value="$PROJECT_DIR$/data_processor/data2xml_processor.py" />
+        <option value="$PROJECT_DIR$/data_processor/raw2data_processor.py" />
+        <option value="$PROJECT_DIR$/storage/storage.py" />
+        <option value="$PROJECT_DIR$/storage/sqlite_storage_impl.py" />
       </list>
     </option>
   </component>
@@ -398,11 +382,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/storage/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="28" selection-start="28" selection-end="28" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="29" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0" />
@@ -439,22 +418,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/storage/sqlite_storage_impl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="24" selection-start="101" selection-end="101" vertical-scroll-proportion="0.056461733">
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_processor/data2xml_processor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="39" selection-start="0" selection-end="39" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/entry_point.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="39" vertical-scroll-proportion="0.0">
@@ -462,14 +425,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/stat_data.py">
+    <entry file="file://$PROJECT_DIR$/unittests/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="39" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/storage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="13" selection-start="191" selection-end="196" vertical-scroll-proportion="0.0">
+        <state line="1" column="0" selection-start="30" selection-end="30" vertical-scroll-proportion="0.018820576">
           <folding />
         </state>
       </provider>
@@ -481,10 +439,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/endpoint/endpoint.py">
+    <entry file="file://$PROJECT_DIR$/data_processor/raw2data_processor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="12" selection-start="98" selection-end="102" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="19" column="58" selection-start="795" selection-end="795" vertical-scroll-proportion="0.3686934">
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/storage/sqlite_storage_impl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="30" selection-start="984" selection-end="984" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -495,10 +464,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/unittests/__init__.py">
+    <entry file="file://$PROJECT_DIR$/endpoint/endpoint.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="28" selection-start="28" selection-end="28" vertical-scroll-proportion="0.0">
+        <state line="5" column="12" selection-start="98" selection-end="102" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/storage/storage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="47" selection-start="111" selection-end="111" vertical-scroll-proportion="0.056461733">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/stat_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="39" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_processor/data2xml_processor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="0" selection-start="137" selection-end="137" vertical-scroll-proportion="0.075282305">
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
