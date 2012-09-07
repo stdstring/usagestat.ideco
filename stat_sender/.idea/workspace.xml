@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b17e782d-c162-4726-8b2c-e2c854f2dbbe" name="Default" comment="" />
+    <list default="true" id="b17e782d-c162-4726-8b2c-e2c854f2dbbe" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/unreliable_task_executer.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/settings.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/unittests/__init__.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/endpoint/endpoint_impl.py" afterPath="$PROJECT_DIR$/endpoint/endpoint_impl.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/entry_point.py" afterPath="$PROJECT_DIR$/entry_point.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stat_send_task.py" afterPath="$PROJECT_DIR$/stat_send_task.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/sqlite_storage_impl.py" afterPath="$PROJECT_DIR$/storage/sqlite_storage_impl.py" />
+    </list>
     <ignored path="stat_sender.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,30 +32,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="data2xml_processor.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/data_processor/data2xml_processor.py">
+      <file leaf-file-name="raw2data_processor.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data_processor/raw2data_processor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="0" selection-start="137" selection-end="137" vertical-scroll-proportion="0.075282305">
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="entry_point.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/entry_point.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="39" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="stat_send_task.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stat_send_task.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="47" selection-start="579" selection-end="579" vertical-scroll-proportion="0.0">
+            <state line="19" column="58" selection-start="795" selection-end="795" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -60,11 +50,44 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stat_data.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/common/stat_data.py">
+      <file leaf-file-name="entry_point.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/entry_point.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="39" vertical-scroll-proportion="0.0">
+            <state line="21" column="0" selection-start="878" selection-end="878" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="endpoint_impl.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/endpoint/endpoint_impl.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="35" selection-start="318" selection-end="318" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="47" column="23" selection-start="1213" selection-end="1231" vertical-scroll-proportion="0.0">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stat_send_task.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/stat_send_task.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="24" selection-start="410" selection-end="410" vertical-scroll-proportion="0.20702635">
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -76,35 +99,38 @@
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/storage/istorage.py" />
-        <option value="$PROJECT_DIR$/common/__init__.py" />
         <option value="$PROJECT_DIR$/common/stat_data.py" />
         <option value="$PROJECT_DIR$/endpoint/__init__.py" />
         <option value="$PROJECT_DIR$/endpoint/iendpoint.py" />
         <option value="$PROJECT_DIR$/endpoint/endpoint.py" />
         <option value="$PROJECT_DIR$/data_processor/__init__.py" />
         <option value="$PROJECT_DIR$/data_processor/data_processor.py" />
-        <option value="$PROJECT_DIR$/endpoint/endpoint_impl.py" />
-        <option value="$PROJECT_DIR$/entry_point.py" />
-        <option value="$PROJECT_DIR$/stat_send_task.py" />
         <option value="$PROJECT_DIR$/unittests/__init__.py" />
         <option value="$PROJECT_DIR$/data_processor/data2xml_processor.py" />
         <option value="$PROJECT_DIR$/data_processor/raw2data_processor.py" />
         <option value="$PROJECT_DIR$/storage/storage.py" />
+        <option value="$PROJECT_DIR$/common/unreliable_task_executer.py" />
+        <option value="$PROJECT_DIR$/endpoint/endpoint_impl.py" />
+        <option value="$PROJECT_DIR$/settings.py" />
         <option value="$PROJECT_DIR$/storage/sqlite_storage_impl.py" />
+        <option value="$PROJECT_DIR$/entry_point.py" />
+        <option value="$PROJECT_DIR$/stat_send_task.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
-    <option name="y" value="24" />
-    <option name="width" value="1855" />
-    <option name="height" value="954" />
+    <option name="x" value="64" />
+    <option name="y" value="-4" />
+    <option name="width" value="1857" />
+    <option name="height" value="983" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -168,35 +194,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="unittests" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stat_sender" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stat_sender" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="storage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stat_sender" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stat_sender" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="endpoint" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -214,20 +212,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stat_sender" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="stat_sender" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -235,9 +219,17 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="preferences.externalResources" />
-    <property name="options.searchVisible" value="true" />
+    <property name="options.lastSelected" value="com.jetbrains.python.buildout.BuildoutModulesConfigurable" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+  </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <PyConsoleSettings />
+    </option>
+    <option name="myDjangoConsoleState">
+      <PyConsoleSettings />
+    </option>
   </component>
   <component name="RunManager">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -296,6 +288,24 @@
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="DETECT_NESTED_COPIES" value="true" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <configuration useDefault="false">$USER_HOME$/.subversion_IDEA</configuration>
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="b17e782d-c162-4726-8b2c-e2c854f2dbbe" name="Default" comment="" />
@@ -305,14 +315,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1855" height="954" extended-state="6" />
+    <frame x="64" y="-4" width="1857" height="983" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25373963" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25540167" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -382,54 +392,42 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="29" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.pycharm/system/python_stubs/-1247972723/__builtin__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="641" column="6" selection-start="19685" selection-end="19685" vertical-scroll-proportion="-0.23212045" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/endpoint/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="30" selection-end="30" vertical-scroll-proportion="0.018820576" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="30" selection-end="30" vertical-scroll-proportion="0.018820576" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data_processor/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="30" selection-end="30" vertical-scroll-proportion="0.018820576">
+        <state line="1" column="0" selection-start="30" selection-end="30" vertical-scroll-proportion="0.018820576" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/storage/storage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="47" selection-start="111" selection-end="111" vertical-scroll-proportion="0.056461733" />
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python2.7/httplib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="283" column="21" selection-start="8640" selection-end="8640" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/endpoint/endpoint_impl.py">
+    <entry file="file://$PROJECT_DIR$/data_processor/data2xml_processor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="19" selection-start="99" selection-end="99" vertical-scroll-proportion="0.056461733">
+        <state line="4" column="0" selection-start="137" selection-end="137" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/entry_point.py">
+    <entry file="file://$PROJECT_DIR$/common/unreliable_task_executer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="39" vertical-scroll-proportion="0.0">
+        <state line="5" column="25" selection-start="154" selection-end="154" vertical-scroll-proportion="0.09702458">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/unittests/__init__.py">
+    <entry file="file://$PROJECT_DIR$/common/stat_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="30" selection-end="30" vertical-scroll-proportion="0.018820576">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="39" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data_processor/data_processor.py">
@@ -441,16 +439,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data_processor/raw2data_processor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="58" selection-start="795" selection-end="795" vertical-scroll-proportion="0.3686934">
+        <state line="19" column="58" selection-start="795" selection-end="795" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/endpoint/endpoint.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="12" selection-start="98" selection-end="102" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/storage/sqlite_storage_impl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="23" selection-start="112" selection-end="129" vertical-scroll-proportion="0.037641153">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="23" selection-start="1213" selection-end="1231" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.pycharm/system/python_stubs/-1247972723/sys.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="191" column="4" selection-start="7045" selection-end="7045" vertical-scroll-proportion="0.33290815">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.pycharm/system/python_stubs/-1247972723/__builtin__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="222" column="4" selection-start="6950" selection-end="6950" vertical-scroll-proportion="0.89711416">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/entry_point.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="0" selection-start="878" selection-end="878" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/storage/sqlite_storage_impl.py">
+    <entry file="file://$PROJECT_DIR$/endpoint/endpoint_impl.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="30" selection-start="984" selection-end="984" vertical-scroll-proportion="0.0">
+        <state line="9" column="35" selection-start="318" selection-end="318" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -459,33 +497,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stat_send_task.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="47" selection-start="579" selection-end="579" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/endpoint/endpoint.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="12" selection-start="98" selection-end="102" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/storage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="47" selection-start="111" selection-end="111" vertical-scroll-proportion="0.056461733">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/stat_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="39" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_processor/data2xml_processor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="137" selection-end="137" vertical-scroll-proportion="0.075282305">
+        <state line="11" column="24" selection-start="410" selection-end="410" vertical-scroll-proportion="0.20702635">
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>

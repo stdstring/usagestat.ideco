@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from common.unreliable_task_executer import UnreliableTaskExecuter
 
 class StatSendTask(object):
 
@@ -8,25 +9,26 @@ class StatSendTask(object):
         self._endpoint = endpoint
         self._send_attempt_count = send_attempt_count
 
-    # spec: None -> None
+    # spec: None -> bool
     def execute(self):
-        # get data
-        stat_data = self._storage.get_data()
-        # process data
-        data = stat_data
-        for data_processor in self._data_processors:
-            data = data_processor.process(data)
-        result = False
-        attempt_count = 0
-        # send data
-        while attempt_count < self._send_attempt_count:
-            result = self._endpoint.send(data)
-            if result:
-                break
-            attempt_count += 1
-        # clear data
-        if result:
+        try:
+            # get data
+            stat_data = self._storage.get_data()
+            # process data
+            data = stat_data
+            for data_processor in self._data_processors:
+                data = data_processor.process(data)
+            # send data
+            task = lambda: self._endpoint.send(data)
+            send_executer = UnreliableTaskExecuter(task, self._send_attempt_count)
+            result = send_executer.execute()
+            if not result:
+                return False
+            # clear data
             self._storage.clear(stat_data.id_range)
+        except:
+            return False
+        return True
 
     _storage = None
     _endpoint =None

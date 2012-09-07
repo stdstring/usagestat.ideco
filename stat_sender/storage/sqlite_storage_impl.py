@@ -4,12 +4,12 @@ from storage.storage import Storage
 
 class SqliteStorageImpl(Storage):
 
-    def __init__(self, db_filename):
-        self._db_filename = db_filename
+    def __init__(self, db_file):
+        self._db_file = db_file
 
     # spec: None -> [(int, str, datetime, str)]
     def get_data(self):
-        connection = connect(self._db_filename)
+        connection = connect(self._db_file)
         try:
             cursor = connection.cursor()
             query_str = 'select ID, CATEGORY, TIMEMARKER, DATA from STAT_DATA order by ID'
@@ -20,7 +20,7 @@ class SqliteStorageImpl(Storage):
 
     # spec: (int, int) -> None
     def clear(self, id_clear_range):
-        connection = connect(self._db_filename)
+        connection = connect(self._db_file)
         try:
             cursor = connection.cursor()
             query_str = 'delete from STAT_DATA where id between ? and ?'
@@ -29,6 +29,6 @@ class SqliteStorageImpl(Storage):
         finally:
             connection.close()
 
-    _db_filename = None
+    _db_file = None
 
 __author__ = 'andrey.ushakov'
