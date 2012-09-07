@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 import sys
-import errno
 from data_processor.data2xml_processor import Data2XmlProcessor
 from data_processor.raw2data_processor import Raw2DataProcessor
 from endpoint.endpoint_impl import EndPointImpl
@@ -22,7 +21,7 @@ def main():
     if not result:
         sys.exit(-1)
 
-if __name__ == 'main':
+if __name__ == '__main__':
     main()
 
 __author__ = 'andrey.ushakov'

@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from httplib import HTTPSConnection, OK
-from endpoint.endpoint import EndPoint
+from endpoint import EndPoint
 
 class EndPointImpl(EndPoint):
 

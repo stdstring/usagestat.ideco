@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from data_processor.data_processor import DataProcessor
+from data_processor import DataProcessor
 
 class Data2XmlProcessor(DataProcessor):
 
@@ -26,4 +26,4 @@ class Data2XmlProcessor(DataProcessor):
         return '<%(category)s_item><timemarker>%(timemarker)s</timemarker><data>%(data)s</data></%(category)s_item>' %\
                {'category':item.category, 'timemarker':item.timemarker, 'data':item.data}
 
-__author__ = 'std_string'
+__author__ = 'andrey.ushakov'

@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from _sqlite3 import connect
-from storage.storage import Storage
+from storage import Storage
 
 class SqliteStorageImpl(Storage):
 

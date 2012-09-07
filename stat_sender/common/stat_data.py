@@ -3,7 +3,10 @@ from __future__ import unicode_literals
 class StatDataItem(object):
 
     def __init__(self, id, category, timemarker, data):
-        pass
+        self._id = id
+        self._category = category
+        self._timemarker = timemarker
+        self._data = data
 
     # spec: None -> int
     @property
@@ -33,7 +36,8 @@ class StatDataItem(object):
 class StatData(object):
 
     def __init__(self, id_range, stat_data_items):
-        pass
+        self._id_range = id_range
+        self._stat_data_items = stat_data_items
 
     # spec: None -> (int, int)
     @property
