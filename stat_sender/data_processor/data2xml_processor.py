@@ -15,8 +15,8 @@ class Data2XmlProcessor(DataProcessor):
     def _create_result_xml(self, data_items_dict):
         category_data_storage = []
         for category in data_items_dict:
-            category_data = '<%(category)s>%(data)s</%(category)s>' %\
-                            {'category':category, 'data':data_items_dict[category]}
+            data = ''.join(data_items_dict[category])
+            category_data = '<%(category)s>%(data)s</%(category)s>' % {'category':category, 'data':data}
             category_data_storage.append(category_data)
         total_data = ''.join(category_data_storage)
         return '<stat_data>%(data)s</stat_data>' % {'data':total_data}

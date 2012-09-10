@@ -28,6 +28,21 @@ class StatDataItem(object):
     def data(self):
         return self._data
 
+    def __eq__(self, other):
+        if not other.__class__ == StatDataItem:
+            raise TypeError
+        return self._id == other._id and\
+               self._category == other._category and \
+               self._timemarker == other._timemarker  and\
+               self._data == other._data
+
+    def __hash__(self):
+        result = hash(self._id)
+        result = (result * 13) ^ hash(self._category)
+        result = (result * 13) ^ hash(self._timemarker)
+        result = (result * 13) ^ hash(self._data)
+        return result
+
     _id = None
     _category = None
     _timemarker = None
