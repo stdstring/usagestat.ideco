@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from common.stat_data import StatData
 from common.unreliable_task_executer import UnreliableTaskExecuter
 
 class StatSendTask(object):
@@ -12,22 +13,32 @@ class StatSendTask(object):
     # spec: None -> bool
     def execute(self):
         try:
-            # get data
-            stat_data = self._storage.get_data()
-            # process data
-            data = stat_data
-            for data_processor in self._data_processors:
-                data = data_processor.process(data)
-            # send data
-            task = lambda: self._endpoint.send(data)
-            send_executer = UnreliableTaskExecuter(task, self._send_attempt_count)
-            result = send_executer.execute()
-            if not result:
-                return False
-            # clear data
-            self._storage.clear(stat_data.id_range)
+            return self._unsafe_execute()
         except:
             return False
+
+    # spec: None -> bool
+    def _unsafe_execute(self):
+        # get data
+        stat_data = self._storage.get_data()
+        if not stat_data:
+            return True
+        # process data
+        data = stat_data
+        id_range = None
+        for data_processor in self._data_processors:
+            data = data_processor.process(data)
+            # TODO (andrey.ushakov) : think about this spike
+            if isinstance(data, StatData):
+                id_range = data.id_range
+        # send data
+        task = lambda: self._endpoint.send(data)
+        send_executer = UnreliableTaskExecuter(task, self._send_attempt_count)
+        result = send_executer.execute()
+        if not result:
+            return False
+        # clear data
+        self._storage.clear(id_range)
         return True
 
     _storage = None
