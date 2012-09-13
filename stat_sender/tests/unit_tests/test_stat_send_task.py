@@ -3,11 +3,11 @@ from datetime import datetime
 from mox import Mox
 import unittest
 from unittest.case import TestCase
-from data_processor.data2xml_processor import Data2XmlProcessor
-from data_processor.raw2data_processor import Raw2DataProcessor
-from endpoint.endpoint import EndPoint
-from stat_send_task import StatSendTask
-from storage.storage import Storage
+from src.data_processor.data2xml_processor import Data2XmlProcessor
+from src.data_processor.raw2data_processor import Raw2DataProcessor
+from src.endpoint.endpoint import EndPoint
+from src.stat_send_task import StatSendTask
+from src.storage.storage import Storage
 
 class TestStatSendTask(TestCase):
 

@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-import sys
 from data_processor.data2xml_processor import Data2XmlProcessor
 from data_processor.raw2data_processor import Raw2DataProcessor
 from endpoint.endpoint_impl import EndPointImpl
@@ -7,7 +6,7 @@ from settings import Settings
 from stat_send_task import StatSendTask
 from storage.sqlite_storage_impl import SqliteStorageImpl
 
-def main():
+def execute():
     db_file = Settings.get_db_file()
     remote_host = Settings.get_remote_host()
     key_file = Settings.get_key_file()
@@ -18,10 +17,6 @@ def main():
     data_processors = [Raw2DataProcessor(), Data2XmlProcessor()]
     task = StatSendTask(storage, data_processors, endpoint, send_attempt_count)
     result = task.execute()
-    if not result:
-        sys.exit(-1)
-
-if __name__ == '__main__':
-    main()
+    return result
 
 __author__ = 'andrey.ushakov'

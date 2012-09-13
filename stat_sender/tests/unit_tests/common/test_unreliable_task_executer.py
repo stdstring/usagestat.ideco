@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from mox import Mox
 import unittest
 from unittest.case import TestCase
-from common.unreliable_task_executer import UnreliableTaskExecuter
+from src.common.unreliable_task_executer import UnreliableTaskExecuter
 
 class TestUnreliableTaskExecuter(TestCase):
 

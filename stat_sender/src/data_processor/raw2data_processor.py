@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 import sys
-from common.stat_data import StatDataItem, StatData
+from src.common.stat_data import StatDataItem, StatData
 from data_processor import DataProcessor
 
 class Raw2DataProcessor(DataProcessor):
