@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+import logging.config
 from data_processor.data2xml_processor import Data2XmlProcessor
 from data_processor.raw2data_processor import Raw2DataProcessor
 from endpoint.endpoint_impl import EndPointImpl
@@ -6,7 +7,10 @@ from settings import Settings
 from stat_send_task import StatSendTask
 from storage.sqlite_storage_impl import SqliteStorageImpl
 
+# spec: None -> bool
 def execute():
+    log_conf_file = Settings.get_log_conf()
+    logging.config.fileConfig(log_conf_file)
     db_file = Settings.get_db_file()
     remote_host = Settings.get_remote_host()
     key_file = Settings.get_key_file()

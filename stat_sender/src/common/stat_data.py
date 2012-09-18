@@ -28,6 +28,7 @@ class StatDataItem(object):
     def data(self):
         return self._data
 
+    # spec: StatData -> bool
     def __eq__(self, other):
         if not other.__class__ == StatDataItem:
             raise TypeError
@@ -36,6 +37,7 @@ class StatDataItem(object):
                self._timemarker == other._timemarker  and\
                self._data == other._data
 
+    # spec: None -> int
     def __hash__(self):
         result = hash(self._id)
         result = (result * 13) ^ hash(self._category)

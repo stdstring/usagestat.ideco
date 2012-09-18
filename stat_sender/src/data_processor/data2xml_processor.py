@@ -12,6 +12,7 @@ class Data2XmlProcessor(DataProcessor):
             result[data_item.category].append(self._convert_stat_data_item(data_item))
         return self._create_result_xml(result)
 
+    # spec: {str: [str]} -> str (xml in str representation)
     def _create_result_xml(self, data_items_dict):
         category_data_storage = []
         for category in data_items_dict:
