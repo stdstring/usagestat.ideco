@@ -16,6 +16,7 @@ class TestSqliteStorageImpl(TestCase):
 
     def tearDown(self):
         self._remove_temp_db_dir()
+        os.chdir(self._initial_working_dir)
 
     def test_db_metadata(self):
         actual_metadata = self._execute_query("select name, sql from SQLITE_MASTER where type = 'table'")

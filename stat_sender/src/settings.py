@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from ConfigParser import SafeConfigParser
-import os
+import os.path
 
 class Settings(object):
 
@@ -49,7 +49,7 @@ class Settings(object):
     # spec: None -> None
     @staticmethod
     def _load_conf_file():
-        main_conf_file = 'stat_sender.conf'
+        main_conf_file = Settings._main_conf_file
         main_conf_path = os.path.abspath(main_conf_file)
         conf_parser = SafeConfigParser()
         conf_parser.read(main_conf_path)
@@ -60,6 +60,7 @@ class Settings(object):
         Settings._send_attempt_count = conf_parser.getint('endpoint_conf', 'send_attempt_count')
         Settings._log_conf = conf_parser.get('log_conf', 'log_conf_file')
 
+    _main_conf_file = 'stat_sender.conf'
     # for storage
     _db_file = None
     # for endpoint
