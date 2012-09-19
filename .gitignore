@@ -1,3 +1,4 @@
-# ignoring *.pyc, stat_sender/.idea
+# ignoring *.pyc, stat_sender/.idea, stat_file_source/.idea
 *.pyc
 stat_sender/.idea
+stat_file_source/.idea
