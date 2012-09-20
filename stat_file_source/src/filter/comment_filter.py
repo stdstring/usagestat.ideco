@@ -3,7 +3,7 @@ from src.filter.filter import Filter
 
 class CommentFilter(Filter):
 
-    def __init__(self, comment_leader):
+    def __init__(self, comment_leader='#'):
         self._comment_leader = comment_leader
 
     # spec: str -> str

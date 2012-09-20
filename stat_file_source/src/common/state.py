@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 class State(object):
 
-    def __init(self, state_id, items):
+    def __init__(self, state_id, items):
         self._state_id = state_id
         self._items = items
 
@@ -11,7 +11,7 @@ class State(object):
     def state_id(self):
         return self._state_id
 
-    # spec: None -> {str:object}
+    # spec: None -> {str: [object]}
     @property
     def items(self):
         return self._items
