@@ -5,9 +5,11 @@ from src.handler.handler import Handler
 
 class BaseKeyValueHandler(Handler):
 
-    def __init__(self, key_value_delimiter, known_keys):
+    # spec: str, [str], (str, State -> str) -> BaseKeyValueHandler
+    def __init__(self, key_value_delimiter, known_keys, key_transformer):
         self._key_value_delimiter = key_value_delimiter
         self._known_keys = known_keys
+        self._key_transformer = key_transformer
 
     # spec: str, State -> (bool, State)
     def process(self, source, state):
@@ -16,8 +18,9 @@ class BaseKeyValueHandler(Handler):
             key = source[0:delimiter_position]
             value = source[delimiter_position + len(self._key_value_delimiter): len(source) - delimiter_position - len(self._key_value_delimiter)]
             if key in self._known_keys:
-                items = DictHelper.get_or_create(state, key, [])
-                items[key] = self._define_value(items[key], value)
+                final_key = self._key_transformer(key, state)
+                items = DictHelper.get_or_create(state, final_key, [])
+                items[final_key] = self._define_value(items[key], value)
                 return (True, State(state.state_id, items))
             else:
                 return (False, state)
@@ -34,5 +37,6 @@ class BaseKeyValueHandler(Handler):
 
     _key_value_delimiter = None
     _known_keys = []
+    _key_transformer = None
 
 __author__ = 'andrey.ushakov'

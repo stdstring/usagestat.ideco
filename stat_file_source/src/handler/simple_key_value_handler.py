@@ -3,10 +3,11 @@ from src.handler.base_key_value_handler import BaseKeyValueHandler
 
 class SimpleKeyValueHandler(BaseKeyValueHandler):
 
-    def __init__(self, key_value_delimiter, known_keys):
-        BaseKeyValueHandler.__init__(self, key_value_delimiter, known_keys)
+    # spec: str, [str], (str, State -> str) -> SimpleKeyValueHandler
+    def __init__(self, key_value_delimiter, known_keys, key_transformer):
+        BaseKeyValueHandler.__init__(self, key_value_delimiter, known_keys, key_transformer)
 
-    # spec: object, str -> object
+    # spec: [str], str -> [str]
     def _define_value(self, old_value, item_value):
         return old_value.append(item_value)
 
