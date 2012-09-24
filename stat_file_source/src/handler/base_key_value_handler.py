@@ -21,7 +21,7 @@ class BaseKeyValueHandler(Handler):
                 final_key = self._key_transformer(key, state)
                 items = DictHelper.get_or_create(state, final_key, [])
                 items[final_key] = self._define_value(items[key], value)
-                return (True, State(state.state_id, items))
+                return (True, State(state.state_id, state.state_data, items))
             else:
                 return (False, state)
         else:
