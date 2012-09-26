@@ -3,12 +3,6 @@ from unittest.case import TestCase
 from src.common.state import State
 from src.handler.aggregate_key_value_handler import AggregateKeyValueHandler
 
-def aggregate_fun(old_value, item):
-    if old_value is None:
-        return 1
-    else:
-        return old_value + 1
-
 class TestAggregateKeyValueHandler(TestCase):
 
     def test_handle_known_key(self):
@@ -45,6 +39,6 @@ class TestAggregateKeyValueHandler(TestCase):
         self.assertFalse(new_state is None)
         self.assertFalse(new_state is old_state)
 
-    _handler = AggregateKeyValueHandler('=', ['key13', 'key666'], lambda key, state: key, aggregate_fun, 0)
+    _handler = AggregateKeyValueHandler('=', ['key13', 'key666'], lambda key, state: key, lambda old_value, item: old_value + 1, 0)
 
 __author__ = 'andrey.ushakov'
