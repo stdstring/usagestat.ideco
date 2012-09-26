@@ -4,8 +4,8 @@ from src.handler.base_key_value_handler import BaseKeyValueHandler
 class AggregateKeyValueHandler(BaseKeyValueHandler):
 
     # spec: str, [str], (str, State -> str), (object, str -> object) -> AggregateKeyValueHandler
-    def __init__(self, key_value_delimiter, known_keys, key_transformer, aggregate_fun):
-        BaseKeyValueHandler.__init__(self, key_value_delimiter, known_keys, key_transformer)
+    def __init__(self, key_value_delimiter, known_keys, key_transformer, aggregate_fun, item_init_value):
+        BaseKeyValueHandler.__init__(self, key_value_delimiter, known_keys, key_transformer, item_init_value)
         self._aggregate_fun = aggregate_fun
 
     # spec: object, str -> object

@@ -23,6 +23,20 @@ class State(object):
     def items(self):
         return self._items
 
+    def __eq__(self, other):
+        if not isinstance(other, State):
+            raise TypeError()
+        return self._state_id == other._state_id and\
+               self._state_data == other._state_data and\
+               self._items == other._items
+        pass
+
+    def __hash__(self):
+        result = hash(self._state_id)
+        result = (result * 13) ^ hash(self._state_data)
+        result = (result * 13) ^ hash(self._items)
+        return result
+
     _state_id = None
     _state_data = None
     _items = {}

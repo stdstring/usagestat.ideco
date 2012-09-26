@@ -5,13 +5,13 @@ from src.filter.comment_filter import CommentFilter
 class TestCommentFilter(TestCase):
 
     def test_without_comment(self):
-        self.assertEquals('some line with data', self._filter.filter('some line with data'))
+        self.assertEqual('some line with data', self._filter.filter('some line with data'))
 
     def test_whole_line_comment(self):
-        self.assertEquals('', self._filter.filter('# some line with comment'))
+        self.assertEqual('', self._filter.filter('# some line with comment'))
 
     def test_line_end_comment(self):
-        self.assertEquals('some line with data ', self._filter.filter('some line with data # some line with comment'))
+        self.assertEqual('some line with data ', self._filter.filter('some line with data # some line with comment'))
 
     _filter = CommentFilter('#')
 
