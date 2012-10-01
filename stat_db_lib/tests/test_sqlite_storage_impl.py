@@ -1,12 +1,11 @@
 from __future__ import unicode_literals
 from datetime import datetime, timedelta
 from unittest.case import TestCase
+import time
+from src.sqlite_storage_impl import SqliteStorageImpl
 # TODO (andrey.ushakov) : think because this is very dirty hack
 import os
 import sys
-import time
-from src.sqlite_storage_impl import SqliteStorageImpl
-
 sys.path.append(os.path.abspath('../stat_sender_db/functional_test_utils'))
 from db_manager import DBManager
 
@@ -18,14 +17,41 @@ class TestSqliteStorageImpl(TestCase):
     def tearDown(self):
         self._db_manager.__exit__(None, None, None)
 
-    def test_save_data(self):
+    def test_save_item(self):
         now = datetime.now()
-        print now
         storage = SqliteStorageImpl(self._db_manager.get_db_file(), None)
-        storage.save('category1', 'some portion of data')
-        storage.save('category2', 'yet one some portion of data')
+        storage.save_item('category1', 'some portion of data')
+        actual = self._db_manager.execute_query('select ID, CATEGORY, TIMEMARKER, DATA from STAT_DATA order by ID')
+        expected = [(1, 'category1', 'some portion of data')]
+        self._check_data(now, expected, actual)
+
+    def test_save_two_items(self):
+        now = datetime.now()
+        storage = SqliteStorageImpl(self._db_manager.get_db_file(), None)
+        storage.save_item('category1', 'some portion of data')
+        storage.save_item('category2', 'yet one some portion of data')
         actual = self._db_manager.execute_query('select ID, CATEGORY, TIMEMARKER, DATA from STAT_DATA order by ID')
         expected = [(1, 'category1', 'some portion of data'), (2, 'category2', 'yet one some portion of data')]
+        self._check_data(now, expected, actual)
+
+    def test_save_data(self):
+        now = datetime.now()
+        storage = SqliteStorageImpl(self._db_manager.get_db_file(), None)
+        data = [('category1', 'some portion of data'), ('category2', 'yet one some portion of data')]
+        storage.save_data(data)
+        actual = self._db_manager.execute_query('select ID, CATEGORY, TIMEMARKER, DATA from STAT_DATA order by ID')
+        expected = [(1, 'category1', 'some portion of data'), (2, 'category2', 'yet one some portion of data')]
+        self._check_data(now, expected, actual)
+
+    def test_save_two_data_portions(self):
+        now = datetime.now()
+        storage = SqliteStorageImpl(self._db_manager.get_db_file(), None)
+        data = [('category1', 'some portion of data'), ('category2', 'yet one some portion of data')]
+        storage.save_data(data)
+        data = [('category1', 'other portion of data')]
+        storage.save_data(data)
+        actual = self._db_manager.execute_query('select ID, CATEGORY, TIMEMARKER, DATA from STAT_DATA order by ID')
+        expected = [(1, 'category1', 'some portion of data'), (2, 'category2', 'yet one some portion of data'), (3, 'category1', 'other portion of data')]
         self._check_data(now, expected, actual)
 
     # datetime, [(int, str, str)], [(int, str, str, str)]

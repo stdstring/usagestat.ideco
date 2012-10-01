@@ -15,7 +15,7 @@ class StatSendTask(object):
 
     # spec: None -> bool
     def execute(self):
-        self._logger.info('StatSendTask.execute enter')
+        self._logger.info('StatSendTask.execute() enter')
         try:
             result = self._unsafe_execute()
             str_result = LoggerHelper.bool_result_to_str(result)
