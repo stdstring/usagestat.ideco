@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from unittest.case import TestCase
-from src.common.state import State
-from src.handler.simple_key_value_handler import SimpleKeyValueHandler
+from stat_file_source.common.state import State
+from stat_file_source.handler.simple_key_value_handler import SimpleKeyValueHandler
 
 class TestSimpleKeyValueHandler(TestCase):
 

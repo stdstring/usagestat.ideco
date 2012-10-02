@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from src.common.state import State
+from stat_file_source.common.state import State
 
 class FileSourceCollector(object):
 

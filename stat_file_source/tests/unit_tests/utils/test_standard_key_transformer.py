@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from unittest.case import TestCase
-from src.common.state import State
-from src.utils.standard_key_transformer import StandardKeyTransformer
+from stat_file_source.common.state import State
+from stat_file_source.utils.standard_key_transformer import StandardKeyTransformer
 
 class TestStandardKeyTransformer(TestCase):
 

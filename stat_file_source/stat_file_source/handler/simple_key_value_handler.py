@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from src.handler.base_key_value_handler import BaseKeyValueHandler
+from stat_file_source.handler.base_key_value_handler import BaseKeyValueHandler
 
 class SimpleKeyValueHandler(BaseKeyValueHandler):
 

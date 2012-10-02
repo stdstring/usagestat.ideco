@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 import re
-from src.common.state import State
-from src.handler.handler import Handler
+from stat_file_source.common.state import State
+from stat_file_source.handler.handler import Handler
 
 class StandardConfigSectionHandler(Handler):
 

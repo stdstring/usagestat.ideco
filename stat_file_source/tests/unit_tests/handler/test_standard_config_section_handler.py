@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from unittest.case import TestCase
-from src.common.state import State
-from src.handler.standard_config_section_handler import StandardConfigSectionHandler
+from stat_file_source.common.state import State
+from stat_file_source.handler.standard_config_section_handler import StandardConfigSectionHandler
 
 class TestStandardConfigSectionHandler(TestCase):
 

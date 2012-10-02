@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from unittest.case import TestCase
-from src.filter.comment_filter import CommentFilter
+from stat_file_source.filter.comment_filter import CommentFilter
 
 class TestCommentFilter(TestCase):
 

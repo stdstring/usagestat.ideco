@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from unittest.case import TestCase
-from src.filter.spaces_filter import SpacesFilter
+from stat_file_source.filter.spaces_filter import SpacesFilter
 
 class TestSpacesFilter(TestCase):
 

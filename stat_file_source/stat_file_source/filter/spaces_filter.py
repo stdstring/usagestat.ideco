@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from src.filter.filter import Filter
+from stat_file_source.filter.filter import Filter
 
 class SpacesFilter(Filter):
 

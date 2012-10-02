@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from unittest.case import TestCase
-from src.common.logger_helper import LoggerHelper
+from stat_file_source.common.logger_helper import LoggerHelper
 
 class TestLoggerHelper(TestCase):
 

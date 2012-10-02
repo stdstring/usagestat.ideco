@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
-from src.common.dict_helper import DictHelper
-from src.common.state import State
-from src.handler.handler import Handler
+from stat_file_source.common.dict_helper import DictHelper
+from stat_file_source.common.state import State
+from stat_file_source.handler.handler import Handler
 
 class BaseKeyValueHandler(Handler):
 

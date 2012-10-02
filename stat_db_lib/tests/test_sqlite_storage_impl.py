@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from datetime import datetime, timedelta
 from unittest.case import TestCase
 import time
-from src.sqlite_storage_impl import SqliteStorageImpl
+from stat_db_lib.sqlite_storage_impl import SqliteStorageImpl
 # TODO (andrey.ushakov) : think because this is very dirty hack
 import os
 import sys

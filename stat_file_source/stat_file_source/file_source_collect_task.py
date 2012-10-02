@@ -1,11 +1,11 @@
 from __future__ import unicode_literals
 import logging
-from src.common.logger_helper import LoggerHelper
-from src.file_source_collector import FileSourceCollector
+from stat_file_source.common.logger_helper import LoggerHelper
+from stat_file_source.file_source_collector import FileSourceCollector
 # TODO (andrey.ushakov) : think because this is very dirty hack
 import os
 import sys
-sys.path.append(os.path.abspath('../stat_db_lib/src'))
+sys.path.append(os.path.abspath('../stat_db_lib/stat_db_lib'))
 from sqlite_storage_impl import SqliteStorageImpl
 
 class FileSourceCollectTask(object):

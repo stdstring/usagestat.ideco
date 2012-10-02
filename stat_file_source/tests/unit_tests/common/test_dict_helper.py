@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from unittest.case import TestCase
-from src.common.dict_helper import DictHelper
+from stat_file_source.common.dict_helper import DictHelper
 
 class TestDictHelper(TestCase):
 

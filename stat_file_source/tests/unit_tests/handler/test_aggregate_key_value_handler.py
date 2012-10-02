@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from unittest.case import TestCase
-from src.common.state import State
-from src.handler.aggregate_key_value_handler import AggregateKeyValueHandler
+from stat_file_source.common.state import State
+from stat_file_source.handler.aggregate_key_value_handler import AggregateKeyValueHandler
 
 class TestAggregateKeyValueHandler(TestCase):
 

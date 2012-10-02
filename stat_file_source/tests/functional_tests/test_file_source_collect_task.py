@@ -2,14 +2,14 @@ from __future__ import unicode_literals
 from datetime import datetime, timedelta
 from unittest.case import TestCase
 import time
-from src.file_source_collect_task import FileSourceCollectTask
-from src.filter.comment_filter import CommentFilter
-from src.filter.spaces_filter import SpacesFilter
-from src.handler.aggregate_key_value_handler import AggregateKeyValueHandler
-from src.handler.simple_key_value_handler import SimpleKeyValueHandler
-from src.handler.standard_config_section_handler import StandardConfigSectionHandler
-from src.handler.transform_key_value_handler import TransformKeyValueHandler
-from src.utils.standard_key_transformer import StandardKeyTransformer
+from stat_file_source.file_source_collect_task import FileSourceCollectTask
+from stat_file_source.filter.comment_filter import CommentFilter
+from stat_file_source.filter.spaces_filter import SpacesFilter
+from stat_file_source.handler.aggregate_key_value_handler import AggregateKeyValueHandler
+from stat_file_source.handler.simple_key_value_handler import SimpleKeyValueHandler
+from stat_file_source.handler.standard_config_section_handler import StandardConfigSectionHandler
+from stat_file_source.handler.transform_key_value_handler import TransformKeyValueHandler
+from stat_file_source.utils.standard_key_transformer import StandardKeyTransformer
 
 # TODO (andrey.ushakov) : think because this is very dirty hack
 import os
