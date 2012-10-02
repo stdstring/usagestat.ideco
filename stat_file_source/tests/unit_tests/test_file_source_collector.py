@@ -15,8 +15,9 @@ class TestFileSourceCollector(TestCase):
         key_transformer = StandardKeyTransformer()
         filters = [CommentFilter('#'), SpacesFilter()]
         handlers = [StandardConfigSectionHandler(),
-                    SimpleKeyValueHandler('=', ['key13', 'key666'], key_transformer),
-                    AggregateKeyValueHandler('=', ['key555', 'key999'], key_transformer, lambda old_value, item: old_value + 1, 0)]
+                    SimpleKeyValueHandler.create_with_known_key_list('=', ['key13', 'key666'], key_transformer),
+                    AggregateKeyValueHandler.create_with_known_key_list('=', ['key555', 'key999'], key_transformer, lambda old_value, item: old_value + 1, 0),
+                    AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], lambda key, state: state.state_id + '_ip', lambda old_value, item: old_value + 1, 0)]
         self._collector = FileSourceCollector(filters, handlers)
 
     def test_simple_collect(self):
@@ -57,6 +58,22 @@ class TestFileSourceCollector(TestCase):
                  '# yet one comment',
                  'key555=1111']
         expected = {'section_1.key555': 1}
+        actual = self._collector.collect(source)
+        self.assertDictEqual(expected, actual)
+
+    def test_collect_with_aggegate_by_one_key(self):
+        source =[' # comment',
+                 '[gate]',
+                 'ip0=192.168.0.1',
+                 'ip1=192.168.0.2',
+                 '[dns]',
+                 'ip0=192.168.100.1',
+                 'ip1=192.168.101.1',
+                 'ip2=192.168.122.2',
+                 'ip9=192.168.166.66',
+                 '[wins]',
+                 'ip0=192.168.111.11']
+        expected = {'gate_ip': 2, 'dns_ip':3, 'wins_ip':1}
         actual = self._collector.collect(source)
         self.assertDictEqual(expected, actual)
 

@@ -21,12 +21,13 @@ class FileSourceCollectTask(object):
         self._logger.info('FileSourceCollectTask.execute() enter')
         try:
             source_data = self._read_file_content()
-            dest_data = self._collector(source_data)
+            dest_data = self._collector.collect(source_data)
             write_result = self._write_data(dest_data)
             str_write_result = LoggerHelper.bool_result_to_str(write_result)
             self._logger.info('FileSourceCollectTask.execute() exit with result %(result)s' % {'result': str_write_result})
             return write_result
-        except Exception:
+        except Exception as exc:
+            print exc
             self._logger.exception('exception in FileSourceCollectTask.execute()')
             return False
 

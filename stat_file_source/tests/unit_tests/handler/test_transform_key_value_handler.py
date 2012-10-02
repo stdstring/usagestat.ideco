@@ -40,6 +40,6 @@ class TestTransformKeyValueHandler(TestCase):
         self.assertFalse(new_state is old_state)
         self.assertFalse(new_state.items is old_state.items)
 
-    _handler = TransformKeyValueHandler('=', ['key13', 'key666'], lambda key, state: key, lambda value: '__' + str(value) + '__')
+    _handler = TransformKeyValueHandler.create_with_known_key_list('=', ['key13', 'key666'], lambda key, state: key, lambda value: '__' + str(value) + '__')
 
 __author__ = 'andrey.ushakov'

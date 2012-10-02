@@ -5,7 +5,7 @@ from src.storage.sqlite_storage_impl import SqliteStorageImpl
 # TODO (andrey.ushakov) : think because this is very dirty hack
 import os
 import sys
-sys.path.append(os.path.abspath('../stat_sender_db/functional_test_utils'))
+sys.path.append(os.path.abspath('../stat_db_funtest_utils'))
 from db_manager import DBManager
 
 class TestSqliteStorageImpl(TestCase):

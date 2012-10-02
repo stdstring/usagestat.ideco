@@ -1,9 +1,8 @@
 from __future__ import unicode_literals
 from _sqlite3 import connect
-import logging
-from src.storage import Storage
+import storage
 
-class SqliteStorageImpl(Storage):
+class SqliteStorageImpl(storage.Storage):
 
     def __init__(self, db_file_path, logger = None):
         self._db_file_path = db_file_path

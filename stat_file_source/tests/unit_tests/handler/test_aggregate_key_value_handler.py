@@ -39,6 +39,19 @@ class TestAggregateKeyValueHandler(TestCase):
         self.assertFalse(new_state is None)
         self.assertFalse(new_state is old_state)
 
-    _handler = AggregateKeyValueHandler('=', ['key13', 'key666'], lambda key, state: key, lambda old_value, item: old_value + 1, 0)
+    def test_handle_aggegate_by_one_key(self):
+        handler = AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], lambda key, state: 'ip', lambda old_value, item: old_value + 1, 0)
+        state = State(None, None, {})
+        result = handler.process('ip0=192.168.0.1', state)
+        self.assertEqual((True, State(None, None, {'ip': 1})), result)
+        result = handler.process('ip1=192.168.1.1', result[1])
+        self.assertEqual((True, State(None, None, {'ip': 2})), result)
+        result = handler.process('ip2=192.168.5.1', result[1])
+        self.assertEqual((True, State(None, None, {'ip': 3})), result)
+        result = handler.process('ip9=192.168.5.5', result[1])
+        self.assertEqual((False, State(None, None, {'ip': 3})), result)
+
+
+    _handler = AggregateKeyValueHandler.create_with_known_key_list('=', ['key13', 'key666'], lambda key, state: key, lambda old_value, item: old_value + 1, 0)
 
 __author__ = 'andrey.ushakov'

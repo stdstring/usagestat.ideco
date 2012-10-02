@@ -5,10 +5,10 @@ from src.handler.handler import Handler
 
 class BaseKeyValueHandler(Handler):
 
-    # spec: str, [str], (str, State -> str), object -> BaseKeyValueHandler
-    def __init__(self, key_value_delimiter, known_keys, key_transformer, item_init_value):
+    # spec: str, (str, State -> bool), (str, State -> str), object -> BaseKeyValueHandler
+    def __init__(self, key_value_delimiter, known_key_predicate, key_transformer, item_init_value):
         self._key_value_delimiter = key_value_delimiter
-        self._known_keys = known_keys
+        self._known_key_predicate = known_key_predicate
         self._key_transformer = key_transformer
         self._item_init_value = item_init_value
 
@@ -18,7 +18,7 @@ class BaseKeyValueHandler(Handler):
         if delimiter_position > -1:
             key = source[0: delimiter_position]
             value = source[delimiter_position + len(self._key_value_delimiter): len(source)]
-            if key in self._known_keys:
+            if self._known_key_predicate(key, state):
                 final_key = self._key_transformer(key, state)
                 new_items = dict(state.items)
                 key_values = DictHelper.get_or_create(new_items, final_key, self._item_init_value)
@@ -38,7 +38,7 @@ class BaseKeyValueHandler(Handler):
         raise NotImplementedError()
 
     _key_value_delimiter = None
-    _known_keys = []
+    _known_key_predicate = None
     _key_transformer = None
     _item_init_value = None
 

@@ -1,6 +1,6 @@
-# ignoring *.pyc, stat_sender/.idea, stat_file_source/.idea, stat_db_lib/.idea, stat_sender_db/functional_test_utils/.idea
+# ignoring *.pyc, stat_sender/.idea, stat_file_source/.idea, stat_db_lib/.idea, stat_db_funtest_utils/.idea
 *.pyc
 stat_sender/.idea
 stat_file_source/.idea
 stat_db_lib/.idea
-stat_sender_db/functional_test_utils/.idea
+stat_db_funtest_utils/.idea
