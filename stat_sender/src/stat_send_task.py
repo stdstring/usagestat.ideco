@@ -19,7 +19,7 @@ class StatSendTask(object):
         try:
             result = self._unsafe_execute()
             str_result = LoggerHelper.bool_result_to_str(result)
-            self._logger.info('StatSendTask.execute exit with result %(result)s' % {'result': str_result})
+            self._logger.info('StatSendTask.execute() exit with result %(result)s' % {'result': str_result})
             return result
         except Exception:
             self._logger.exception('exception in StatSendTask.execute()')

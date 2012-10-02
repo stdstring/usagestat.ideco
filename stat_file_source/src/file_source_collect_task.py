@@ -26,8 +26,7 @@ class FileSourceCollectTask(object):
             str_write_result = LoggerHelper.bool_result_to_str(write_result)
             self._logger.info('FileSourceCollectTask.execute() exit with result %(result)s' % {'result': str_write_result})
             return write_result
-        except Exception as exc:
-            print exc
+        except Exception:
             self._logger.exception('exception in FileSourceCollectTask.execute()')
             return False
 

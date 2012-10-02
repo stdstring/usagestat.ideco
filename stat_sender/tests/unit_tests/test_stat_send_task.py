@@ -21,7 +21,7 @@ class TestStatSendTask(TestCase):
 
     def test_normal_life_cycle(self):
         now = datetime.now().replace(microsecond=0)
-        self._logger.info('StatSendTask.execute enter')
+        self._logger.info('StatSendTask.execute() enter')
         self._storage.get_data().AndReturn([(13, 'c1', now, 'data1')])
         dest_data = '<stat_data><c1><c1_item><timemarker>' + str(now) + '</timemarker><data>data1</data></c1_item></c1></stat_data>'
         self._logger.getChild('unreliable_task_executer').AndReturn(self._child_logger)
@@ -30,24 +30,24 @@ class TestStatSendTask(TestCase):
         self._endpoint.send(dest_data).AndReturn(True)
         self._child_logger.info('UnreliableTaskExecuter.execute() exit with result successfully')
         self._storage.clear((13, 13))
-        self._logger.info('StatSendTask.execute exit with result successfully')
+        self._logger.info('StatSendTask.execute() exit with result successfully')
         self._test_common_action(True)
 
     def test_empty_data(self):
-        self._logger.info('StatSendTask.execute enter')
+        self._logger.info('StatSendTask.execute() enter')
         self._storage.get_data().AndReturn([])
-        self._logger.info('StatSendTask.execute exit with result successfully')
+        self._logger.info('StatSendTask.execute() exit with result successfully')
         self._test_common_action(True)
 
     def test_exception_when_get_data(self):
-        self._logger.info('StatSendTask.execute enter')
+        self._logger.info('StatSendTask.execute() enter')
         self._storage.get_data().AndRaise(Exception())
         self._logger.exception('exception in StatSendTask.execute()')
         self._test_common_action(False)
 
     def test_unsuccessful_send(self):
         now = datetime.now().replace(microsecond=0)
-        self._logger.info('StatSendTask.execute enter')
+        self._logger.info('StatSendTask.execute() enter')
         self._storage.get_data().AndReturn([(13, 'c1', now, 'data1')])
         dest_data = '<stat_data><c1><c1_item><timemarker>' + str(now) + '</timemarker><data>data1</data></c1_item></c1></stat_data>'
         self._logger.getChild('unreliable_task_executer').AndReturn(self._child_logger)
@@ -57,12 +57,12 @@ class TestStatSendTask(TestCase):
         self._child_logger.info('UnreliableTaskExecuter.execute(): iteration number 2')
         self._endpoint.send(dest_data).AndReturn(False)
         self._child_logger.info('UnreliableTaskExecuter.execute() exit with result fails')
-        self._logger.info('StatSendTask.execute exit with result fails')
+        self._logger.info('StatSendTask.execute() exit with result fails')
         self._test_common_action(False)
 
     def test_exception_when_clear(self):
         now = datetime.now().replace(microsecond=0)
-        self._logger.info('StatSendTask.execute enter')
+        self._logger.info('StatSendTask.execute() enter')
         self._storage.get_data().AndReturn([(13, 'c1', now, 'data1')])
         dest_data = '<stat_data><c1><c1_item><timemarker>' + str(now) + '</timemarker><data>data1</data></c1_item></c1></stat_data>'
         self._logger.getChild('unreliable_task_executer').AndReturn(self._child_logger)
