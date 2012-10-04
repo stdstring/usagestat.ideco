@@ -20,55 +20,55 @@ class TestStatSendTask(TestCase):
         self._child_logger = self._mox.CreateMock(Logger)
 
     def test_normal_life_cycle(self):
-        self._logger.info('StatSendTask.execute() enter')
+        self._logger.info('execute() enter')
         self._storage.get_data().AndReturn([(13, 's1', 'c1', self._datetime_2_str(self._now), 'data1')])
         dest_data = '<stat_data><s1><c1><item><timemarker>' + str(self._now) + '</timemarker><data>data1</data></item></c1></s1></stat_data>'
         self._logger.getChild('unreliable_task_executer').AndReturn(self._child_logger)
-        self._child_logger.info('UnreliableTaskExecuter.execute() enter')
-        self._child_logger.info('UnreliableTaskExecuter.execute(): iteration number 1')
+        self._child_logger.info('execute() enter')
+        self._child_logger.info('execute(): iteration number 1')
         self._endpoint.send(dest_data).AndReturn(True)
-        self._child_logger.info('UnreliableTaskExecuter.execute() exit with result successfully')
+        self._child_logger.info('execute() exit with result successfully')
         self._storage.clear((13, 13))
-        self._logger.info('StatSendTask.execute() exit with result successfully')
+        self._logger.info('execute() exit with result successfully')
         self._test_common_action(True)
 
     def test_empty_data(self):
-        self._logger.info('StatSendTask.execute() enter')
+        self._logger.info('execute() enter')
         self._storage.get_data().AndReturn([])
-        self._logger.info('StatSendTask.execute() exit with result successfully')
+        self._logger.info('execute() exit with result successfully')
         self._test_common_action(True)
 
     def test_exception_when_get_data(self):
-        self._logger.info('StatSendTask.execute() enter')
+        self._logger.info('execute() enter')
         self._storage.get_data().AndRaise(Exception())
-        self._logger.exception('exception in StatSendTask.execute()')
+        self._logger.exception('exception in execute()')
         self._test_common_action(False)
 
     def test_unsuccessful_send(self):
-        self._logger.info('StatSendTask.execute() enter')
+        self._logger.info('execute() enter')
         self._storage.get_data().AndReturn([(13, 's1', 'c1', self._datetime_2_str(self._now), 'data1')])
         dest_data = '<stat_data><s1><c1><item><timemarker>' + str(self._now) + '</timemarker><data>data1</data></item></c1></s1></stat_data>'
         self._logger.getChild('unreliable_task_executer').AndReturn(self._child_logger)
-        self._child_logger.info('UnreliableTaskExecuter.execute() enter')
-        self._child_logger.info('UnreliableTaskExecuter.execute(): iteration number 1')
+        self._child_logger.info('execute() enter')
+        self._child_logger.info('execute(): iteration number 1')
         self._endpoint.send(dest_data).AndRaise(Exception())
-        self._child_logger.info('UnreliableTaskExecuter.execute(): iteration number 2')
+        self._child_logger.info('execute(): iteration number 2')
         self._endpoint.send(dest_data).AndReturn(False)
-        self._child_logger.info('UnreliableTaskExecuter.execute() exit with result fails')
-        self._logger.info('StatSendTask.execute() exit with result fails')
+        self._child_logger.info('execute() exit with result fails')
+        self._logger.info('execute() exit with result fails')
         self._test_common_action(False)
 
     def test_exception_when_clear(self):
-        self._logger.info('StatSendTask.execute() enter')
+        self._logger.info('execute() enter')
         self._storage.get_data().AndReturn([(13, 's1', 'c1', self._datetime_2_str(self._now), 'data1')])
         dest_data = '<stat_data><s1><c1><item><timemarker>' + str(self._now) + '</timemarker><data>data1</data></item></c1></s1></stat_data>'
         self._logger.getChild('unreliable_task_executer').AndReturn(self._child_logger)
-        self._child_logger.info('UnreliableTaskExecuter.execute() enter')
-        self._child_logger.info('UnreliableTaskExecuter.execute(): iteration number 1')
+        self._child_logger.info('execute() enter')
+        self._child_logger.info('execute(): iteration number 1')
         self._endpoint.send(dest_data).AndReturn(True)
-        self._child_logger.info('UnreliableTaskExecuter.execute() exit with result successfully')
+        self._child_logger.info('execute() exit with result successfully')
         self._storage.clear((13, 13)).AndRaise(Exception())
-        self._logger.exception('exception in StatSendTask.execute()')
+        self._logger.exception('exception in execute()')
         self._test_common_action(False)
 
     def _test_common_action(self, expected_result):

@@ -15,14 +15,14 @@ class StatSendTask(object):
 
     # spec: None -> bool
     def execute(self):
-        self._logger.info('StatSendTask.execute() enter')
+        self._logger.info('execute() enter')
         try:
             result = self._unsafe_execute()
             str_result = LoggerHelper.bool_result_to_str(result)
-            self._logger.info('StatSendTask.execute() exit with result %(result)s' % {'result': str_result})
+            self._logger.info('execute() exit with result %(result)s' % {'result': str_result})
             return result
         except Exception:
-            self._logger.exception('exception in StatSendTask.execute()')
+            self._logger.exception('exception in execute()')
             return False
 
     # spec: None -> bool

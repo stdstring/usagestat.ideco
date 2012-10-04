@@ -13,17 +13,17 @@ class EndPointImpl(EndPoint):
 
     # spec: str -> bool
     def send(self, data):
-        self._logger.info('EndPointImpl.send(data) enter')
+        self._logger.info('send(data) enter')
         conn = HTTPSConnection(host=self._remote_host, key_file=self._key_file, cert_file=self._cert_file)
         try:
             headers = {"Content-type": "text/xml", "Accept": "text/plain"}
             conn.request('POST', '', data, headers)
             response = conn.getresponse()
             str_result = self._execute_result_to_str(response.status)
-            self._logger.info('EndPointImpl.send(data) exit with result %(result)s' % {'result':str_result})
+            self._logger.info('send(data) exit with result %(result)s' % {'result':str_result})
             return response.status == OK
         except Exception:
-            self._logger.exception('exception in EndPointImpl.send(data)')
+            self._logger.exception('exception in send(data)')
             raise
         finally:
             conn.close()
