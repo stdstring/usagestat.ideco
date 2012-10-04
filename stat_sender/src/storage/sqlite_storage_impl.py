@@ -9,13 +9,13 @@ class SqliteStorageImpl(Storage):
         self._db_file = db_file
         self._logger = logger
 
-    # spec: None -> [(int, str, datetime, str)]
+    # spec: None -> [(int, str, str, str, str)]
     def get_data(self):
         connection = connect(self._db_file)
         self._logger.info('SqliteStorageImpl.get_data() enter')
         try:
             cursor = connection.cursor()
-            query_str = 'select ID, CATEGORY, TIMEMARKER, DATA from STAT_DATA order by ID'
+            query_str = 'select ID, SOURCE, CATEGORY, TIMEMARKER, DATA from STAT_DATA order by ID'
             cursor.execute(query_str)
             result = cursor.fetchall()
             self._logger.info('SqliteStorageImpl.get_data() exit')

@@ -18,28 +18,30 @@ class TestSqliteStorageImpl(TestCase):
 
     def test_db_metadata(self):
         actual_metadata = self._db_manager.execute_query("select name, sql from SQLITE_MASTER where type = 'table'")
-        expected_metadata = [('STAT_DATA', 'CREATE TABLE STAT_DATA(ID INTEGER PRIMARY KEY, CATEGORY TEXT, TIMEMARKER TEXT, DATA BLOB)')]
+        expected_metadata = [('STAT_DATA', 'CREATE TABLE STAT_DATA(ID INTEGER PRIMARY KEY, SOURCE TEXT not null, CATEGORY TEXT not null, TIMEMARKER TEXT not null, DATA BLOB not null)')]
         self.assertEquals(expected_metadata, actual_metadata)
 
     def test_get_data(self):
-        now = datetime.now()
-        source_data = [('CAT1', str(now), 'some data'), ('CAT2', str(now), 'some another data')]
-        self._db_manager.execute_nonquery('insert into STAT_DATA(CATEGORY, TIMEMARKER, DATA) values(?, ?, ?)', source_data)
+        source_data = [('SRC1', 'CAT1', str(self._now), 'some data'), ('SRC2', 'CAT2', str(self._now), 'some another data')]
+        self._db_manager.execute_nonquery('insert into STAT_DATA(SOURCE, CATEGORY, TIMEMARKER, DATA) values(?, ?, ?, ?)', source_data)
         storage = SqliteStorageImpl(self._db_manager.get_db_file())
         actual_data = storage.get_data()
-        expected_data = [(1, 'CAT1', str(now), 'some data'), (2, 'CAT2', str(now), 'some another data')]
+        expected_data = [(1, 'SRC1', 'CAT1', str(self._now), 'some data'), (2, 'SRC2', 'CAT2', str(self._now), 'some another data')]
         self.assertEquals(expected_data, actual_data)
 
     def test_clear(self):
-        now = datetime.now()
-        source_data = [('CAT1', str(now), 'some data'), ('CAT2', str(now), 'some other data'), ('CAT3', str(now), 'some another data'), ('CAT4', str(now), 'yet some other data')]
-        self._db_manager.execute_nonquery('insert into STAT_DATA(CATEGORY, TIMEMARKER, DATA) values(?, ?, ?)', source_data)
+        source_data = [('SRC1', 'CAT1', str(self._now), 'some data'),
+            ('SRC2', 'CAT2', str(self._now), 'some other data'),
+            ('SRC2', 'CAT3', str(self._now), 'some another data'),
+            ('SRC3', 'CAT4', str(self._now), 'yet some other data')]
+        self._db_manager.execute_nonquery('insert into STAT_DATA(SOURCE, CATEGORY, TIMEMARKER, DATA) values(?, ?, ?, ?)', source_data)
         storage = SqliteStorageImpl(self._db_manager.get_db_file())
         storage.clear((2, 3))
-        actual_data = self._db_manager.execute_query('SELECT ID, CATEGORY, TIMEMARKER, DATA FROM STAT_DATA ORDER BY ID')
-        expected_data = [(1, 'CAT1', str(now), 'some data'), (4, 'CAT4', str(now), 'yet some other data')]
+        actual_data = self._db_manager.execute_query('SELECT ID, SOURCE, CATEGORY, TIMEMARKER, DATA FROM STAT_DATA ORDER BY ID')
+        expected_data = [(1, 'SRC1', 'CAT1', str(self._now), 'some data'), (4, 'SRC3', 'CAT4', str(self._now), 'yet some other data')]
         self.assertEquals(expected_data, actual_data)
 
     _db_manager = DBManager('../stat_sender_db')
+    _now = datetime.now()
 
 __author__ = 'andrey.ushakov'

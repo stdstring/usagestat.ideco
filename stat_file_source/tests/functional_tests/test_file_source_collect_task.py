@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 from datetime import datetime, timedelta
 from unittest.case import TestCase
-import time
 from stat_file_source.file_source_collect_task import FileSourceCollectTask
 from stat_file_source.filter.comment_filter import CommentFilter
 from stat_file_source.filter.spaces_filter import SpacesFilter
@@ -40,7 +39,7 @@ class TestFileSourceCollectTask(TestCase):
                     SimpleKeyValueHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'services', standard_key_transformer),
                     TransformKeyValueHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'users', standard_key_transformer, transform_user_fun),
                     AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], ip_key_transformer, lambda old_value, item: old_value + 1, 0)]
-        self._collect_task = FileSourceCollectTask(filters, handlers, source_filename, self._db_manager.get_db_file())
+        self._collect_task = FileSourceCollectTask('some_source', filters, handlers, source_filename, self._db_manager.get_db_file())
 
     def tearDown(self):
         self._db_manager.__exit__(None, None, None)
@@ -49,7 +48,7 @@ class TestFileSourceCollectTask(TestCase):
         now = datetime.now()
         result = self._collect_task.execute()
         self.assertTrue(result)
-        actual = self._db_manager.execute_query('select ID, CATEGORY, TIMEMARKER, DATA from STAT_DATA order by ID')
+        actual = self._db_manager.execute_query('select ID, SOURCE, CATEGORY, TIMEMARKER, DATA from STAT_DATA order by ID')
         expected = [('gate.ip', 3),
             ('dns.ip', 2),
             ('wins.ip', 1),
@@ -59,22 +58,23 @@ class TestFileSourceCollectTask(TestCase):
             ('users.user', 'kozlov,*********'),
             ('services.http', '80'),
             ('services.ftp', '21')]
-        self._check_data(now, expected, actual)
+        self._check_data(now, 'some_source', expected, actual)
 
-    # spec: datetime, [(str, str)], [(int, str, str, str)] -> None
-    def _check_data(self, now, expected, actual):
+    # spec: datetime, str, [(str, str)], [(int, str, str, str, str)] -> None
+    def _check_data(self, now, source_id, expected, actual):
         self.assertEqual(len(expected), len(actual))
         for expected_item in expected:
-            actual_items = filter(lambda item: item[1] == expected_item[0] and item[3] == expected_item[1], actual)
+            actual_items = filter(lambda item: item[1] == source_id and item[2] == expected_item[0] and item[4] == expected_item[1], actual)
             self.assertEqual(1, len(actual_items))
             actual_item = actual_items[0]
-            actual_time = self._str_2_time(actual_item[2])
+            actual_time = self._str_2_time(actual_item[3])
             self.assertTrue(actual_time - now < timedelta(seconds = 10))
 
     # spec: str -> datetime
     def _str_2_time(self, source_str):
-        time_str = time.strptime(source_str, '%Y-%m-%d %H:%M:%S')
-        return datetime(year=time_str.tm_yday, month=time_str.tm_mon, day=time_str.tm_mday, hour=time_str.tm_hour, minute=time_str.tm_min, second=time_str.tm_sec)
+        return datetime.strptime(source_str, '%Y-%m-%d %H:%M:%S')
+        #time_str = time.strptime(source_str, '%Y-%m-%d %H:%M:%S')
+        #return datetime(year=time_str.tm_yday, month=time_str.tm_mon, day=time_str.tm_mday, hour=time_str.tm_hour, minute=time_str.tm_min, second=time_str.tm_sec)
 
     _collect_task = None
     _db_manager = DBManager('../stat_sender_db')

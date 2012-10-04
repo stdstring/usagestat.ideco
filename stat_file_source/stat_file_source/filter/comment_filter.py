@@ -3,6 +3,7 @@ from stat_file_source.filter.filter import Filter
 
 class CommentFilter(Filter):
 
+    # spec: str -> CommentFilter
     def __init__(self, comment_leader='#'):
         self._comment_leader = comment_leader
 

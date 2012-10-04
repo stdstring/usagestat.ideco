@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 class Storage(object):
-    # spec: None -> [(int, str, datetime, str)]
+    # spec: None -> [(int, str, str, str, str)]
     def get_data(self):
         raise NotImplementedError
 

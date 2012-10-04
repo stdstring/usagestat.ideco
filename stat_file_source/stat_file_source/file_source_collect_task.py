@@ -10,7 +10,9 @@ from sqlite_storage_impl import SqliteStorageImpl
 
 class FileSourceCollectTask(object):
 
-    def __init__(self, filters, handlers, source_filename, db_dest_filename, logger = logging.getLogger('stat_file_source.file_source_collect_task')):
+    # spec: str, [Filter], [Handler], str, str, Logger -> FileSourceCollectTask
+    def __init__(self, source_id, filters, handlers, source_filename, db_dest_filename, logger = logging.getLogger('stat_file_source.file_source_collect_task')):
+        self._source_id = source_id
         self._collector = FileSourceCollector(filters, handlers)
         self._source_filename = source_filename
         self._db_dest_filename = db_dest_filename
@@ -49,7 +51,7 @@ class FileSourceCollectTask(object):
         self._logger.info('FileSourceCollectTask._write_data(data_dict) enter')
         storage = SqliteStorageImpl(self._db_dest_filename, self._logger.getChild('sqlite_storage_impl'))
         data_list = self._prepare_data(data_dict)
-        result = storage.save_data(data_list)
+        result = storage.save_data(self._source_id, data_list)
         str_result = LoggerHelper.bool_result_to_str(result)
         self._logger.info('FileSourceCollectTask._write_data(data_dict) exit with result %(result)s' % {'result': str_result})
         return result
@@ -66,6 +68,7 @@ class FileSourceCollectTask(object):
                 dest_data.append((category, value))
         return dest_data
 
+    _source_id = None
     _collector = None
     _source_filename = None
     _db_dest_filename = None

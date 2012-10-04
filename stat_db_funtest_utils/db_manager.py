@@ -13,6 +13,7 @@ class InvalidOperationException(Exception):
 
 class DBManager(object):
 
+    # spec: str -> DBManager
     def __init__(self, db_create_script_path):
         self._db_create_script_path = db_create_script_path
 
@@ -27,7 +28,7 @@ class DBManager(object):
         os.chdir(self._initial_working_dir)
         return True
 
-    # spec: str ->
+    # spec: str, tuple -> tuple
     def execute_query(self, query, params=()):
         if not self._ready:
             raise InvalidOperationException()
@@ -40,6 +41,7 @@ class DBManager(object):
         finally:
             conn.close()
 
+    # spec: str, tuple -> None
     def execute_nonquery(self, query, params=()):
         if not self._ready:
             raise InvalidOperationException()

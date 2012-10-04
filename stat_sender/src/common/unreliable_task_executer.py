@@ -4,6 +4,7 @@ from src.common.logger_helper import LoggerHelper
 
 class UnreliableTaskExecuter(object):
 
+    # spec: None -> callable, int, Logger
     def __init__(self, task, max_attempt_count, logger = logging.getLogger('stat_sender.unreliable_task_executer')):
         self._task = task
         self._max_attempt_count = max_attempt_count
