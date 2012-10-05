@@ -8,6 +8,13 @@ import sys
 sys.path.append(os.path.abspath('../stat_db_lib/stat_db_lib'))
 from sqlite_storage_impl import SqliteStorageImpl
 
+def read_file_content(source_filename):
+    source = open(source_filename, 'r')
+    try:
+        return source.readlines()
+    finally:
+        source.close()
+
 class FileSourceCollectTask(object):
 
     # spec: str, [Filter], [Handler], str, str, Logger -> FileSourceCollectTask
@@ -21,7 +28,7 @@ class FileSourceCollectTask(object):
     # spec: None -> bool
     def execute(self):
         storage = SqliteStorageImpl(self._db_dest_filename, self._logger.getChild('sqlite_storage_impl'))
-        return FileSourceCollectTaskImpl(self._source_id, self._collector, self._source_filename, storage, self._logger).execute()
+        return FileSourceCollectTaskImpl(self._source_id, self._collector, lambda: read_file_content(self._source_filename), storage, self._logger).execute()
 
     _source_id = None
     _collector = None

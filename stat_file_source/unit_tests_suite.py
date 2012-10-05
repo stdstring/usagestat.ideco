@@ -8,6 +8,7 @@ from tests.unit_tests.handler.test_aggregate_key_value_handler import TestAggreg
 from tests.unit_tests.handler.test_simple_key_value_handler import TestSimpleKeyValueHandler
 from tests.unit_tests.handler.test_standard_config_section_handler import TestStandardConfigSectionHandler
 from tests.unit_tests.handler.test_transform_key_value_handler import TestTransformKeyValueHandler
+from tests.unit_tests.test_file_source_collect_task_impl import TestFileSourceCollectTaskImpl
 from tests.unit_tests.test_file_source_collector import TestFileSourceCollector
 from tests.unit_tests.utils.test_standard_key_transformer import TestStandardKeyTransformer
 
@@ -23,6 +24,7 @@ def load_tests(loader, tests, pattern):
     suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestStandardKeyTransformer))
     suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestFileSourceCollector))
     suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestLoggerHelper))
+    suite.addTest(unittest.TestLoader().loadTestsFromTestCase(TestFileSourceCollectTaskImpl))
     return suite
 
 if __name__ == '__main__':
