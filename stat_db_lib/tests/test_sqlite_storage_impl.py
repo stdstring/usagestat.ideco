@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 from datetime import datetime, timedelta
+from logging import Logger
+from mox import Mox
 from unittest.case import TestCase
 import time
 from stat_db_lib.sqlite_storage_impl import SqliteStorageImpl
@@ -12,49 +14,91 @@ from db_manager import DBManager
 class TestSqliteStorageImpl(TestCase):
 
     def setUp(self):
+        self._mox = Mox()
+        self._logger = self._mox.CreateMock(Logger)
         self._db_manager.__enter__()
 
     def tearDown(self):
         self._db_manager.__exit__(None, None, None)
 
     def test_save_item(self):
-        now = datetime.now()
-        storage = SqliteStorageImpl(self._db_manager.get_db_file(), None)
+        self._logger.info('save_item(some_source, category1, some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source, category1, some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source, category1, some portion of data) exit')
+        self._logger.info('save_item(some_source, category1, some portion of data) exit')
+        self._mox.ReplayAll()
+        storage = SqliteStorageImpl(self._db_manager.get_db_file(), self._logger)
         storage.save_item('some_source', 'category1', 'some portion of data')
         actual = self._db_manager.execute_query(self._query)
         expected = [(1, 'some_source', 'category1', 'some portion of data')]
-        self._check_data(now, expected, actual)
+        self._check_data(expected, actual)
+        self._mox.VerifyAll()
 
     def test_save_two_items(self):
-        now = datetime.now()
-        storage = SqliteStorageImpl(self._db_manager.get_db_file(), None)
+        self._logger.info('save_item(some_source, category1, some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source, category1, some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source, category1, some portion of data) exit')
+        self._logger.info('save_item(some_source, category1, some portion of data) exit')
+        self._logger.info('save_item(some_source, category2, yet one some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source, category2, yet one some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source, category2, yet one some portion of data) exit')
+        self._logger.info('save_item(some_source, category2, yet one some portion of data) exit')
+        self._mox.ReplayAll()
+        storage = SqliteStorageImpl(self._db_manager.get_db_file(), self._logger)
         storage.save_item('some_source', 'category1', 'some portion of data')
         storage.save_item('some_source', 'category2', 'yet one some portion of data')
         actual = self._db_manager.execute_query(self._query)
         expected = [(1, 'some_source', 'category1', 'some portion of data'), (2, 'some_source', 'category2', 'yet one some portion of data')]
-        self._check_data(now, expected, actual)
+        self._check_data(expected, actual)
+        self._mox.VerifyAll()
 
     def test_save_two_items_for_different_sources(self):
-        now = datetime.now()
-        storage = SqliteStorageImpl(self._db_manager.get_db_file(), None)
+        self._logger.info('save_item(some_source1, category1, some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source1, category1, some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source1, category1, some portion of data) exit')
+        self._logger.info('save_item(some_source1, category1, some portion of data) exit')
+        self._logger.info('save_item(some_source2, category2, yet one some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source2, category2, yet one some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source2, category2, yet one some portion of data) exit')
+        self._logger.info('save_item(some_source2, category2, yet one some portion of data) exit')
+        self._mox.ReplayAll()
+        storage = SqliteStorageImpl(self._db_manager.get_db_file(), self._logger)
         storage.save_item('some_source1', 'category1', 'some portion of data')
         storage.save_item('some_source2', 'category2', 'yet one some portion of data')
         actual = self._db_manager.execute_query(self._query)
         expected = [(1, 'some_source1', 'category1', 'some portion of data'), (2, 'some_source2', 'category2', 'yet one some portion of data')]
-        self._check_data(now, expected, actual)
+        self._check_data(expected, actual)
+        self._mox.VerifyAll()
 
     def test_save_data(self):
-        now = datetime.now()
-        storage = SqliteStorageImpl(self._db_manager.get_db_file(), None)
+        self._logger.info('save_data(some_source, data_list) enter')
+        self._logger.info('_save_item_impl(some_source, category1, some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source, category1, some portion of data) exit')
+        self._logger.info('_save_item_impl(some_source, category2, yet one some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source, category2, yet one some portion of data) exit')
+        self._logger.info('save_data(some_source, data_list) exit')
+        self._mox.ReplayAll()
+        storage = SqliteStorageImpl(self._db_manager.get_db_file(), self._logger)
         data = [('category1', 'some portion of data'), ('category2', 'yet one some portion of data')]
         storage.save_data('some_source', data)
         actual = self._db_manager.execute_query(self._query)
         expected = [(1, 'some_source', 'category1', 'some portion of data'), (2, 'some_source', 'category2', 'yet one some portion of data')]
-        self._check_data(now, expected, actual)
+        self._check_data(expected, actual)
+        self._mox.VerifyAll()
 
     def test_save_two_data_portions(self):
-        now = datetime.now()
-        storage = SqliteStorageImpl(self._db_manager.get_db_file(), None)
+        self._logger.info('save_data(some_source, data_list) enter')
+        self._logger.info('_save_item_impl(some_source, category1, some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source, category1, some portion of data) exit')
+        self._logger.info('_save_item_impl(some_source, category2, yet one some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source, category2, yet one some portion of data) exit')
+        self._logger.info('save_data(some_source, data_list) exit')
+        self._logger.info('save_data(some_source, data_list) enter')
+        self._logger.info('_save_item_impl(some_source, category1, other portion of data) enter')
+        self._logger.info('_save_item_impl(some_source, category1, other portion of data) exit')
+        self._logger.info('save_data(some_source, data_list) exit')
+        self._mox.ReplayAll()
+        storage = SqliteStorageImpl(self._db_manager.get_db_file(), self._logger)
         data = [('category1', 'some portion of data'), ('category2', 'yet one some portion of data')]
         storage.save_data('some_source', data)
         data = [('category1', 'other portion of data')]
@@ -63,11 +107,22 @@ class TestSqliteStorageImpl(TestCase):
         expected = [(1, 'some_source', 'category1', 'some portion of data'),
             (2, 'some_source', 'category2', 'yet one some portion of data'),
             (3, 'some_source', 'category1', 'other portion of data')]
-        self._check_data(now, expected, actual)
+        self._check_data(expected, actual)
+        self._mox.VerifyAll()
 
     def test_save_two_data_portions_for_different_sources(self):
-        now = datetime.now()
-        storage = SqliteStorageImpl(self._db_manager.get_db_file(), None)
+        self._logger.info('save_data(some_source1, data_list) enter')
+        self._logger.info('_save_item_impl(some_source1, category1, some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source1, category1, some portion of data) exit')
+        self._logger.info('_save_item_impl(some_source1, category2, yet one some portion of data) enter')
+        self._logger.info('_save_item_impl(some_source1, category2, yet one some portion of data) exit')
+        self._logger.info('save_data(some_source1, data_list) exit')
+        self._logger.info('save_data(some_source2, data_list) enter')
+        self._logger.info('_save_item_impl(some_source2, category1, other portion of data) enter')
+        self._logger.info('_save_item_impl(some_source2, category1, other portion of data) exit')
+        self._logger.info('save_data(some_source2, data_list) exit')
+        self._mox.ReplayAll()
+        storage = SqliteStorageImpl(self._db_manager.get_db_file(), self._logger)
         data = [('category1', 'some portion of data'), ('category2', 'yet one some portion of data')]
         storage.save_data('some_source1', data)
         data = [('category1', 'other portion of data')]
@@ -76,10 +131,11 @@ class TestSqliteStorageImpl(TestCase):
         expected = [(1, 'some_source1', 'category1', 'some portion of data'),
             (2, 'some_source1', 'category2', 'yet one some portion of data'),
             (3, 'some_source2', 'category1', 'other portion of data')]
-        self._check_data(now, expected, actual)
+        self._check_data(expected, actual)
+        self._mox.VerifyAll()
 
-    # datetime, [(int, str, str, str)], [(int, str, str, str, str)]
-    def _check_data(self, now, expected, actual):
+    # spec: [(int, str, str, str)], [(int, str, str, str, str)]
+    def _check_data(self, expected, actual):
         self.assertEqual(len(expected), len(actual))
         index = 0
         while index < len(expected):
@@ -89,9 +145,12 @@ class TestSqliteStorageImpl(TestCase):
             self.assertEqual(expected[index][3], actual[index][4])
             time_str = time.strptime(actual[index][3], '%Y-%m-%d %H:%M:%S')
             actualDateTime = datetime(year=time_str.tm_yday, month=time_str.tm_mon, day=time_str.tm_mday, hour=time_str.tm_hour, minute=time_str.tm_min, second=time_str.tm_sec)
-            self.assertTrue(actualDateTime-now < timedelta(seconds = 10))
+            self.assertTrue(actualDateTime-self._now < timedelta(seconds = 10))
             index += 1
 
+    _mox = None
+    _logger = None
+    _now = datetime.now()
     _db_manager = DBManager('../stat_sender_db')
     _query = 'select ID, SOURCE, CATEGORY, TIMEMARKER, DATA from STAT_DATA order by ID'
 

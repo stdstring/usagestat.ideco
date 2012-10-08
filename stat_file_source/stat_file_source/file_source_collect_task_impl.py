@@ -40,11 +40,11 @@ class FileSourceCollectTaskImpl(object):
 
     # spec: {str: object | [object]} -> bool
     def _write_data(self, data_dict):
-        self._logger.info('_write_data(data_dict() enter')
+        self._logger.info('_write_data(data_dict) enter')
         data_list = self._prepare_data(data_dict)
         result = self._storage.save_data(self._source_id, data_list)
         str_result = LoggerHelper.bool_result_to_str(result)
-        self._logger.info('_write_data(data_dict() exit with result %(result)s' % {'result': str_result})
+        self._logger.info('_write_data(data_dict) exit with result %(result)s' % {'result': str_result})
         return result
 
     # spec: {str: object | [object]} -> [(str, object)]

@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 from datetime import datetime, timedelta
+from logging import Logger
+from mox import Mox
 from unittest.case import TestCase
 from stat_file_source.file_source_collect_task import FileSourceCollectTask
 from stat_file_source.filter.comment_filter import CommentFilter
@@ -9,7 +11,6 @@ from stat_file_source.handler.simple_key_value_handler import SimpleKeyValueHand
 from stat_file_source.handler.standard_config_section_handler import StandardConfigSectionHandler
 from stat_file_source.handler.transform_key_value_handler import TransformKeyValueHandler
 from stat_file_source.utils.standard_key_transformer import StandardKeyTransformer
-
 # TODO (andrey.ushakov) : think because this is very dirty hack
 import os
 import sys
@@ -30,6 +31,9 @@ def transform_user_fun(source_value):
 class TestFileSourceCollectTask(TestCase):
 
     def setUp(self):
+        self._mox = Mox()
+        self._main_logger = self._mox.CreateMock(Logger)
+        self._storage_logger = self._mox.CreateMock(Logger)
         source_filename = os.path.abspath('tests/functional_tests/test.conf')
         self._db_manager.__enter__()
         filters = [CommentFilter('#'), SpacesFilter()]
@@ -39,12 +43,40 @@ class TestFileSourceCollectTask(TestCase):
                     SimpleKeyValueHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'services', standard_key_transformer),
                     TransformKeyValueHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'users', standard_key_transformer, transform_user_fun),
                     AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], ip_key_transformer, lambda old_value, item: old_value + 1, 0)]
-        self._collect_task = FileSourceCollectTask('some_source', filters, handlers, source_filename, self._db_manager.get_db_file())
+        self._collect_task = FileSourceCollectTask('some_source', filters, handlers, source_filename, self._db_manager.get_db_file(), self._main_logger)
 
     def tearDown(self):
         self._db_manager.__exit__(None, None, None)
 
     def test_execute(self):
+        self._main_logger.getChild('sqlite_storage_impl').AndReturn(self._storage_logger)
+        self._main_logger.info('execute() enter')
+        self._main_logger.info('_read_file_content() enter')
+        self._main_logger.info('_read_file_content() exit')
+        self._main_logger.info('_write_data(data_dict) enter')
+        self._storage_logger.info('save_data(some_source, data_list) enter')
+        self._storage_logger.info('_save_item_impl(some_source, wins.ip, 1) enter')
+        self._storage_logger.info('_save_item_impl(some_source, wins.ip, 1) exit')
+        self._storage_logger.info('_save_item_impl(some_source, services.http, 80) enter')
+        self._storage_logger.info('_save_item_impl(some_source, services.http, 80) exit')
+        self._storage_logger.info('_save_item_impl(some_source, gate.ip, 3) enter')
+        self._storage_logger.info('_save_item_impl(some_source, gate.ip, 3) exit')
+        self._storage_logger.info('_save_item_impl(some_source, users.user, ivanov,*******) enter')
+        self._storage_logger.info('_save_item_impl(some_source, users.user, ivanov,*******) exit')
+        self._storage_logger.info('_save_item_impl(some_source, users.user, petrov,***) enter')
+        self._storage_logger.info('_save_item_impl(some_source, users.user, petrov,***) exit')
+        self._storage_logger.info('_save_item_impl(some_source, users.user, sydorov,*********) enter')
+        self._storage_logger.info('_save_item_impl(some_source, users.user, sydorov,*********) exit')
+        self._storage_logger.info('_save_item_impl(some_source, users.user, kozlov,*********) enter')
+        self._storage_logger.info('_save_item_impl(some_source, users.user, kozlov,*********) exit')
+        self._storage_logger.info('_save_item_impl(some_source, dns.ip, 2) enter')
+        self._storage_logger.info('_save_item_impl(some_source, dns.ip, 2) exit')
+        self._storage_logger.info('_save_item_impl(some_source, services.ftp, 21) enter')
+        self._storage_logger.info('_save_item_impl(some_source, services.ftp, 21) exit')
+        self._storage_logger.info('save_data(some_source, data_list) exit')
+        self._main_logger.info('_write_data(data_dict) exit with result successfully')
+        self._main_logger.info('execute() exit with result successfully')
+        self._mox.ReplayAll()
         now = datetime.now()
         result = self._collect_task.execute()
         self.assertTrue(result)
@@ -59,6 +91,7 @@ class TestFileSourceCollectTask(TestCase):
             ('services.http', '80'),
             ('services.ftp', '21')]
         self._check_data(now, 'some_source', expected, actual)
+        self._mox.VerifyAll()
 
     # spec: datetime, str, [(str, str)], [(int, str, str, str, str)] -> None
     def _check_data(self, now, source_id, expected, actual):
@@ -73,9 +106,10 @@ class TestFileSourceCollectTask(TestCase):
     # spec: str -> datetime
     def _str_2_time(self, source_str):
         return datetime.strptime(source_str, '%Y-%m-%d %H:%M:%S')
-        #time_str = time.strptime(source_str, '%Y-%m-%d %H:%M:%S')
-        #return datetime(year=time_str.tm_yday, month=time_str.tm_mon, day=time_str.tm_mday, hour=time_str.tm_hour, minute=time_str.tm_min, second=time_str.tm_sec)
 
+    _mox = None
+    _main_logger = None
+    _storage_logger = None
     _collect_task = None
     _db_manager = DBManager('../stat_sender_db')
 
