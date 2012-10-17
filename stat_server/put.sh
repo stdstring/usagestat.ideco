@@ -1,0 +1,2 @@
+#!/bin/bash
+curl --dump-header - -H "Content-Type: application/xml" -X PUT --data '<objects><object><source>s1</source><category>cat1</category><timemarker>21.12.2012 23:59:59</timemarker><data>some portion of data</data></object><object><source>s666</source><category>cat999</category><timemarker>21.12.2012 23:59:59</timemarker><data>other data</data></object></objects>' http://127.0.0.1:8000/statserver/api/v1/collect/
