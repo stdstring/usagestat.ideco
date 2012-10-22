@@ -52,10 +52,12 @@ class SqliteStorageImpl(storage.Storage):
             self._log_exception('Exception in _save_item_impl(%(source)s, %(category)s, %(data)s)' % {'source': source_id, 'category': category, 'data': data})
             raise
 
+    # spec: str -> None
     def _log_info(self, message):
         if self._logger is not None:
             self._logger.info(message)
 
+    # spec: str -> None
     def _log_exception(self, message):
         if self._logger is not None:
             self._logger.exception(message)

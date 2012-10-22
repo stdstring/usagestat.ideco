@@ -17,6 +17,13 @@ DATABASES = {
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    },
+    'stat_db': {
+        'NAME': 'stat_db',
+        'USER': 'postgres',
+        'PASSWORD': '31415926',
+        'HOST': None,
+        'PORT': None,
     }
 }
 
