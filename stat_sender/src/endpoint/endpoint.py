@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-class EndPoint(object):
+class Endpoint(object):
 
     # spec: str -> bool
     def send(self, data):

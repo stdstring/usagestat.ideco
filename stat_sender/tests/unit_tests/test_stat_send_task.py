@@ -6,7 +6,7 @@ import unittest
 from unittest.case import TestCase
 from src.data_processor.data2xml_processor import Data2XmlProcessor
 from src.data_processor.raw2data_processor import Raw2DataProcessor
-from src.endpoint.endpoint import EndPoint
+from src.endpoint.endpoint import Endpoint
 from src.stat_send_task import StatSendTask
 from src.storage.storage import Storage
 
@@ -25,7 +25,7 @@ class TestStatSendTask(TestCase):
     def setUp(self):
         self._mox = Mox()
         self._storage = self._mox.CreateMock(Storage)
-        self._endpoint = self._mox.CreateMock(EndPoint)
+        self._endpoint = self._mox.CreateMock(Endpoint)
         self._logger = self._mox.CreateMock(Logger)
         self._child_logger = self._mox.CreateMock(Logger)
 
