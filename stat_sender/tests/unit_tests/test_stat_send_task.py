@@ -12,6 +12,16 @@ from src.storage.storage import Storage
 
 class TestStatSendTask(TestCase):
 
+    def __init__(self, methodName='runTest'):
+        super(TestStatSendTask, self).__init__(methodName)
+        self._now = datetime.now().replace(microsecond=0)
+        self._str_now = '{0:%Y-%m-%d %H:%M:%S}'.format(self._now)
+        self._mox = None
+        self._storage = None
+        self._endpoint = None
+        self._logger = None
+        self._child_logger = None
+
     def setUp(self):
         self._mox = Mox()
         self._storage = self._mox.CreateMock(Storage)
@@ -22,7 +32,7 @@ class TestStatSendTask(TestCase):
     def test_normal_life_cycle(self):
         self._logger.info('execute() enter')
         self._storage.get_data().AndReturn([(13, 's1', 'c1', self._datetime_2_str(self._now), 'data1')])
-        dest_data = '<stat_data><s1><c1><item><timemarker>' + str(self._now) + '</timemarker><data>data1</data></item></c1></s1></stat_data>'
+        dest_data = '<objects><object><source>s1</source><category>c1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></object></objects>'
         self._logger.getChild('unreliable_task_executer').AndReturn(self._child_logger)
         self._child_logger.info('execute() enter')
         self._child_logger.info('execute(): iteration number 1')
@@ -47,7 +57,7 @@ class TestStatSendTask(TestCase):
     def test_unsuccessful_send(self):
         self._logger.info('execute() enter')
         self._storage.get_data().AndReturn([(13, 's1', 'c1', self._datetime_2_str(self._now), 'data1')])
-        dest_data = '<stat_data><s1><c1><item><timemarker>' + str(self._now) + '</timemarker><data>data1</data></item></c1></s1></stat_data>'
+        dest_data = '<objects><object><source>s1</source><category>c1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></object></objects>'
         self._logger.getChild('unreliable_task_executer').AndReturn(self._child_logger)
         self._child_logger.info('execute() enter')
         self._child_logger.info('execute(): iteration number 1')
@@ -61,7 +71,7 @@ class TestStatSendTask(TestCase):
     def test_exception_when_clear(self):
         self._logger.info('execute() enter')
         self._storage.get_data().AndReturn([(13, 's1', 'c1', self._datetime_2_str(self._now), 'data1')])
-        dest_data = '<stat_data><s1><c1><item><timemarker>' + str(self._now) + '</timemarker><data>data1</data></item></c1></s1></stat_data>'
+        dest_data = '<objects><object><source>s1</source><category>c1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></object></objects>'
         self._logger.getChild('unreliable_task_executer').AndReturn(self._child_logger)
         self._child_logger.info('execute() enter')
         self._child_logger.info('execute(): iteration number 1')
@@ -81,13 +91,7 @@ class TestStatSendTask(TestCase):
     def _datetime_2_str(self, source):
         return source.strftime('%Y-%m-%d %H:%M:%S')
 
-    _mox = None
-    _storage = None
-    _endpoint = None
     _send_attempt_count = 2
-    _logger = None
-    _child_logger = None
-    _now = datetime.now().replace(microsecond=0)
 
 if __name__ == '__main__':
     unittest.main()
