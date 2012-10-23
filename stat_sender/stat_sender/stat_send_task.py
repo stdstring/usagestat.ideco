@@ -2,11 +2,11 @@ from __future__ import unicode_literals
 import logging
 from common.stat_data import StatData
 from common.unreliable_task_executer import UnreliableTaskExecuter
-from src.common.logger_helper import LoggerHelper
+from stat_sender.common.logger_helper import LoggerHelper
 
 class StatSendTask(object):
 
-    def __init__(self, storage, data_processors, endpoint, send_attempt_count, logger = logging.getLogger('stat_sender.stat_send_task')):
+    def __init__(self, storage, data_processors, endpoint, send_attempt_count, logger):
         self._storage = storage
         self._data_processors = data_processors
         self._endpoint = endpoint

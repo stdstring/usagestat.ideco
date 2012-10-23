@@ -3,7 +3,7 @@ from logging import Logger
 from mox import Mox
 import unittest
 from unittest.case import TestCase
-from src.common.unreliable_task_executer import UnreliableTaskExecuter
+from stat_sender.common.unreliable_task_executer import UnreliableTaskExecuter
 
 class TestUnreliableTaskExecuter(TestCase):
 

@@ -2,8 +2,8 @@ from __future__ import unicode_literals
 from datetime import datetime, timedelta
 import unittest
 from unittest.case import TestCase
-from src.common.stat_data import StatDataItem, StatData
-from src.data_processor.raw2data_processor import Raw2DataProcessor
+from stat_sender.common.stat_data import StatDataItem, StatData
+from stat_sender.data_processor.raw2data_processor import Raw2DataProcessor
 
 class TestRaw2DataProcessor(TestCase):
 

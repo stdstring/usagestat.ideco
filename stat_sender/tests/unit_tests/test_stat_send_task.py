@@ -4,11 +4,11 @@ from logging import Logger
 from mox import Mox
 import unittest
 from unittest.case import TestCase
-from src.data_processor.data2xml_processor import Data2XmlProcessor
-from src.data_processor.raw2data_processor import Raw2DataProcessor
-from src.endpoint.endpoint import Endpoint
-from src.stat_send_task import StatSendTask
-from src.storage.storage import Storage
+from stat_sender.data_processor.data2xml_processor import Data2XmlProcessor
+from stat_sender.data_processor.raw2data_processor import Raw2DataProcessor
+from stat_sender.endpoint.endpoint import Endpoint
+from stat_sender.stat_send_task import StatSendTask
+from stat_sender.storage.storage import Storage
 
 class TestStatSendTask(TestCase):
 

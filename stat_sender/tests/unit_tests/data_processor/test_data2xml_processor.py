@@ -2,8 +2,8 @@ from __future__ import unicode_literals
 from datetime import datetime
 import unittest
 from unittest.case import TestCase
-from src.common.stat_data import StatDataItem, StatData
-from src.data_processor.data2xml_processor import Data2XmlProcessor
+from stat_sender.common.stat_data import StatDataItem, StatData
+from stat_sender.data_processor.data2xml_processor import Data2XmlProcessor
 
 class TestData2XmlProcessor(TestCase):
 

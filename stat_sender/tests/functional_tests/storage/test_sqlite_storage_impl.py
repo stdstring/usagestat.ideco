@@ -3,7 +3,7 @@ from datetime import datetime
 from logging import Logger
 from mox import Mox
 from unittest.case import TestCase
-from src.storage.sqlite_storage_impl import SqliteStorageImpl
+from stat_sender.storage.sqlite_storage_impl import SqliteStorageImpl
 # TODO (andrey.ushakov) : think because this is very dirty hack
 import os
 import sys

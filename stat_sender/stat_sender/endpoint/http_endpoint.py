@@ -1,11 +1,10 @@
 import httplib
-import logging
-from src.common.logger_helper import LoggerHelper
-from src.endpoint.endpoint import Endpoint
+from stat_sender.common.logger_helper import LoggerHelper
+from stat_sender.endpoint.endpoint import Endpoint
 
 class HttpEndpoint(Endpoint):
 
-    def __init__(self, remote_host, logger=logging.getLogger('stat_sender.http_endpoint'), **kwargs):
+    def __init__(self, remote_host, logger, **kwargs):
         self._logger = logger
         self._connection_factory = lambda: httplib.HTTPConnection(host=remote_host)
 

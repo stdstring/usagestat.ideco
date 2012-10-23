@@ -1,12 +1,12 @@
 from __future__ import unicode_literals
 from datetime import datetime
 import sys
-from src.common.stat_data import StatDataItem, StatData
+from stat_sender.common.stat_data import StatDataItem, StatData
 from data_processor import DataProcessor
 
 class Raw2DataProcessor(DataProcessor):
 
-    # spec : (int, str, str, str, str) -> StatData
+    # spec : [(int, str, str, str, str)] -> StatData
     def process(self, raw_data):
         stat_data_items = []
         min_id = sys.maxint
@@ -24,7 +24,5 @@ class Raw2DataProcessor(DataProcessor):
     # spec: str -> datetime
     def _str_2_datetime(self, source):
         return datetime.strptime(source, '%Y-%m-%d %H:%M:%S')
-        #time_str = time.strptime(source, '%Y-%m-%d %H:%M:%S')
-        #return datetime(year=time_str.tm_yday, month=time_str.tm_mon, day=time_str.tm_mday, hour=time_str.tm_hour, minute=time_str.tm_min, second=time_str.tm_sec)
 
 __author__ = 'andrey.ushakov'

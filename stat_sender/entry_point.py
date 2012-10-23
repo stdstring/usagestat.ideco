@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 import sys
-from src import stat_sender_entry_point
+from stat_sender import stat_sender_entry_point
 
 def main():
     result = stat_sender_entry_point.execute()

@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 import logging, logging.config
 from data_processor.data2xml_processor import Data2XmlProcessor
 from data_processor.raw2data_processor import Raw2DataProcessor
-from src import settings
+from stat_sender import settings
 from stat_send_task import StatSendTask
 from storage.sqlite_storage_impl import SqliteStorageImpl
 
@@ -19,7 +19,7 @@ def execute():
     send_attempt_count = settings.SEND_ATTEMPT_COUNT
     storage = SqliteStorageImpl(db_file, root_logger.getChild('sqlite_storage_impl'))
     data_processors = [Raw2DataProcessor(), Data2XmlProcessor()]
-    task = StatSendTask(storage, data_processors, endpoint, send_attempt_count)
+    task = StatSendTask(storage, data_processors, endpoint, send_attempt_count, root_logger.getChild('stat_send_task'))
     result = task.execute()
     return result
 

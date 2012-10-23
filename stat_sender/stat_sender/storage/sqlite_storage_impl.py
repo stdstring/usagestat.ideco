@@ -1,11 +1,10 @@
 from __future__ import unicode_literals
 from _sqlite3 import connect
-import logging
 from storage import Storage
 
 class SqliteStorageImpl(Storage):
 
-    def __init__(self, db_file, logger = logging.getLogger('stat_sender.sqlite_storage_impl')):
+    def __init__(self, db_file, logger):
         self._db_file = db_file
         self._logger = logger
 
