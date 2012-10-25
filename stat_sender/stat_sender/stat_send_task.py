@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-import logging
 from common.stat_data import StatData
 from common.unreliable_task_executer import UnreliableTaskExecuter
 from stat_sender.common.logger_helper import LoggerHelper

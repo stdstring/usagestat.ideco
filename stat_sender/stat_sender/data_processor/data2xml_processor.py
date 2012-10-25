@@ -19,6 +19,6 @@ class Data2XmlProcessor(DataProcessor):
                      '<timemarker>{timemarker:%Y-%m-%d %H:%M:%S}</timemarker>' \
                      '<data>{data:s}</data>' \
                      '</object>'
-        return format_str.format(source = item.source, category = item.category, timemarker = item.timemarker, data = item.data)
+        return format_str.format(source = item.source, category = item.category, timemarker = item.timemarker, data = str(item.data))
 
 __author__ = 'andrey.ushakov'

@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
-from stat_file_source.common.state import State
+#from stat_file_source.common.state import State
+import common.state
 
 class FileSourceCollector(object):
 
@@ -10,7 +11,7 @@ class FileSourceCollector(object):
 
     # spec: [str] -> {str:[object]}
     def collect(self, source):
-        state = State(None, None, {})
+        state = common.state.State(None, None, {})
         for source_item in source:
             state = self._collect_item(source_item, state)
         return state.items

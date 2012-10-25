@@ -28,7 +28,7 @@ class UnreliableTaskExecuter(object):
     def _safe_execute(self):
         try:
             return self._task()
-        except Exception:
+        except Exception as e:
             return False
 
     _max_attempt_count = 1

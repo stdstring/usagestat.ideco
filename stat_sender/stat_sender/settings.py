@@ -3,13 +3,13 @@ from stat_sender.endpoint.http_endpoint import HttpEndpoint
 from stat_sender.endpoint.https_endpoint import HttpsEndpoint
 
 # storage
-DB_FILE = ''
+DB_FILE = '/tmp/usage_stat.db'
 
 # endpoint
 USED_ENDPOINT = 'http'
 
 ENDPOINTS_DEF = {'http':  {'endpoint_impl': HttpEndpoint,
-                           'remote_host': '',
+                           'remote_host': 'http://localhost:8000/statserver/api/v1/collect',
                            'params': {}},
                  'https': {'endpoint_impl': HttpsEndpoint,
                            'remote_host': '',
