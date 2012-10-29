@@ -1,6 +1,6 @@
 import httplib
 import urlparse
-from stat_sender.common.logger_helper import LoggerHelper
+from stat_sender.common import logger_helper
 from stat_sender.endpoint.endpoint import Endpoint
 
 class HttpEndpoint(Endpoint):
@@ -24,7 +24,7 @@ class HttpEndpoint(Endpoint):
             conn.request('PUT', self._path, data, headers)
             response = conn.getresponse()
             result = response.status == httplib.OK or response.status == httplib.NO_CONTENT
-            str_result = LoggerHelper.bool_result_to_str(result)
+            str_result = logger_helper.bool_result_to_str(result)
             self._logger.info('send(data) exit with result {0:s}'.format(str_result))
             return result
         except BaseException:

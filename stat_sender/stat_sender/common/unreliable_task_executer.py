@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from stat_sender.common.logger_helper import LoggerHelper
+from stat_sender.common import logger_helper
 
 class UnreliableTaskExecuter(object):
 
@@ -20,7 +20,7 @@ class UnreliableTaskExecuter(object):
             if result:
                 break
             attempt_count += 1
-        str_result = LoggerHelper.bool_result_to_str(result)
+        str_result = logger_helper.bool_result_to_str(result)
         self._logger.info('execute() exit with result {0:s}'.format(str_result))
         return result
 

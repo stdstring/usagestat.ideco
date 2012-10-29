@@ -21,6 +21,7 @@ class TestStatSendTask(TestCase):
         self._endpoint = None
         self._logger = None
         self._child_logger = None
+        self._send_attempt_count = 2
 
     def setUp(self):
         self._mox = Mox()
@@ -90,8 +91,6 @@ class TestStatSendTask(TestCase):
 
     def _datetime_2_str(self, source):
         return source.strftime('%Y-%m-%d %H:%M:%S')
-
-    _send_attempt_count = 2
 
 if __name__ == '__main__':
     unittest.main()

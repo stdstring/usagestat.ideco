@@ -8,9 +8,9 @@ from stat_sender.storage.sqlite_storage import SqliteStorage
 import os
 import sys
 sys.path.append(os.path.abspath('../stat_db_funtest_utils'))
-from db_manager import DBManager
+import db_manager
 
-class TestSqliteStorageImpl(TestCase):
+class TestSqliteStorage(TestCase):
 
     def setUp(self):
         self._mox = Mox()
@@ -55,7 +55,7 @@ class TestSqliteStorageImpl(TestCase):
 
     _mox = None
     _logger = None
-    _db_manager = DBManager('../stat_sender_db')
+    _db_manager = db_manager.DBManager('../stat_sender_db')
     _now = datetime.now()
 
 __author__ = 'andrey.ushakov'

@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from common.stat_data import StatData
 from common.unreliable_task_executer import UnreliableTaskExecuter
-from stat_sender.common.logger_helper import LoggerHelper
+from stat_sender.common import logger_helper
 
 class StatSendTask(object):
 
@@ -17,7 +17,7 @@ class StatSendTask(object):
         self._logger.info('execute() enter')
         try:
             result = self._unsafe_execute()
-            str_result = LoggerHelper.bool_result_to_str(result)
+            str_result = logger_helper.bool_result_to_str(result)
             self._logger.info('execute() exit with result {0:s}'.format(str_result))
             return result
         except Exception:
