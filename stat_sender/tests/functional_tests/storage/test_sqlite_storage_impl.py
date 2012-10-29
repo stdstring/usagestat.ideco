@@ -3,7 +3,7 @@ from datetime import datetime
 from logging import Logger
 from mox import Mox
 from unittest.case import TestCase
-from stat_sender.storage.sqlite_storage_impl import SqliteStorageImpl
+from stat_sender.storage.sqlite_storage import SqliteStorage
 # TODO (andrey.ushakov) : think because this is very dirty hack
 import os
 import sys
@@ -31,7 +31,7 @@ class TestSqliteStorageImpl(TestCase):
         self._mox.ReplayAll()
         source_data = [('SRC1', 'CAT1', str(self._now), 'some data'), ('SRC2', 'CAT2', str(self._now), 'some another data')]
         self._db_manager.execute_nonquery('insert into STAT_DATA(SOURCE, CATEGORY, TIMEMARKER, DATA) values(?, ?, ?, ?)', source_data)
-        storage = SqliteStorageImpl(self._db_manager.get_db_file(), self._logger)
+        storage = SqliteStorage(self._db_manager.get_db_file(), self._logger)
         actual_data = storage.get_data()
         expected_data = [(1, 'SRC1', 'CAT1', str(self._now), 'some data'), (2, 'SRC2', 'CAT2', str(self._now), 'some another data')]
         self.assertEquals(expected_data, actual_data)
@@ -46,7 +46,7 @@ class TestSqliteStorageImpl(TestCase):
             ('SRC2', 'CAT3', str(self._now), 'some another data'),
             ('SRC3', 'CAT4', str(self._now), 'yet some other data')]
         self._db_manager.execute_nonquery('insert into STAT_DATA(SOURCE, CATEGORY, TIMEMARKER, DATA) values(?, ?, ?, ?)', source_data)
-        storage = SqliteStorageImpl(self._db_manager.get_db_file(), self._logger)
+        storage = SqliteStorage(self._db_manager.get_db_file(), self._logger)
         storage.clear((2, 3))
         actual_data = self._db_manager.execute_query('SELECT ID, SOURCE, CATEGORY, TIMEMARKER, DATA FROM STAT_DATA ORDER BY ID')
         expected_data = [(1, 'SRC1', 'CAT1', str(self._now), 'some data'), (4, 'SRC3', 'CAT4', str(self._now), 'yet some other data')]

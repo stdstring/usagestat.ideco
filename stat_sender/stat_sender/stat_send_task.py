@@ -18,7 +18,7 @@ class StatSendTask(object):
         try:
             result = self._unsafe_execute()
             str_result = LoggerHelper.bool_result_to_str(result)
-            self._logger.info('execute() exit with result %(result)s' % {'result': str_result})
+            self._logger.info('execute() exit with result {0:s}'.format(str_result))
             return result
         except Exception:
             self._logger.exception('exception in execute()')
@@ -47,11 +47,5 @@ class StatSendTask(object):
         # clear data
         self._storage.clear(id_range)
         return True
-
-    _storage = None
-    _endpoint =None
-    _data_processors = []
-    _send_attempt_count = 1
-    _logger = None
 
 __author__ = 'andrey.ushakov'

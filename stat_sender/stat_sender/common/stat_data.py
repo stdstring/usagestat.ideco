@@ -54,12 +54,6 @@ class StatDataItem(object):
         result = (result * 13) ^ hash(self._data)
         return result
 
-    _id = None
-    _source = None
-    _category = None
-    _timemarker = None
-    _data = None
-
 class StatData(object):
 
     # spec: (int, int), [StatDataItem] -> StatData
@@ -76,8 +70,5 @@ class StatData(object):
     @property
     def stat_data_items(self):
         return self._stat_data_items
-
-    _id_range = None
-    _stat_data_items = []
 
 __author__ = 'andrey.ushakov'

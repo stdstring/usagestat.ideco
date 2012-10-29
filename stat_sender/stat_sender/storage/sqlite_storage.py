@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from _sqlite3 import connect
 from storage import Storage
 
-class SqliteStorageImpl(Storage):
+class SqliteStorage(Storage):
 
     def __init__(self, db_file, logger):
         self._db_file = db_file
@@ -19,7 +19,7 @@ class SqliteStorageImpl(Storage):
             result = cursor.fetchall()
             self._logger.info('get_data() exit')
             return result
-        except Exception:
+        except BaseException:
             self._logger.exception('exception in get_data()')
             raise
         finally:
@@ -28,20 +28,17 @@ class SqliteStorageImpl(Storage):
     # spec: (int, int) -> None
     def clear(self, id_clear_range):
         connection = connect(self._db_file)
-        self._logger.info('clear(%(id_range)s) enter' % {'id_range':id_clear_range})
+        self._logger.info('clear({0!s}) enter'.format(id_clear_range))
         try:
             cursor = connection.cursor()
             query_str = 'delete from STAT_DATA where id between ? and ?'
             cursor.execute(query_str, id_clear_range)
             connection.commit()
-            self._logger.info('clear(%(id_range)s) exit' % {'id_range':id_clear_range})
-        except Exception:
-            self._logger.exception('exception in clear(%(id_range)s)' % {'id_range':id_clear_range})
+            self._logger.info('clear({0!s}) exit'.format(id_clear_range))
+        except BaseException:
+            self._logger.exception('exception in clear({0!s})'.format(id_clear_range))
             raise
         finally:
             connection.close()
-
-    _db_file = None
-    _logger = None
 
 __author__ = 'andrey.ushakov'

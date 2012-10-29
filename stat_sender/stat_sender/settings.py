@@ -9,10 +9,10 @@ DB_FILE = '/tmp/usage_stat.db'
 USED_ENDPOINT = 'http'
 
 ENDPOINTS_DEF = {'http':  {'endpoint_impl': HttpEndpoint,
-                           'remote_host': 'http://localhost:8000/statserver/api/v1/collect',
+                           'remote_host': 'http://localhost:8000/statserver/api/v1/collect/',
                            'params': {}},
                  'https': {'endpoint_impl': HttpsEndpoint,
-                           'remote_host': '',
+                           'remote_host': 'http://localhost:8000/statserver/api/v1/collect/',
                            'params': {'key_file': '', 'cert_file': ''}}}
 
 # task execution

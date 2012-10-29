@@ -61,7 +61,7 @@ class TestStatSendTask(TestCase):
         self._logger.getChild('unreliable_task_executer').AndReturn(self._child_logger)
         self._child_logger.info('execute() enter')
         self._child_logger.info('execute(): iteration number 1')
-        self._endpoint.send(dest_data).AndRaise(Exception())
+        self._endpoint.send(dest_data).AndReturn(False)
         self._child_logger.info('execute(): iteration number 2')
         self._endpoint.send(dest_data).AndReturn(False)
         self._child_logger.info('execute() exit with result fails')
