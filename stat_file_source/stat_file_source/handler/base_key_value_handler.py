@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-from stat_file_source.common.dict_helper import DictHelper
 from stat_file_source.common.state import State
 from stat_file_source.handler.handler import Handler
 
@@ -21,7 +20,7 @@ class BaseKeyValueHandler(Handler):
             if self._known_key_predicate(key, state):
                 final_key = self._key_transformer(key, state)
                 new_items = dict(state.items)
-                key_values = DictHelper.get_or_create(new_items, final_key, self._item_init_value)
+                key_values = new_items.setdefault(final_key, self._item_init_value)
                 new_items[final_key] = self._define_value(key_values, value)
                 return (True, State(state.state_id, state.state_data, new_items))
             else:
