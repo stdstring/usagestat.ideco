@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 import unittest
-from tests.functional_tests.storage.test_sqlite_storage import TestSqliteStorage
+from stat_sender_tests.functional_tests.storage.test_sqlite_storage import TestSqliteStorage
 
 def load_tests(loader, tests, pattern):
     suite = unittest.TestSuite()
