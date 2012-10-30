@@ -11,6 +11,7 @@ class TestData2XmlProcessor(TestCase):
         super(TestData2XmlProcessor, self).__init__(methodName)
         self._now = datetime.now().replace(microsecond=0)
         self._str_now = '{0:%Y-%m-%d %H:%M:%S}'.format(self._now)
+        self._processor = Data2XmlProcessor()
 
     def test_process_single_data_item(self):
         source_items = [StatDataItem(13, 'some_source', 'category1', self._now, 'data1')]
@@ -62,8 +63,6 @@ class TestData2XmlProcessor(TestCase):
                    '<object><source>some_source2</source><category>category2</category><timemarker>' + self._str_now + '</timemarker><data>data6</data></object>' +\
                    '</objects>'
         self.assertEquals(expected, actual)
-
-    _processor = Data2XmlProcessor()
 
 if __name__ == '__main__':
     unittest.main()
