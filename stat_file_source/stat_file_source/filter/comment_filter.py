@@ -20,6 +20,4 @@ class CommentFilter(Filter):
         # TODO (andrey.ushakov) : some comment leaders may be escaped
         return source.find(self._comment_leader)
 
-    _comment_leader = None
-
 __author__ = 'andrey.ushakov'

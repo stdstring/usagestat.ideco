@@ -5,6 +5,10 @@ from stat_file_source.handler.aggregate_key_value_handler import AggregateKeyVal
 
 class TestAggregateKeyValueHandler(TestCase):
 
+    def __init__(self, methodName='runTest'):
+        super(TestAggregateKeyValueHandler, self).__init__(methodName)
+        self._handler = AggregateKeyValueHandler.create_with_known_key_list('=', ['key13', 'key666'], lambda key, state: key, lambda old_value, item: old_value + 1, 0)
+
     def test_handle_known_key(self):
         state = State(None, None, {})
         self.assertEqual((True, State(None, None, {'key13': 1})), self._handler.process('key13=IDDQD', state))
@@ -50,8 +54,5 @@ class TestAggregateKeyValueHandler(TestCase):
         self.assertEqual((True, State(None, None, {'ip': 3})), result)
         result = handler.process('ip9=192.168.5.5', result[1])
         self.assertEqual((False, State(None, None, {'ip': 3})), result)
-
-
-    _handler = AggregateKeyValueHandler.create_with_known_key_list('=', ['key13', 'key666'], lambda key, state: key, lambda old_value, item: old_value + 1, 0)
 
 __author__ = 'andrey.ushakov'

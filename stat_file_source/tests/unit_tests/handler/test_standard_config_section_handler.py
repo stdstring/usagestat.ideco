@@ -5,6 +5,10 @@ from stat_file_source.handler.standard_config_section_handler import StandardCon
 
 class TestStandardConfigSectionHandler(TestCase):
 
+    def __init__(self, methodName='runTest'):
+        super(TestStandardConfigSectionHandler, self).__init__(methodName)
+        self._handler = StandardConfigSectionHandler()
+
     def test_handle_section(self):
         state = State(None, None, {})
         self.assertEqual((True, State('some section', 'some section', {})), self._handler.process('[some section]', state))
@@ -27,7 +31,5 @@ class TestStandardConfigSectionHandler(TestCase):
     def test_handle_bad_data(self):
         state = State(None, None, {})
         self.assertEqual((False, state), self._handler.process('some arbitrary data', state))
-
-    _handler = StandardConfigSectionHandler()
 
 __author__ = 'andrey.ushakov'

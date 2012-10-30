@@ -5,6 +5,10 @@ from stat_file_source.handler.simple_key_value_handler import SimpleKeyValueHand
 
 class TestSimpleKeyValueHandler(TestCase):
 
+    def __init__(self, methodName='runTest'):
+        super(TestSimpleKeyValueHandler, self).__init__(methodName)
+        self._handler = SimpleKeyValueHandler.create_with_known_key_list('=', ['key13', 'key666'], lambda key, state: key)
+
     def test_handle_known_key(self):
         state = State(None, None, {})
         self.assertEqual((True, State(None, None, {'key13': ['IDDQD']})), self._handler.process('key13=IDDQD', state))
@@ -39,7 +43,5 @@ class TestSimpleKeyValueHandler(TestCase):
         self.assertFalse(new_state is None)
         self.assertFalse(new_state is old_state)
         self.assertFalse(new_state.items is old_state.items)
-
-    _handler = SimpleKeyValueHandler.create_with_known_key_list('=', ['key13', 'key666'], lambda key, state: key)
 
 __author__ = 'andrey.ushakov'

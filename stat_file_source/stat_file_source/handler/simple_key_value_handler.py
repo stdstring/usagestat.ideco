@@ -5,7 +5,7 @@ class SimpleKeyValueHandler(BaseKeyValueHandler):
 
     # spec: str, (str, State -> bool), (str, State -> str) -> SimpleKeyValueHandler
     def __init__(self, key_value_delimiter, known_key_predicate, key_transformer):
-        BaseKeyValueHandler.__init__(self, key_value_delimiter, known_key_predicate, key_transformer, [])
+        super(SimpleKeyValueHandler, self).__init__(key_value_delimiter, known_key_predicate, key_transformer, [])
 
     # spec: str, [str], (str, State -> str) -> SimpleKeyValueHandler
     @staticmethod

@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 import logging
-#from stat_file_source.common.logger_helper import LoggerHelper
-import common.logger_helper
+from stat_file_source.common import logger_helper
 
 class FileSourceCollectTaskImpl(object):
 
@@ -20,11 +19,10 @@ class FileSourceCollectTaskImpl(object):
             source_data = self._read_file_content()
             dest_data = self._collector.collect(source_data)
             write_result = self._write_data(dest_data)
-            str_write_result = common.logger_helper.LoggerHelper.bool_result_to_str(write_result)
-            self._logger.info('execute() exit with result %(result)s' % {'result': str_write_result})
+            str_write_result = logger_helper.bool_result_to_str(write_result)
+            self._logger.info('execute() exit with result {0:s}'.format(str_write_result))
             return write_result
-        except Exception as exc:
-            print exc
+        except Exception:
             self._logger.exception('exception in execute()')
             return False
 
@@ -44,8 +42,8 @@ class FileSourceCollectTaskImpl(object):
         self._logger.info('_write_data(data_dict) enter')
         data_list = self._prepare_data(data_dict)
         result = self._storage.save_data(self._source_id, data_list)
-        str_result = common.logger_helper.LoggerHelper.bool_result_to_str(result)
-        self._logger.info('_write_data(data_dict) exit with result %(result)s' % {'result': str_result})
+        str_result = logger_helper.bool_result_to_str(result)
+        self._logger.info('_write_data(data_dict) exit with result {0:s}'.format(str_result))
         return result
 
     # spec: {str: object | [object]} -> [(str, object)]
@@ -59,11 +57,5 @@ class FileSourceCollectTaskImpl(object):
             else:
                 dest_data.append((category, value))
         return dest_data
-
-    _source_id = None
-    _collector = None
-    _source_provider = None
-    _storage = None
-    _logger = None
 
 __author__ = 'andrey.ushakov'

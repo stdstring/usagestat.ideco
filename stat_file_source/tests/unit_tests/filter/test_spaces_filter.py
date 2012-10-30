@@ -4,6 +4,10 @@ from stat_file_source.filter.spaces_filter import SpacesFilter
 
 class TestSpacesFilter(TestCase):
 
+    def __init__(self, methodName='runTest'):
+        super(TestSpacesFilter, self).__init__(methodName)
+        self._filter = SpacesFilter()
+
     def test_lead_spaces(self):
         self.assertEqual('data', self._filter.filter('  data'))
         self.assertEqual('data', self._filter.filter('\t\tdata'))
@@ -23,7 +27,5 @@ class TestSpacesFilter(TestCase):
         self.assertEqual('some  data', self._filter.filter('some  data'))
         self.assertEqual('some\t\tdata', self._filter.filter('some\t\tdata'))
         self.assertEqual('some \tdata', self._filter.filter('some \tdata'))
-
-    _filter = SpacesFilter()
 
 __author__ = 'andrey.ushakov'

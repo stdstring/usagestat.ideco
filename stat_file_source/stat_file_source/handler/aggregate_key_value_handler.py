@@ -5,7 +5,7 @@ class AggregateKeyValueHandler(BaseKeyValueHandler):
 
     # spec: str, (str, State -> bool), (str, State -> str), (object, str -> object) -> AggregateKeyValueHandler
     def __init__(self, key_value_delimiter, known_key_predicate, key_transformer, aggregate_fun, item_init_value):
-        BaseKeyValueHandler.__init__(self, key_value_delimiter, known_key_predicate, key_transformer, item_init_value)
+        super(AggregateKeyValueHandler, self).__init__(key_value_delimiter, known_key_predicate, key_transformer, item_init_value)
         self._aggregate_fun = aggregate_fun
 
     # spec: str, [str], (str, State -> str), (object, str -> object) -> AggregateKeyValueHandler
@@ -21,7 +21,5 @@ class AggregateKeyValueHandler(BaseKeyValueHandler):
     # spec: object, str -> object
     def _define_value(self, old_value, item_value):
         return self._aggregate_fun(old_value, item_value)
-
-    _aggregate_fun = None
 
 __author__ = 'andrey.ushakov'

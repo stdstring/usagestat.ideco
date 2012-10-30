@@ -7,11 +7,14 @@ class StandardConfigSectionHandler(Handler):
 
     # spec: str, State -> (bool, State)
     def process(self, source, state):
-        result = re.match('\[(?P<section_name>.+)\]', source)
+        #result = re.match('\[(?P<section_name>.+)\]', source)
+        result = self._rexpr.match(source)
         if result is None:
             return (False, state)
         else:
             section_name = result.group('section_name')
             return (True, State(section_name, section_name, state.items))
+
+    _rexpr = re.compile('\[(?P<section_name>.+)\]')
 
 __author__ = 'andrey.ushakov'

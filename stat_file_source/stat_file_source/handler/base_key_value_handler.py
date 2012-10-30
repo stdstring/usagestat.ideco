@@ -36,9 +36,4 @@ class BaseKeyValueHandler(Handler):
     def _define_value(self, old_value, item_value):
         raise NotImplementedError()
 
-    _key_value_delimiter = None
-    _known_key_predicate = None
-    _key_transformer = None
-    _item_init_value = None
-
 __author__ = 'andrey.ushakov'

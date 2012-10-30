@@ -11,7 +11,7 @@ from stat_file_source.utils.standard_key_transformer import StandardKeyTransform
 class TestFileSourceCollector(TestCase):
 
     def __init__(self, methodName='runTest'):
-        TestCase.__init__(self, methodName)
+        super(TestFileSourceCollector, self).__init__(methodName)
         key_transformer = StandardKeyTransformer()
         filters = [CommentFilter('#'), SpacesFilter()]
         handlers = [StandardConfigSectionHandler(),
@@ -76,7 +76,5 @@ class TestFileSourceCollector(TestCase):
         expected = {'gate_ip': 2, 'dns_ip':3, 'wins_ip':1}
         actual = self._collector.collect(source)
         self.assertDictEqual(expected, actual)
-
-    _collector = None
 
 __author__ = 'andrey.ushakov'

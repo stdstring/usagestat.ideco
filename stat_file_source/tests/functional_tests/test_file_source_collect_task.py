@@ -15,7 +15,7 @@ from stat_file_source.utils.standard_key_transformer import StandardKeyTransform
 import os
 import sys
 sys.path.append(os.path.abspath('../stat_db_funtest_utils'))
-from db_manager import DBManager
+import db_manager
 
 # spec: str -> str
 def transform_user_fun(source_value):
@@ -25,10 +25,18 @@ def transform_user_fun(source_value):
     else:
         user = source_value[0:delimiter_index]
         pwd = '*' * (len(source_value) - delimiter_index - 1)
-        return '%(user)s,%(pwd)s' % {'user': user, 'pwd': pwd}
+        return '{user:s},{pwd:s}'.format(user=user, pwd=pwd)
 
 
 class TestFileSourceCollectTask(TestCase):
+
+    def __init__(self, methodName='runTest'):
+        super(TestFileSourceCollectTask, self).__init__(methodName)
+        self._mox = None
+        self._main_logger = None
+        self._storage_logger = None
+        self._collect_task = None
+        self._db_manager = db_manager.DBManager('../stat_sender_db')
 
     def setUp(self):
         self._mox = Mox()
@@ -38,7 +46,7 @@ class TestFileSourceCollectTask(TestCase):
         self._db_manager.__enter__()
         filters = [CommentFilter('#'), SpacesFilter()]
         standard_key_transformer = StandardKeyTransformer()
-        ip_key_transformer = lambda key, state: '%(category)s.ip' % {'category': state.state_id}
+        ip_key_transformer = lambda key, state: '{category:s}.ip'.format(category=state.state_id)
         handlers = [StandardConfigSectionHandler(),
                     SimpleKeyValueHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'services', standard_key_transformer),
                     TransformKeyValueHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'users', standard_key_transformer, transform_user_fun),
@@ -49,7 +57,7 @@ class TestFileSourceCollectTask(TestCase):
         self._db_manager.__exit__(None, None, None)
 
     def test_execute(self):
-        self._main_logger.getChild('sqlite_storage_impl').AndReturn(self._storage_logger)
+        self._main_logger.getChild('sqlite_storage').AndReturn(self._storage_logger)
         self._main_logger.info('execute() enter')
         self._main_logger.info('_read_file_content() enter')
         self._main_logger.info('_read_file_content() exit')
@@ -106,11 +114,5 @@ class TestFileSourceCollectTask(TestCase):
     # spec: str -> datetime
     def _str_2_time(self, source_str):
         return datetime.strptime(source_str, '%Y-%m-%d %H:%M:%S')
-
-    _mox = None
-    _main_logger = None
-    _storage_logger = None
-    _collect_task = None
-    _db_manager = DBManager('../stat_sender_db')
 
 __author__ = 'andrey.ushakov'

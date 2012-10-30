@@ -8,15 +8,23 @@ from stat_file_source.file_source_collector import FileSourceCollector
 import os
 import sys
 sys.path.append(os.path.abspath('../stat_db_lib/stat_db_lib'))
-from storage import Storage
+import storage
 
 class TestFileSourceCollectTaskImpl(TestCase):
+
+    def __init__(self, methodName='runTest'):
+        super(TestFileSourceCollectTaskImpl, self).__init__(methodName)
+        self._mox = None
+        self._collector = None
+        self._source_provider = None
+        self._storage = None
+        self._logger = None
 
     def setUp(self):
         self._mox = Mox()
         self._collector = self._mox.CreateMock(FileSourceCollector)
         self._source_provider = self._mox.CreateMockAnything()
-        self._storage = self._mox.CreateMock(Storage)
+        self._storage = self._mox.CreateMock(storage.Storage)
         self._logger = self._mox.CreateMock(Logger)
 
     def test_successful_execute(self):
@@ -77,11 +85,5 @@ class TestFileSourceCollectTaskImpl(TestCase):
         actual_result = task_impl.execute()
         self.assertEqual(expected_result, actual_result)
         self._mox.VerifyAll()
-
-    _mox = None
-    _collector = None
-    _source_provider = None
-    _storage = None
-    _logger = None
 
 __author__ = 'andrey.ushakov'

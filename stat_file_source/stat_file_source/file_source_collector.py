@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-#from stat_file_source.common.state import State
 import common.state
 
 class FileSourceCollector(object):
@@ -36,8 +35,5 @@ class FileSourceCollector(object):
             if result[0]:
                 return result[1]
         return state
-
-    _filters = []
-    _handlers = []
 
 __author__ = 'andrey.ushakov'

@@ -5,6 +5,10 @@ from stat_file_source.handler.transform_key_value_handler import TransformKeyVal
 
 class TestTransformKeyValueHandler(TestCase):
 
+    def __init__(self, methodName='runTest'):
+        super(TestTransformKeyValueHandler, self).__init__(methodName)
+        self._handler = TransformKeyValueHandler.create_with_known_key_list('=', ['key13', 'key666'], lambda key, state: key, lambda value: '__' + str(value) + '__')
+
     def test_handle_known_key(self):
         state = State(None, None, {})
         self.assertEqual((True, State(None, None, {'key13': ['__IDDQD__']})), self._handler.process('key13=IDDQD', state))
@@ -39,7 +43,5 @@ class TestTransformKeyValueHandler(TestCase):
         self.assertFalse(new_state is None)
         self.assertFalse(new_state is old_state)
         self.assertFalse(new_state.items is old_state.items)
-
-    _handler = TransformKeyValueHandler.create_with_known_key_list('=', ['key13', 'key666'], lambda key, state: key, lambda value: '__' + str(value) + '__')
 
 __author__ = 'andrey.ushakov'
