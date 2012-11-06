@@ -47,7 +47,7 @@ class ReceiverResource(Resource):
             self._storage.save_data(self._temp_storage)
             self._logger.info('dispatch_list({0:s}, **kwargs) exit'.format(request_repr))
             return response
-        except BaseException:
+        except BaseException as e:
             self._logger.exception('exception in dispatch_list({0:s}, **kwargs)'.format(request_repr))
             raise
 
