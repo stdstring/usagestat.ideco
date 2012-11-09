@@ -4,10 +4,12 @@ from stat_server.xml_serialization.xml_deserializer import XmlDeserializer
 
 class StatServerTask(object):
 
+    # spec: Storage, Logger -> StatServerTask
     def __init__(self, storage, logger):
         self._storage = storage
         self._logger = logger
 
+    # spec: str -> None
     def process_request(self, body):
         try:
             self._logger.info('process_request({0:s}) enter'.format(body))

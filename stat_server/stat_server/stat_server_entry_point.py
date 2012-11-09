@@ -5,6 +5,7 @@ from stat_server import settings
 from stat_server.stat_server_task import StatServerTask
 from stat_server.storage.pg_storage_impl import PgStorageImpl
 
+# spec; None -> None
 def execute():
     # app
     app = Bottle()

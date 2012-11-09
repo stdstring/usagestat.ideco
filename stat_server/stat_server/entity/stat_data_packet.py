@@ -5,6 +5,7 @@ from stat_server.entity.stat_data_item import StatDataItem
 
 class StatDataPacket(object):
 
+    # spec: UUID, [StatDataItem] -> StatDataPacket
     def __init__(self, user_id=None, items=None):
         self._user_id = user_id
         self._items = items

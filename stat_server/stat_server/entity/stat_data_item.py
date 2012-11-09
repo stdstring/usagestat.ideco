@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 class StatDataItem(object):
 
+    # spec: str, str, datetime, str -> StatDataItem
     def __init__(self, source=None, category=None, timemarker=None, data=None):
         self._source = source
         self._category = category
