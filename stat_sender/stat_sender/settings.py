@@ -5,6 +5,9 @@ from stat_sender.endpoint.https_endpoint import HttpsEndpoint
 # storage
 DB_FILE = '/tmp/usage_stat.db'
 
+# user_identity source
+USER_IDENTITY_SOURCE = '/tmp/user.id'
+
 # endpoint
 USED_ENDPOINT = 'http'
 

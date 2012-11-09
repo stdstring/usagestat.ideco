@@ -13,8 +13,8 @@ class StatLifeCycleScenario(TestCase):
     def test(self):
         # prepare db for server
         # execute stat_server
-        stat_server_path = os.path.abspath('../stat_server/manage.py')
-        stat_server_proc_args = ['python', stat_server_path, 'runserver']
+        stat_server_path = os.path.abspath('../stat_server/entry_point.py')
+        stat_server_proc_args = ['python', stat_server_path]
         stat_server_proc = subprocess.Popen(stat_server_proc_args)
         stat_server_pid = stat_server_proc.pid
         os.setpgid(stat_server_pid, stat_server_pid)

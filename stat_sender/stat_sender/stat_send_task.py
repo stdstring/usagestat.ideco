@@ -5,8 +5,9 @@ from stat_sender.common import logger_helper
 
 class StatSendTask(object):
 
-    def __init__(self, storage, data_processors, endpoint, send_attempt_count, logger):
+    def __init__(self, storage, user_identity_provider, data_processors, endpoint, send_attempt_count, logger):
         self._storage = storage
+        self._user_identity_provider = user_identity_provider
         self._data_processors = data_processors
         self._endpoint = endpoint
         self._send_attempt_count = send_attempt_count
@@ -31,10 +32,12 @@ class StatSendTask(object):
         if not stat_data:
             return True
         # process data
+        user_id = self._user_identity_provider.get_user_identity()
+        additional_data = {'user_id': user_id}
         data = stat_data
         id_range = None
         for data_processor in self._data_processors:
-            data = data_processor.process(data)
+            data = data_processor.process(data, **additional_data)
             # TODO (andrey.ushakov) : think about this spike
             if isinstance(data, StatData):
                 id_range = data.id_range

@@ -21,9 +21,9 @@ class HttpEndpoint(Endpoint):
         conn = self._connection_factory()
         try:
             headers = {"Content-Type": "application/xml", "Accept": "text/plain"}
-            conn.request('PUT', self._path, data, headers)
+            conn.request('POST', self._path, data, headers)
             response = conn.getresponse()
-            result = response.status == httplib.OK or response.status == httplib.NO_CONTENT
+            result = response.status == httplib.OK
             str_result = logger_helper.bool_result_to_str(result)
             self._logger.info('send(data) exit with result {0:s}'.format(str_result))
             return result

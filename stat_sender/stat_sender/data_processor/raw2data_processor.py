@@ -6,8 +6,8 @@ from data_processor import DataProcessor
 
 class Raw2DataProcessor(DataProcessor):
 
-    # spec : [(int, str, str, str, str)] -> StatData
-    def process(self, raw_data):
+    # spec : [(int, str, str, str, str)], {...} -> StatData
+    def process(self, raw_data, **kwargs):
         stat_data_items = []
         min_id = sys.maxint
         max_id = 0
