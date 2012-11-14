@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
-from datetime import datetime
 import uuid
+from stat_server.common.datetime_converters import str_2_time
 from stat_server.entity.stat_data_item import StatDataItem
 
 class StatDataPacket(object):
@@ -30,6 +30,13 @@ class StatDataPacket(object):
     def items(self, value):
         self._items = value
 
+    def __str__(self):
+        items = ','.join(map(lambda item: str(item), self.items))
+        return 'StatDataPacket(user_id="{user_id:s}", items=[{items:s}])'.format(user_id=self.user_id, items=items)
+
+    def __repr__(self):
+        return self.__str__()
+
     # spec: {...} -> StatDataPacket
     @staticmethod
     def create(internal_repr):
@@ -38,6 +45,8 @@ class StatDataPacket(object):
         packet_body = internal_repr['data_packet']
         user_id = uuid.UUID(packet_body['user_id'])
         data_items_body = packet_body['data_item']
+        if not isinstance(data_items_body, list):
+            data_items_body = [data_items_body]
         data_item_storage = []
         for data_item_body in data_items_body:
             source = data_item_body['source']['']
@@ -46,9 +55,5 @@ class StatDataPacket(object):
             data = data_item_body['data']['']
             data_item_storage.append(StatDataItem(source, category, timemarker, data))
         return StatDataPacket(user_id, data_item_storage)
-
-# spec: str -> datetime
-def str_2_time(source_str):
-    return datetime.strptime(source_str, '%Y-%m-%d %H:%M:%S')
 
 __author__ = 'andrey.ushakov'

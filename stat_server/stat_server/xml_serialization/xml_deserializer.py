@@ -3,9 +3,6 @@ import collections
 import xml.parsers.expat
 
 class XmlDeserializer(object):
-    pass
-
-class XmlDeserializer(object):
 
     # spec: class, str -> instance_of_class
     def deserialize(self, dest_type, string_source):

@@ -49,4 +49,11 @@ class StatDataItem(object):
     def data(self, value):
         self._data = value
 
+    def __str__(self):
+        format_str = 'StatDataItem(source="{source:s}", category="{category:s}", timemarker="{timemarker:%Y-%m-%d %H:%M:%S}", data="{data:s}")'
+        return format_str.format(source=self.source, category=self.category, timemarker=self.timemarker, data=self.data)
+
+    def __repr__(self):
+        return self.__str__()
+
 __author__ = 'andrey.ushakov'
