@@ -30,12 +30,27 @@ class StatDataPacket(object):
     def items(self, value):
         self._items = value
 
+    # spec: None -> str
     def __str__(self):
         items = ','.join(map(lambda item: str(item), self.items))
         return 'StatDataPacket(user_id="{user_id:s}", items=[{items:s}])'.format(user_id=self.user_id, items=items)
 
+    # spec: None -> str
     def __repr__(self):
         return self.__str__()
+
+    # spec: StatDataItem -> bool
+    def __eq__(self, other):
+        if not other.__class__ == StatDataPacket:
+            return False
+        return self._user_id == other._user_id and\
+               self._items == other._items
+
+    # spec: None -> int
+    def __hash__(self):
+        result = hash(self._user_id)
+        result = (result * 13) ^ hash(self._items)
+        return result
 
     # spec: {...} -> StatDataPacket
     @staticmethod

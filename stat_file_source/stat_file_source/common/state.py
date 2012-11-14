@@ -26,7 +26,7 @@ class State(object):
     # spec: State -> bool
     def __eq__(self, other):
         if not isinstance(other, State):
-            raise TypeError()
+            return False
         return self._state_id == other._state_id and\
                self._state_data == other._state_data and\
                self._items == other._items

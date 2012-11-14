@@ -38,11 +38,11 @@ class StatDataItem(object):
     # spec: StatData -> bool
     def __eq__(self, other):
         if not other.__class__ == StatDataItem:
-            raise TypeError
-        return self._id == other._id and \
-               self._source == other._source and \
-               self._category == other._category and \
-               self._timemarker == other._timemarker  and\
+            return False
+        return self._id == other._id and\
+               self._source == other._source and\
+               self._category == other._category and\
+               self._timemarker == other._timemarker and\
                self._data == other._data
 
     # spec: None -> int
