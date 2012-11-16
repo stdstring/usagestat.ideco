@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 import unittest
-from stat_file_source_tests.functional_tests.test_file_source_collect_task import TestFileSourceCollectTask
+from tests.functional_tests.test_file_source_collect_task import TestFileSourceCollectTask
 
 def load_tests(loader, tests, pattern):
     suite = unittest.TestSuite()

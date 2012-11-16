@@ -7,8 +7,8 @@ class TestUserIdentityProvider(TestCase):
 
     def __init__(self, methodName='runTest'):
         super(TestUserIdentityProvider, self).__init__(methodName)
-        self._existing_user_identity_source = os.path.abspath('stat_sender_tests/functional_tests/user_identity/user.id')
-        self._nonexisting_user_identity_source = os.path.abspath('stat_sender_tests/functional_tests/user_identity/user2.id')
+        self._existing_user_identity_source = os.path.abspath('tests/functional_tests/user_identity/user.id')
+        self._nonexisting_user_identity_source = os.path.abspath('tests/functional_tests/user_identity/user2.id')
 
     def tearDown(self):
         if os.path.exists(self._nonexisting_user_identity_source):

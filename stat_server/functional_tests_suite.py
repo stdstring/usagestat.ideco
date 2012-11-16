@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 import unittest
-from stat_server_tests.functional_tests.storage.test_pg_storage_impl import TestPgStorageImpl
+from tests.functional_tests.storage.test_pg_storage_impl import TestPgStorageImpl
 
 def load_tests(loader, tests, pattern):
     suite = unittest.TestSuite()

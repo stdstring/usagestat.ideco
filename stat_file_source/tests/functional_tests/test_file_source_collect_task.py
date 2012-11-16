@@ -42,7 +42,7 @@ class TestFileSourceCollectTask(TestCase):
         self._mox = Mox()
         self._main_logger = self._mox.CreateMock(Logger)
         self._storage_logger = self._mox.CreateMock(Logger)
-        source_filename = os.path.abspath('stat_file_source_tests/functional_tests/test.conf')
+        source_filename = os.path.abspath('tests/functional_tests/test.conf')
         self._db_manager.__enter__()
         filters = [CommentFilter('#'), SpacesFilter()]
         standard_key_transformer = StandardKeyTransformer()

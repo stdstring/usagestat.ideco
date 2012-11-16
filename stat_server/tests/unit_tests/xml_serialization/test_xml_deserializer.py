@@ -5,7 +5,7 @@ from stat_server.common.datetime_converters import str_2_time
 from stat_server.entity.stat_data_item import StatDataItem
 from stat_server.entity.stat_data_packet import StatDataPacket
 from stat_server.xml_serialization.xml_deserializer import XmlDeserializer
-from stat_server_tests.common.stat_data_packet_checker import check_stat_data_packet
+from tests.common.stat_data_packet_checker import check_stat_data_packet
 
 class TestXmlDeserializer(TestCase):
 
