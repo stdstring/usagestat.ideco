@@ -15,7 +15,7 @@ from stat_file_source.utils.standard_key_transformer import StandardKeyTransform
 import os
 import sys
 sys.path.append(os.path.abspath('../stat_db_funtest_utils'))
-import db_manager
+import sqlite_db_manager
 
 # spec: str -> str
 def transform_user_fun(source_value):
@@ -36,7 +36,7 @@ class TestFileSourceCollectTask(TestCase):
         self._main_logger = None
         self._storage_logger = None
         self._collect_task = None
-        self._db_manager = db_manager.DBManager('../stat_sender_db')
+        self._db_manager = sqlite_db_manager.SqliteDbManager('../stat_sender_db')
 
     def setUp(self):
         self._mox = Mox()
@@ -51,7 +51,7 @@ class TestFileSourceCollectTask(TestCase):
                     SimpleKeyValueHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'services', standard_key_transformer),
                     TransformKeyValueHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'users', standard_key_transformer, transform_user_fun),
                     AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], ip_key_transformer, lambda old_value, item: old_value + 1, 0)]
-        self._collect_task = FileSourceCollectTask('some_source', filters, handlers, source_filename, self._db_manager.get_db_file(), self._main_logger)
+        self._collect_task = FileSourceCollectTask('some_source', filters, handlers, source_filename, self._db_manager.db_filename, self._main_logger)
 
     def tearDown(self):
         self._db_manager.__exit__(None, None, None)

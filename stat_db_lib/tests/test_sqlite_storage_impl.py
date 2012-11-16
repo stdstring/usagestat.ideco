@@ -9,9 +9,17 @@ from stat_db_lib.sqlite_storage_impl import SqliteStorageImpl
 import os
 import sys
 sys.path.append(os.path.abspath('../stat_db_funtest_utils'))
-from db_manager import DBManager
+import sqlite_db_manager
 
 class TestSqliteStorageImpl(TestCase):
+
+    def __init__(self, methodName='runTest'):
+        super(TestSqliteStorageImpl, self).__init__(methodName)
+        self._mox = None
+        self._logger = None
+        self._now = datetime.now()
+        self._db_manager = sqlite_db_manager.SqliteDbManager('../stat_sender_db')
+        self._query = 'select ID, SOURCE, CATEGORY, TIMEMARKER, DATA from STAT_DATA order by ID'
 
     def setUp(self):
         self._mox = Mox()
@@ -27,7 +35,7 @@ class TestSqliteStorageImpl(TestCase):
         self._logger.info('_save_item_impl(some_source, category1, some portion of data) exit')
         self._logger.info('save_item(some_source, category1, some portion of data) exit')
         self._mox.ReplayAll()
-        storage = SqliteStorageImpl(self._db_manager.get_db_file(), self._logger)
+        storage = SqliteStorageImpl(self._db_manager.connection_string, self._logger)
         storage.save_item('some_source', 'category1', 'some portion of data')
         actual = self._db_manager.execute_query(self._query)
         expected = [(1, 'some_source', 'category1', 'some portion of data')]
@@ -44,7 +52,7 @@ class TestSqliteStorageImpl(TestCase):
         self._logger.info('_save_item_impl(some_source, category2, yet one some portion of data) exit')
         self._logger.info('save_item(some_source, category2, yet one some portion of data) exit')
         self._mox.ReplayAll()
-        storage = SqliteStorageImpl(self._db_manager.get_db_file(), self._logger)
+        storage = SqliteStorageImpl(self._db_manager.connection_string, self._logger)
         storage.save_item('some_source', 'category1', 'some portion of data')
         storage.save_item('some_source', 'category2', 'yet one some portion of data')
         actual = self._db_manager.execute_query(self._query)
@@ -62,7 +70,7 @@ class TestSqliteStorageImpl(TestCase):
         self._logger.info('_save_item_impl(some_source2, category2, yet one some portion of data) exit')
         self._logger.info('save_item(some_source2, category2, yet one some portion of data) exit')
         self._mox.ReplayAll()
-        storage = SqliteStorageImpl(self._db_manager.get_db_file(), self._logger)
+        storage = SqliteStorageImpl(self._db_manager.connection_string, self._logger)
         storage.save_item('some_source1', 'category1', 'some portion of data')
         storage.save_item('some_source2', 'category2', 'yet one some portion of data')
         actual = self._db_manager.execute_query(self._query)
@@ -78,7 +86,7 @@ class TestSqliteStorageImpl(TestCase):
         self._logger.info('_save_item_impl(some_source, category2, yet one some portion of data) exit')
         self._logger.info('save_data(some_source, data_list) exit')
         self._mox.ReplayAll()
-        storage = SqliteStorageImpl(self._db_manager.get_db_file(), self._logger)
+        storage = SqliteStorageImpl(self._db_manager.connection_string, self._logger)
         data = [('category1', 'some portion of data'), ('category2', 'yet one some portion of data')]
         storage.save_data('some_source', data)
         actual = self._db_manager.execute_query(self._query)
@@ -98,7 +106,7 @@ class TestSqliteStorageImpl(TestCase):
         self._logger.info('_save_item_impl(some_source, category1, other portion of data) exit')
         self._logger.info('save_data(some_source, data_list) exit')
         self._mox.ReplayAll()
-        storage = SqliteStorageImpl(self._db_manager.get_db_file(), self._logger)
+        storage = SqliteStorageImpl(self._db_manager.connection_string, self._logger)
         data = [('category1', 'some portion of data'), ('category2', 'yet one some portion of data')]
         storage.save_data('some_source', data)
         data = [('category1', 'other portion of data')]
@@ -122,7 +130,7 @@ class TestSqliteStorageImpl(TestCase):
         self._logger.info('_save_item_impl(some_source2, category1, other portion of data) exit')
         self._logger.info('save_data(some_source2, data_list) exit')
         self._mox.ReplayAll()
-        storage = SqliteStorageImpl(self._db_manager.get_db_file(), self._logger)
+        storage = SqliteStorageImpl(self._db_manager.connection_string, self._logger)
         data = [('category1', 'some portion of data'), ('category2', 'yet one some portion of data')]
         storage.save_data('some_source1', data)
         data = [('category1', 'other portion of data')]
@@ -147,11 +155,5 @@ class TestSqliteStorageImpl(TestCase):
             actualDateTime = datetime(year=time_str.tm_yday, month=time_str.tm_mon, day=time_str.tm_mday, hour=time_str.tm_hour, minute=time_str.tm_min, second=time_str.tm_sec)
             self.assertTrue(actualDateTime-self._now < timedelta(seconds = 10))
             index += 1
-
-    _mox = None
-    _logger = None
-    _now = datetime.now()
-    _db_manager = DBManager('../stat_sender_db')
-    _query = 'select ID, SOURCE, CATEGORY, TIMEMARKER, DATA from STAT_DATA order by ID'
 
 __author__ = 'andrey.ushakov'

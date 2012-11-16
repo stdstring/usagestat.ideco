@@ -8,7 +8,7 @@ from stat_sender.storage.sqlite_storage import SqliteStorage
 import os
 import sys
 sys.path.append(os.path.abspath('../stat_db_funtest_utils'))
-import db_manager
+import sqlite_db_manager
 
 class TestSqliteStorage(TestCase):
 
@@ -16,7 +16,7 @@ class TestSqliteStorage(TestCase):
         super(TestSqliteStorage, self).__init__(methodName)
         self._mox = None
         self._logger = None
-        self._db_manager = db_manager.DBManager('../stat_sender_db')
+        self._db_manager = sqlite_db_manager.SqliteDbManager('../stat_sender_db')
         self._now = datetime.now()
         self._str_now = str(self._now)
 
@@ -39,7 +39,7 @@ class TestSqliteStorage(TestCase):
         self._mox.ReplayAll()
         source_data = [('SRC1', 'CAT1', str(self._now), 'some data'), ('SRC2', 'CAT2', self._str_now, 'some another data')]
         self._db_manager.execute_nonquery('insert into STAT_DATA(SOURCE, CATEGORY, TIMEMARKER, DATA) values(?, ?, ?, ?)', source_data)
-        storage = SqliteStorage(self._db_manager.get_db_file(), self._logger)
+        storage = SqliteStorage(self._db_manager.connection_string, self._logger)
         actual_data = storage.get_data()
         expected_data = [(1, 'SRC1', 'CAT1', self._str_now, 'some data'), (2, 'SRC2', 'CAT2', self._str_now, 'some another data')]
         self.assertEquals(expected_data, actual_data)
@@ -54,7 +54,7 @@ class TestSqliteStorage(TestCase):
             ('SRC2', 'CAT3', self._str_now, 'some another data'),
             ('SRC3', 'CAT4', self._str_now, 'yet some other data')]
         self._db_manager.execute_nonquery('insert into STAT_DATA(SOURCE, CATEGORY, TIMEMARKER, DATA) values(?, ?, ?, ?)', source_data)
-        storage = SqliteStorage(self._db_manager.get_db_file(), self._logger)
+        storage = SqliteStorage(self._db_manager.connection_string, self._logger)
         storage.clear((2, 3))
         actual_data = self._db_manager.execute_query('SELECT ID, SOURCE, CATEGORY, TIMEMARKER, DATA FROM STAT_DATA ORDER BY ID')
         expected_data = [(1, 'SRC1', 'CAT1', self._str_now, 'some data'), (4, 'SRC3', 'CAT4', self._str_now, 'yet some other data')]

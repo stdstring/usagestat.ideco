@@ -1,9 +1,10 @@
 from __future__ import unicode_literals
-from sqlite3 import connect
 import os
 import shutil
+import sqlite3
 import subprocess
 import tempfile
+import psycopg2
 
 class DbCreationException(Exception):
     pass
@@ -11,29 +12,44 @@ class DbCreationException(Exception):
 class InvalidOperationException(Exception):
     pass
 
-class DBManager(object):
+# TODO (andrey.ushakov) : make this class abstract
+class DbManager(object):
 
-    # spec: str -> DBManager
-    def __init__(self, db_create_script_path):
-        self._db_create_script_path = db_create_script_path
+    def __init__(self):
+        self._ready = False
+        self._connection_string = None
 
     def __enter__(self):
         self._prepare_db()
-        self._ready = True
+        self.ready = True
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self._ready = False
-        self._remove_temp_db_dir()
-        os.chdir(self._initial_working_dir)
+        self.ready = False
+        self._clear_db()
         return True
+
+    @property
+    def connection_string(self):
+        return self._connection_string
+
+    @connection_string.setter
+    def connection_string(self, value):
+        self._connection_string = value
+
+    @property
+    def ready(self):
+        return self._ready
+
+    @ready.setter
+    def ready(self, value):
+        self._ready = value
 
     # spec: str, tuple -> tuple
     def execute_query(self, query, params=()):
         if not self._ready:
             raise InvalidOperationException()
-        db_filename = self.get_db_file()
-        conn = connect(db_filename)
+        conn = self._create_connection()
         try:
             cursor = conn.cursor()
             cursor.execute(query, params)
@@ -45,8 +61,7 @@ class DBManager(object):
     def execute_nonquery(self, query, params=()):
         if not self._ready:
             raise InvalidOperationException()
-        db_filename = self.get_db_file()
-        conn = connect(db_filename)
+        conn = self._create_connection()
         try:
             cursor = conn.cursor()
             if params == ():
@@ -57,45 +72,13 @@ class DBManager(object):
         finally:
             conn.close()
 
-    # spec: None -> str
-    def get_db_file(self):
-        temp_dir = tempfile.gettempdir()
-        return os.path.join(temp_dir, self._db_dirname, self._db_filename)
-
-    # spec: None -> None
     def _prepare_db(self):
-        os.chdir(self._initial_working_dir)
-        self._create_temp_db_dir()
-        abs_create_script_path = os.path.abspath(self._db_create_script_path)
-        self._remove_temp_db_dir()
-        shutil.copytree(abs_create_script_path, self._get_db_dir())
-        os.chdir(self._get_db_dir())
-        create_result = subprocess.call([os.path.join(self._get_db_dir(), self._db_create_script_name)])
-        if create_result:
-            raise DbCreationException()
+        raise NotImplementedError()
 
-    # spec : str -> None
-    def _create_temp_db_dir(self):
-        temp_db_dir = self._get_db_dir()
-        if not os.path.exists(temp_db_dir):
-            os.makedirs(temp_db_dir)
+    def _clear_db(self):
+        raise NotImplementedError()
 
-    # spec: None -> None
-    def _remove_temp_db_dir(self):
-        temp_db_dir = self._get_db_dir()
-        if os.path.exists(temp_db_dir):
-            shutil.rmtree(temp_db_dir)
-
-    # spec: None -> str
-    def _get_db_dir(self):
-        temp_dir = tempfile.gettempdir()
-        return os.path.join(temp_dir, self._db_dirname)
-
-    _ready = False
-    _initial_working_dir = os.getcwd()
-    _db_create_script_path = None
-    _db_create_script_name = 'create.sh'
-    _db_dirname = 'usage_stat_db'
-    _db_filename = 'usage_stat.db'
+    def _create_connection(self):
+        raise NotImplementedError()
 
 __author__ = 'andrey.ushakov'

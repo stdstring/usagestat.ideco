@@ -46,7 +46,7 @@ class PgStorageImpl(Storage):
             cursor.execute(query, (user_id, item.source, item.category, item.timemarker, item.data))
             self._log_info('save_item(cursor, {user_id!s}, {item!s}) exit'.format(user_id=user_id, item=item))
         except BaseException:
-            self._log_info('exception in save_item(cursor, {user_id!s}, {item!s})'.format(user_id=user_id, item=item))
+            self._log_exception('exception in save_item(cursor, {user_id!s}, {item!s})'.format(user_id=user_id, item=item))
             raise
 
     # spec: str -> None
