@@ -9,8 +9,8 @@ class PgStorageImpl(Storage):
         self._logger = logger
 
     # spec: str, str, str, (str | None), (int | None) -> PgStorageImpl
-    @staticmethod
-    def create(database, user, pwd, host = None, port = None, logger = logging.getLogger('stat_server.pg_storage_impl')):
+    @classmethod
+    def create(cls, database, user, pwd, host = None, port = None, logger = logging.getLogger('stat_server.pg_storage_impl')):
         if database is None:
             database = 'stat_db'
         storage = ['dbname={0:s}'.format(database), 'user={0:s}'.format(user), 'password={0:s}'.format(pwd)]
@@ -19,7 +19,7 @@ class PgStorageImpl(Storage):
         if host is not None:
             storage.append('port={0:d}'.format(port))
         connection_string = ' '.join(storage)
-        return PgStorageImpl(connection_string, logger)
+        return cls(connection_string, logger)
 
     # spec: StatDataPacket -> None
     def save_data(self, data):
