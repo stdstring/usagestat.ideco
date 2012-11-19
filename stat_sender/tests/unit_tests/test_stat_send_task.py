@@ -11,6 +11,7 @@ from stat_sender.endpoint.endpoint import Endpoint
 from stat_sender.stat_send_task import StatSendTask
 from stat_sender.storage.storage import Storage
 from stat_sender.user_identity.user_identity_provider import UserIdentityProvider
+from tests.common.datetime_converters import datetime_2_str
 
 class TestStatSendTask(TestCase):
 
@@ -37,7 +38,7 @@ class TestStatSendTask(TestCase):
 
     def test_normal_life_cycle(self):
         self._logger.info('execute() enter')
-        self._storage.get_data().AndReturn([(13, 's1', 'c1', self._datetime_2_str(self._now), 'data1')])
+        self._storage.get_data().AndReturn([(13, 's1', 'c1', datetime_2_str(self._now), 'data1')])
         self._user_identity_provider.get_user_identity().AndReturn(self._user_id)
         dest_data = '<?xml version="1.0" ?><data_packet user_id="' + str(self._user_id) + '">' +\
                     '<data_item><source>s1</source><category>c1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></data_item>' +\
@@ -65,7 +66,7 @@ class TestStatSendTask(TestCase):
 
     def test_unsuccessful_send(self):
         self._logger.info('execute() enter')
-        self._storage.get_data().AndReturn([(13, 's1', 'c1', self._datetime_2_str(self._now), 'data1')])
+        self._storage.get_data().AndReturn([(13, 's1', 'c1', datetime_2_str(self._now), 'data1')])
         self._user_identity_provider.get_user_identity().AndReturn(self._user_id)
         dest_data = '<?xml version="1.0" ?><data_packet user_id="' + str(self._user_id) + '">' +\
                     '<data_item><source>s1</source><category>c1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></data_item>' +\
@@ -82,7 +83,7 @@ class TestStatSendTask(TestCase):
 
     def test_exception_when_clear(self):
         self._logger.info('execute() enter')
-        self._storage.get_data().AndReturn([(13, 's1', 'c1', self._datetime_2_str(self._now), 'data1')])
+        self._storage.get_data().AndReturn([(13, 's1', 'c1', datetime_2_str(self._now), 'data1')])
         self._user_identity_provider.get_user_identity().AndReturn(self._user_id)
         dest_data = '<?xml version="1.0" ?><data_packet user_id="' + str(self._user_id) + '">' +\
                     '<data_item><source>s1</source><category>c1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></data_item>' +\
@@ -98,7 +99,7 @@ class TestStatSendTask(TestCase):
 
     def test_exception_when_get_user_identity(self):
         self._logger.info('execute() enter')
-        self._storage.get_data().AndReturn([(13, 's1', 'c1', self._datetime_2_str(self._now), 'data1')])
+        self._storage.get_data().AndReturn([(13, 's1', 'c1', datetime_2_str(self._now), 'data1')])
         self._user_identity_provider.get_user_identity().AndRaise(Exception())
         self._logger.exception('exception in execute()')
         self._test_common_action(False)
@@ -109,10 +110,6 @@ class TestStatSendTask(TestCase):
         actual_result = task.execute()
         self.assertEquals(expected_result, actual_result)
         self._mox.VerifyAll()
-
-    # spec: str -> datetime
-    def _datetime_2_str(self, source):
-        return source.strftime('%Y-%m-%d %H:%M:%S')
 
 if __name__ == '__main__':
     unittest.main()

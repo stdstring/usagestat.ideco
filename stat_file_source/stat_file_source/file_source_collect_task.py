@@ -8,6 +8,7 @@ import sys
 sys.path.append(os.path.abspath('../stat_db_lib/stat_db_lib'))
 import sqlite_storage_impl
 
+# spec: str -> [str]
 def read_file_content(source_filename):
     source = open(source_filename, 'r')
     try:

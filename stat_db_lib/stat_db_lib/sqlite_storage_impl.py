@@ -10,33 +10,33 @@ class SqliteStorageImpl(storage.Storage):
 
     # spec: str, [(str, str)] -> bool
     def save_data(self, source_id, data_list):
-        self._log_info('save_data(%(source)s, data_list) enter' % {'source': source_id})
+        self._log_info('save_data({0:s}, data_list) enter'.format(source_id))
         connection = connect(self._db_file_path)
         try:
             cursor = connection.cursor()
             for data_pair in data_list:
                 self._save_item_impl(cursor, source_id, data_pair[0], data_pair[1])
             connection.commit()
-            self._log_info('save_data(%(source)s, data_list) exit' % {'source': source_id})
+            self._log_info('save_data({0:s}, data_list) exit'.format(source_id))
             return True
         except Exception:
-            self._log_exception('Exception in save_data(%(source)s, data_list)' % {'source': source_id})
+            self._log_exception('Exception in save_data({0:s}, data_list)'.format(source_id))
             return False
         finally:
             connection.close()
 
     # spec: str, str, str -> bool
     def save_item(self, source_id, category, data):
-        self._log_info('save_item(%(source)s, %(category)s, %(data)s) enter' % {'source': source_id, 'category': category, 'data': data})
+        self._log_info('save_item({source:s}, {category:s}, {data:s}) enter'.format(source=source_id, category=category, data=data))
         connection = connect(self._db_file_path)
         try:
             cursor = connection.cursor()
             self._save_item_impl(cursor, source_id, category, data)
             connection.commit()
-            self._log_info('save_item(%(source)s, %(category)s, %(data)s) exit' % {'source': source_id, 'category': category, 'data': data})
+            self._log_info('save_item({source:s}, {category:s}, {data:s}) exit'.format(source=source_id, category=category, data=data))
             return True
         except Exception:
-            self._log_exception('Exception in save_item(%(source)s, %(category)s, %(data)s)' % {'source': source_id, 'category': category, 'data': data})
+            self._log_exception('Exception in save_item({source:s}, {category:s}, {data:s})'.format(source=source_id, category=category, data=data))
             return False
         finally:
             connection.close()
@@ -44,12 +44,12 @@ class SqliteStorageImpl(storage.Storage):
     # spec: Sqlite3Cursor, str, str, str -> None
     def _save_item_impl(self, cursor, source_id, category, data):
         try:
-            self._log_info('_save_item_impl(%(source)s, %(category)s, %(data)s) enter' % {'source': source_id, 'category': category, 'data': data})
+            self._log_info('_save_item_impl({source:s}, {category:s}, {data:s}) enter'.format(source=source_id, category=category, data=data))
             query = "insert into STAT_DATA(ID, SOURCE, CATEGORY, TIMEMARKER, DATA) values(NULL, ?, ?, datetime('now', 'localtime'), ?)"
             cursor.execute(query, (source_id, category, data))
-            self._log_info('_save_item_impl(%(source)s, %(category)s, %(data)s) exit' % {'source': source_id, 'category': category, 'data': data})
+            self._log_info('_save_item_impl({source:s}, {category:s}, {data:s}) exit'.format(source=source_id, category=category, data=data))
         except Exception:
-            self._log_exception('Exception in _save_item_impl(%(source)s, %(category)s, %(data)s)' % {'source': source_id, 'category': category, 'data': data})
+            self._log_exception('Exception in _save_item_impl({source:s}, {category:s}, {data:s})'.format(source=source_id, category=category, data=data))
             raise
 
     # spec: str -> None
