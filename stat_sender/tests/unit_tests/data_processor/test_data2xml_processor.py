@@ -19,13 +19,15 @@ class TestData2XmlProcessor(TestCase):
     def test_process_single_data_item(self):
         source_items = [StatDataItem(13, 'some_source', 'category1', self._now, 'data1')]
         actual = self._processor.process(StatData((13, 13), source_items), **self._additional_params)
-        expected = '<data_packet user_id="' + str(self._user_id) + '"><data_item><source>some_source</source><category>category1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></data_item></data_packet>'
+        expected = '<?xml version="1.0" ?><data_packet user_id="' + str(self._user_id) + '">' +\
+                   '<data_item><source>some_source</source><category>category1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></data_item>' +\
+                   '</data_packet>'
         self.assertEquals(expected, actual)
 
     def test_process_several_data_items(self):
         source_items = [StatDataItem(13, 'some_source', 'category1', self._now, 'data1'), StatDataItem(14, 'some_source', 'category2', self._now, 'data2')]
         actual = self._processor.process(StatData((13, 14), source_items), **self._additional_params)
-        expected = '<data_packet user_id="' + str(self._user_id) + '">' + \
+        expected = '<?xml version="1.0" ?><data_packet user_id="' + str(self._user_id) + '">' + \
                    '<data_item><source>some_source</source><category>category1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></data_item>' +\
                    '<data_item><source>some_source</source><category>category2</category><timemarker>' + self._str_now + '</timemarker><data>data2</data></data_item>' +\
                    '</data_packet>'
@@ -34,7 +36,7 @@ class TestData2XmlProcessor(TestCase):
     def test_process_same_category_data_items(self):
         source_items = [StatDataItem(13, 'some_source', 'category1', self._now, 'data1'), StatDataItem(14, 'some_source', 'category1', self._now, 'data2')]
         actual = self._processor.process(StatData((13, 14), source_items), **self._additional_params)
-        expected = '<data_packet user_id="' + str(self._user_id) + '">' +\
+        expected = '<?xml version="1.0" ?><data_packet user_id="' + str(self._user_id) + '">' +\
                    '<data_item><source>some_source</source><category>category1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></data_item>' +\
                    '<data_item><source>some_source</source><category>category1</category><timemarker>' + self._str_now + '</timemarker><data>data2</data></data_item>' +\
                    '</data_packet>'
@@ -43,7 +45,7 @@ class TestData2XmlProcessor(TestCase):
     def test_process_several_sources(self):
         source_items = [StatDataItem(13, 'some_source1', 'category1', self._now, 'data1'), StatDataItem(14, 'some_source2', 'category1', self._now, 'data2')]
         actual = self._processor.process(StatData((13, 14), source_items), **self._additional_params)
-        expected = '<data_packet user_id="' + str(self._user_id) + '">' +\
+        expected = '<?xml version="1.0" ?><data_packet user_id="' + str(self._user_id) + '">' +\
                    '<data_item><source>some_source1</source><category>category1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></data_item>' +\
                    '<data_item><source>some_source2</source><category>category1</category><timemarker>' + self._str_now + '</timemarker><data>data2</data></data_item>' +\
                    '</data_packet>'
@@ -57,7 +59,7 @@ class TestData2XmlProcessor(TestCase):
                         StatDataItem(17, 'some_source2','category1', self._now, 'data5'),
                         StatDataItem(18, 'some_source2','category2', self._now, 'data6')]
         actual = self._processor.process(StatData((13, 18), source_items), **self._additional_params)
-        expected = '<data_packet user_id="' + str(self._user_id) + '">' +\
+        expected = '<?xml version="1.0" ?><data_packet user_id="' + str(self._user_id) + '">' +\
                    '<data_item><source>some_source1</source><category>category1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></data_item>' +\
                    '<data_item><source>some_source1</source><category>category2</category><timemarker>' + self._str_now + '</timemarker><data>data2</data></data_item>' +\
                    '<data_item><source>some_source1</source><category>category1</category><timemarker>' + self._str_now + '</timemarker><data>data3</data></data_item>' +\

@@ -5,6 +5,7 @@ from stat_sender.endpoint.endpoint import Endpoint
 
 class HttpEndpoint(Endpoint):
 
+    # spec: str, Logger, {...} -> HttpEndpoint
     def __init__(self, remote_host, logger, **kwargs):
         self._logger = logger
         parse_result = urlparse.urlparse(remote_host)

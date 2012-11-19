@@ -50,12 +50,14 @@ class TestStatServerTask(TestCase):
         self._logger.exception('exception in process_request({0:s})'.format(self._good_xml_packet))
         self._test_common_body_with_exception(self._good_xml_packet, Exception)
 
+    # spec: str -> None
     def _test_common_body(self, request_body):
         self._mox.ReplayAll()
         task = StatServerTask(self._storage, self._logger)
         task.process_request(request_body)
         self._mox.VerifyAll()
 
+    # spec: str, class -> None
     def _test_common_body_with_exception(self, request_body, expected_exception):
         self._mox.ReplayAll()
         task = StatServerTask(self._storage, self._logger)

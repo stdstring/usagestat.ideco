@@ -93,6 +93,7 @@ class TestPgStorageImpl(TestCase):
         self._set_logger_when_exception('83cf01c6-2284-11e2-9494-08002703af71', source.items[0])
         self._test_common_body_with_exception(source, IntegrityError)
 
+    # spec: [StatDataPacket], [(str, str, str, datetime, str)] -> None
     def _test_common_body(self, source_list, expected):
         self._mox.ReplayAll()
         storage = PgStorageImpl(self._db_manager.connection_string, self._logger)
@@ -102,12 +103,14 @@ class TestPgStorageImpl(TestCase):
         self._check_data(expected, actual)
         self._mox.VerifyAll()
 
+    # spec: [StatDataPacket], class -> None
     def _test_common_body_with_exception(self, source, expected_exception):
         self._mox.ReplayAll()
         storage = PgStorageImpl(self._db_manager.connection_string, self._logger)
         self.assertRaises(expected_exception, lambda: storage.save_data(source))
         self._mox.VerifyAll()
 
+    # spec: str, StatDataItem -> None
     def _set_logger_when_normal(self, user_id, items):
         self._logger.info('save_data(data) enter')
         for item in items:
@@ -115,6 +118,7 @@ class TestPgStorageImpl(TestCase):
             self._logger.info('save_item(cursor, {user_id:s}, {item!s}) exit'.format(user_id=user_id, item=item))
         self._logger.info('save_data(data) exit')
 
+    # spec: str, StatDataItem -> None
     def _set_logger_when_exception(self, user_id, item):
         self._logger.info('save_data(data) enter')
         self._logger.info('save_item(cursor, {user_id:s}, {item!s}) enter'.format(user_id=user_id, item=item))

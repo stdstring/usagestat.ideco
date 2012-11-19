@@ -5,6 +5,7 @@ from stat_sender.common import logger_helper
 
 class StatSendTask(object):
 
+    # spec: Storage, UserIdentityProvider, [DataProcessor], Endpoint, int, Logger
     def __init__(self, storage, user_identity_provider, data_processors, endpoint, send_attempt_count, logger):
         self._storage = storage
         self._user_identity_provider = user_identity_provider

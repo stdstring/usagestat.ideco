@@ -4,22 +4,11 @@ import psycopg2
 from stat_server.storage.storage import Storage
 
 class PgStorageImpl(Storage):
+
+    # spec: str, Logger -> PgStorageImpl
     def __init__(self, connection_string, logger = logging.getLogger('stat_server.pg_storage_impl')):
         self._connection_string = connection_string
         self._logger = logger
-
-    # spec: str, str, str, (str | None), (int | None) -> PgStorageImpl
-    @classmethod
-    def create(cls, database, user, pwd, host = None, port = None, logger = logging.getLogger('stat_server.pg_storage_impl')):
-        if database is None:
-            database = 'stat_db'
-        storage = ['dbname={0:s}'.format(database), 'user={0:s}'.format(user), 'password={0:s}'.format(pwd)]
-        if host is not None:
-            storage.append('host={0:s}'.format(host))
-        if host is not None:
-            storage.append('port={0:d}'.format(port))
-        connection_string = ' '.join(storage)
-        return cls(connection_string, logger)
 
     # spec: StatDataPacket -> None
     def save_data(self, data):

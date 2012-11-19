@@ -13,12 +13,7 @@ def execute():
     logging.config.dictConfig(settings.LOG_CONF)
     root_logger = logging.getLogger('stat_server.entry_point')
     storage_logger = root_logger.getChild('pg_storage_impl')
-    storage = PgStorageImpl.create(settings.DB['NAME'],
-        settings.DB['USER'],
-        settings.DB['PASSWORD'],
-        settings.DB['HOST'],
-        settings.DB['PORT'],
-        storage_logger)
+    storage = PgStorageImpl(settings.DB_CONN_STR, storage_logger)
     stat_collect_task = StatServerTask(storage, root_logger)
     # routes
     app.add_route(Route(app, '/statserver/api/v1/collect/', 'POST', lambda: stat_collect_task.process_request(request.body.getvalue()), 'collect_endpoint'))

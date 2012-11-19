@@ -1,11 +1,7 @@
 from __future__ import unicode_literals
 
 # db
-DB = {'NAME': 'stat_db',
-      'USER': 'postgres',
-      'PASSWORD': '31415926',
-      'HOST': None,
-      'PORT': None}
+DB_CONN_STR = 'dbname=stat_db user=postgres password=31415926 host=localhost port=5432'
 
 # endpoint
 ENDPOINT = {'HOST': 'localhost', 'PORT': 8000}

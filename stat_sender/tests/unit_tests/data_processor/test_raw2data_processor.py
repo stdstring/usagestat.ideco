@@ -21,6 +21,7 @@ class TestRaw2DataProcessor(TestCase):
         self.assertEquals((10, 12), actual.id_range)
         self.assertEquals(expected_items, actual.stat_data_items)
 
+    # spec: str -> datetime
     def _datetime_2_str(self, source):
         return source.strftime('%Y-%m-%d %H:%M:%S')
 

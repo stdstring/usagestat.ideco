@@ -4,6 +4,7 @@ from storage import Storage
 
 class SqliteStorage(Storage):
 
+    # spec: str, Logger -> SqliteStorage
     def __init__(self, db_file, logger):
         self._db_file = db_file
         self._logger = logger

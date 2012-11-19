@@ -72,6 +72,7 @@ class TestXmlDeserializer(TestCase):
             data = body['data']['']
             return TestXmlDeserializer.SimpleObject(id, data)
 
+    # spec: SimpleObject, SimpleObject -> None
     def _check_simple_object(self, expected, actual):
         self.assertIsNotNone(actual)
         self.assertEqual(expected.id, actual.id)

@@ -4,6 +4,7 @@ from stat_sender.endpoint.http_endpoint import HttpEndpoint
 
 class HttpsEndpoint(HttpEndpoint):
 
+    # spec: str, Logger, {...} -> HttpsEndpoint
     def __init__(self, remote_host, logger, **kwargs):
         super(HttpsEndpoint, self).__init__(remote_host, logger, kwargs = kwargs)
         key_file = kwargs['key_file']

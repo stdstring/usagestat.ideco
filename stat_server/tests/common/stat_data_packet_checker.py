@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+# spec: TestCase, StatDataPacket, StatDataPacket -> None
 def check_stat_data_packet(test_case, expected, actual):
     test_case.assertIsNotNone(actual)
     test_case.assertEqual(expected.user_id, actual.user_id)
@@ -10,6 +11,7 @@ def check_stat_data_packet(test_case, expected, actual):
         check_stat_data_item(test_case, expected.items[index], actual.items[index])
         index += 1
 
+# spec: TestCase, StatDataItem, StatDataItem -> None
 def check_stat_data_item(test_case, expected, actual):
     test_case.assertIsNotNone(actual)
     test_case.assertEqual(expected.source, actual.source)

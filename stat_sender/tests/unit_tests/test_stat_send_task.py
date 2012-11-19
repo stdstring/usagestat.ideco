@@ -39,7 +39,9 @@ class TestStatSendTask(TestCase):
         self._logger.info('execute() enter')
         self._storage.get_data().AndReturn([(13, 's1', 'c1', self._datetime_2_str(self._now), 'data1')])
         self._user_identity_provider.get_user_identity().AndReturn(self._user_id)
-        dest_data = '<data_packet user_id="' + str(self._user_id) + '"><data_item><source>s1</source><category>c1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></data_item></data_packet>'
+        dest_data = '<?xml version="1.0" ?><data_packet user_id="' + str(self._user_id) + '">' +\
+                    '<data_item><source>s1</source><category>c1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></data_item>' +\
+                    '</data_packet>'
         self._logger.getChild('unreliable_task_executer').AndReturn(self._child_logger)
         self._child_logger.info('execute() enter')
         self._child_logger.info('execute(): iteration number 1')
@@ -65,7 +67,9 @@ class TestStatSendTask(TestCase):
         self._logger.info('execute() enter')
         self._storage.get_data().AndReturn([(13, 's1', 'c1', self._datetime_2_str(self._now), 'data1')])
         self._user_identity_provider.get_user_identity().AndReturn(self._user_id)
-        dest_data = '<data_packet user_id="' + str(self._user_id) + '"><data_item><source>s1</source><category>c1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></data_item></data_packet>'
+        dest_data = '<?xml version="1.0" ?><data_packet user_id="' + str(self._user_id) + '">' +\
+                    '<data_item><source>s1</source><category>c1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></data_item>' +\
+                    '</data_packet>'
         self._logger.getChild('unreliable_task_executer').AndReturn(self._child_logger)
         self._child_logger.info('execute() enter')
         self._child_logger.info('execute(): iteration number 1')
@@ -80,7 +84,9 @@ class TestStatSendTask(TestCase):
         self._logger.info('execute() enter')
         self._storage.get_data().AndReturn([(13, 's1', 'c1', self._datetime_2_str(self._now), 'data1')])
         self._user_identity_provider.get_user_identity().AndReturn(self._user_id)
-        dest_data = '<data_packet user_id="' + str(self._user_id) + '"><data_item><source>s1</source><category>c1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></data_item></data_packet>'
+        dest_data = '<?xml version="1.0" ?><data_packet user_id="' + str(self._user_id) + '">' +\
+                    '<data_item><source>s1</source><category>c1</category><timemarker>' + self._str_now + '</timemarker><data>data1</data></data_item>' +\
+                    '</data_packet>'
         self._logger.getChild('unreliable_task_executer').AndReturn(self._child_logger)
         self._child_logger.info('execute() enter')
         self._child_logger.info('execute(): iteration number 1')
@@ -104,6 +110,7 @@ class TestStatSendTask(TestCase):
         self.assertEquals(expected_result, actual_result)
         self._mox.VerifyAll()
 
+    # spec: str -> datetime
     def _datetime_2_str(self, source):
         return source.strftime('%Y-%m-%d %H:%M:%S')
 
