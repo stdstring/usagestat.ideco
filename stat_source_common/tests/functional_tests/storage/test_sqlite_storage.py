@@ -6,11 +6,10 @@ from unittest.case import TestCase
 import time
 from stat_source_common.entity.data_item import DataItem
 from stat_source_common.storage.sqlite_storage import SqliteStorage
+from tests.common.data_portion import DataPortion
 # TODO (andrey.ushakov) : think because this is very dirty hack
 import os
 import sys
-from tests.common.data_portion import DataPortion
-
 sys.path.append(os.path.abspath('../stat_db_funtest_utils'))
 import sqlite_db_manager
 
@@ -70,6 +69,7 @@ class TestSqliteStorage(TestCase):
             (3, 'some_source2', 'category1', 'other portion of data')]
         self._test_save_data_common_body(data_portion_list, expected)
 
+    # spec: [DataPortion], [(int, str, str, str)] -> None
     def _test_save_item_common_body(self, data_portion_list, expected):
         for data_portion in data_portion_list:
             self._logger.info('save_item({source:s}, {data_item!s}) enter'.format(source=data_portion.source_id, data_item=data_portion.data))
@@ -84,6 +84,7 @@ class TestSqliteStorage(TestCase):
         self._check_data(expected, actual)
         self._mox.VerifyAll()
 
+    # spec: [DataPortion], [(int, str, str, str)] -> None
     def _test_save_data_common_body(self, data_portion_list, expected):
         for data_portion in data_portion_list:
             self._logger.info('save_data({source:s}, data_list) enter'.format(source=data_portion.source_id))

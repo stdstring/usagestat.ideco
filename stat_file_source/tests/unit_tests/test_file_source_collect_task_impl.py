@@ -7,7 +7,7 @@ from stat_file_source.file_source_collector import FileSourceCollector
 # TODO (andrey.ushakov) : think because this is very dirty hack
 import os
 import sys
-sys.path.append(os.path.abspath('../stat_db_lib/stat_db_lib'))
+sys.path.append(os.path.abspath('../stat_source_common/stat_source_common/storage'))
 import storage
 
 class TestFileSourceCollectTaskImpl(TestCase):

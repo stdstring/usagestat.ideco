@@ -16,6 +16,8 @@ import os
 import sys
 sys.path.append(os.path.abspath('../stat_db_funtest_utils'))
 import sqlite_db_manager
+sys.path.append(os.path.abspath('../stat_source_common/stat_source_common/entity'))
+import data_item
 
 # spec: str -> str
 def transform_user_fun(source_value):
@@ -57,30 +59,24 @@ class TestFileSourceCollectTask(TestCase):
         self._db_manager.__exit__(None, None, None)
 
     def test_execute(self):
+        data_list = [data_item.DataItem('wins.ip', 1),
+                     data_item.DataItem('services.http', '80'),
+                     data_item.DataItem('gate.ip', 3),
+                     data_item.DataItem('users.user', 'ivanov,*******'),
+                     data_item.DataItem('users.user', 'petrov,***'),
+                     data_item.DataItem('users.user', 'sydorov,*********'),
+                     data_item.DataItem('users.user', 'kozlov,*********'),
+                     data_item.DataItem('dns.ip', 2),
+                     data_item.DataItem('services.ftp', '21')]
         self._main_logger.getChild('sqlite_storage').AndReturn(self._storage_logger)
         self._main_logger.info('execute() enter')
         self._main_logger.info('_read_file_content() enter')
         self._main_logger.info('_read_file_content() exit')
         self._main_logger.info('_write_data(data_dict) enter')
         self._storage_logger.info('save_data(some_source, data_list) enter')
-        self._storage_logger.info('_save_item_impl(some_source, wins.ip, 1) enter')
-        self._storage_logger.info('_save_item_impl(some_source, wins.ip, 1) exit')
-        self._storage_logger.info('_save_item_impl(some_source, services.http, 80) enter')
-        self._storage_logger.info('_save_item_impl(some_source, services.http, 80) exit')
-        self._storage_logger.info('_save_item_impl(some_source, gate.ip, 3) enter')
-        self._storage_logger.info('_save_item_impl(some_source, gate.ip, 3) exit')
-        self._storage_logger.info('_save_item_impl(some_source, users.user, ivanov,*******) enter')
-        self._storage_logger.info('_save_item_impl(some_source, users.user, ivanov,*******) exit')
-        self._storage_logger.info('_save_item_impl(some_source, users.user, petrov,***) enter')
-        self._storage_logger.info('_save_item_impl(some_source, users.user, petrov,***) exit')
-        self._storage_logger.info('_save_item_impl(some_source, users.user, sydorov,*********) enter')
-        self._storage_logger.info('_save_item_impl(some_source, users.user, sydorov,*********) exit')
-        self._storage_logger.info('_save_item_impl(some_source, users.user, kozlov,*********) enter')
-        self._storage_logger.info('_save_item_impl(some_source, users.user, kozlov,*********) exit')
-        self._storage_logger.info('_save_item_impl(some_source, dns.ip, 2) enter')
-        self._storage_logger.info('_save_item_impl(some_source, dns.ip, 2) exit')
-        self._storage_logger.info('_save_item_impl(some_source, services.ftp, 21) enter')
-        self._storage_logger.info('_save_item_impl(some_source, services.ftp, 21) exit')
+        for data in data_list:
+            self._storage_logger.info('_save_item_impl(some_source, {0!s}) enter'.format(data))
+            self._storage_logger.info('_save_item_impl(some_source, {0!s}) exit'.format(data))
         self._storage_logger.info('save_data(some_source, data_list) exit')
         self._main_logger.info('_write_data(data_dict) exit with result successfully')
         self._main_logger.info('execute() exit with result successfully')

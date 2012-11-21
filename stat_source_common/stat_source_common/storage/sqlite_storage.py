@@ -23,7 +23,8 @@ class SqliteStorage(storage.Storage):
             connection.commit()
             self._log_info('save_data({0:s}, data_list) exit'.format(source_id))
             return True
-        except Exception:
+        except Exception as e:
+            print e
             self._log_exception('exception in save_data({0:s}, data_list)'.format(source_id))
             return False
         finally:
@@ -39,7 +40,8 @@ class SqliteStorage(storage.Storage):
             connection.commit()
             self._log_info('save_item({source:s}, {data_item!s}) exit'.format(source=source_id, data_item=data_item))
             return True
-        except Exception:
+        except Exception as e:
+            print e
             self._log_exception('exception in save_item({source:s}, {data_item!s})'.format(source=source_id, data_item=data_item))
             return False
         finally:
@@ -52,7 +54,8 @@ class SqliteStorage(storage.Storage):
             query = "insert into STAT_DATA(ID, SOURCE, CATEGORY, TIMEMARKER, DATA) values(NULL, ?, ?, datetime('now', 'localtime'), ?)"
             cursor.execute(query, (source_id, data_item.category, data_item.data))
             self._log_info('_save_item_impl({source:s}, {data_item!s}) exit'.format(source=source_id, data_item=data_item))
-        except Exception:
+        except Exception as e:
+            print e
             self._log_exception('exception in _save_item_impl({source:s}, {data_item!s})'.format(source=source_id, data_item=data_item))
             raise
 

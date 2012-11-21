@@ -70,6 +70,7 @@ class TestSqliteStorage(TestCase):
         storage.save_data(data_portion.source_id, data_portion.data)
         self._mox.VerifyAll()
 
+    # spec: [DataPortion] -> None
     def _test_save_items_common_body(self, data_portion_list):
         for data_portion in data_portion_list:
             self._logger.info("save_item({source:s}, {data_item!s}) enter".format(source=data_portion.source_id, data_item=data_portion.data))
@@ -87,6 +88,7 @@ class TestSqliteStorage(TestCase):
             self.assertTrue(result)
         self._mox.VerifyAll()
 
+    # spec: [DataPortion] -> None
     def _test_save_data_common_body(self, data_portion_list):
         for data_portion in data_portion_list:
             self._logger.info('save_data({0:s}, data_list) enter'.format(data_portion.source_id))

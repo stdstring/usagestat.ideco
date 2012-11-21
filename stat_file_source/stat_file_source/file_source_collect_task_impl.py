@@ -1,6 +1,11 @@
 from __future__ import unicode_literals
 import logging
 from stat_file_source.common import logger_helper
+# TODO (andrey.ushakov) : think because this is very dirty hack
+import os
+import sys
+sys.path.append(os.path.abspath('../stat_source_common/stat_source_common/entity'))
+import data_item
 
 class FileSourceCollectTaskImpl(object):
 
@@ -53,9 +58,9 @@ class FileSourceCollectTaskImpl(object):
             value = data_dict[category]
             if isinstance(value, list):
                 for item in value:
-                    dest_data.append((category, item))
+                    dest_data.append(data_item.DataItem(category, item))
             else:
-                dest_data.append((category, value))
+                dest_data.append(data_item.DataItem(category, value))
         return dest_data
 
 __author__ = 'andrey.ushakov'

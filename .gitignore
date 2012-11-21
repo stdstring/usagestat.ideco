@@ -1,11 +1,10 @@
-# ignoring *.pyc, stat_sender/.idea, stat_sender_db/usage_stat.db, stat_db_source/.idea, stat_file_source/.idea, stat_source_common/.idea, stat_db_lib/.idea, stat_db_funtest_utils/.idea, stat_server/.idea, stat_total_fun_tests/.idea
+# ignoring *.pyc, stat_sender/.idea, stat_sender_db/usage_stat.db, stat_db_source/.idea, stat_file_source/.idea, stat_source_common/.idea, stat_db_funtest_utils/.idea, stat_server/.idea, stat_total_fun_tests/.idea
 *.pyc
 stat_sender/.idea
 stat_sender_db/usage_stat.db
 stat_db_source/.idea
 stat_file_source/.idea
 stat_source_common/.idea
-stat_db_lib/.idea
 stat_db_funtest_utils/.idea
 stat_server/.idea
 stat_total_fun_tests/.idea

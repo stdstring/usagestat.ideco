@@ -1,16 +1,17 @@
 from __future__ import unicode_literals
+import io
 import logging
 import file_source_collect_task_impl
 import file_source_collector
 # TODO (andrey.ushakov) : think because this is very dirty hack
 import os
 import sys
-sys.path.append(os.path.abspath('../stat_db_lib/stat_db_lib'))
-import sqlite_storage_impl
+sys.path.append(os.path.abspath('../stat_source_common/stat_source_common/storage'))
+import sqlite_storage
 
 # spec: str -> [str]
 def read_file_content(source_filename):
-    source = open(source_filename, 'r')
+    source = io.open(source_filename, 'r')
     try:
         return source.readlines()
     finally:
@@ -28,7 +29,7 @@ class FileSourceCollectTask(object):
 
     # spec: None -> bool
     def execute(self):
-        storage = sqlite_storage_impl.SqliteStorageImpl(self._db_dest_filename, self._logger.getChild('sqlite_storage'))
+        storage = sqlite_storage.SqliteStorage(self._db_dest_filename, self._logger.getChild('sqlite_storage'))
         task_impl = file_source_collect_task_impl.FileSourceCollectTaskImpl(self._source_id, self._collector, lambda: read_file_content(self._source_filename), storage, self._logger)
         return task_impl.execute()
 
