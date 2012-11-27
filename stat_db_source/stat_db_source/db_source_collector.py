@@ -3,6 +3,7 @@ from stat_db_source.storage.data_collector import DataCollector
 
 class DbSourceCollector(object):
 
+    # spec: str, [CollectTask], (None -> ?DbConnection?), Storage, Logger -> DbSourceCollector
     def __init__(self, source_id, collect_task_list, source_connection_factory, dest_storage, logger):
         self._source_id = source_id
         self._collect_task_list = collect_task_list
@@ -10,6 +11,7 @@ class DbSourceCollector(object):
         self._dest_storage = dest_storage
         self._logger = logger
 
+    # spec: None -> None
     def collect(self):
         self._logger.info('collect() enter')
         try:
