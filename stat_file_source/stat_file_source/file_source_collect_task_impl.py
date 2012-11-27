@@ -1,11 +1,7 @@
 from __future__ import unicode_literals
 import logging
+from stat_source_common.entity import data_item
 from stat_file_source.common import logger_helper
-# TODO (andrey.ushakov) : think because this is very dirty hack
-import os
-import sys
-sys.path.append(os.path.abspath('../stat_source_common/stat_source_common/entity'))
-import data_item
 
 class FileSourceCollectTaskImpl(object):
 
