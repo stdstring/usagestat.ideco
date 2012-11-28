@@ -14,8 +14,9 @@ class DataCollector(object):
         try:
             cursor = connection.cursor()
             query_executer = lambda query: query_executer_body(query, cursor)
+            collect_task_logger = self._logger.getChild('collect_task')
             for collect_task in collect_task_list:
-                collect_task.collect_data(query_executer)
+                collect_task.collect_data(query_executer, collect_task_logger)
         except Exception:
             self._logger.exception('exception in collect_data(collect_task_list)')
             raise

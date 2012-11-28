@@ -6,12 +6,12 @@ import db_manager
 
 class PgDbManager(db_manager.DbManager):
 
-    # spec: str, str, str, int -> PgDbManager
-    def __init__(self, username, pwd, host=None, port=None):
+    # spec: str, str, str, int, str, str, str -> PgDbManager
+    def __init__(self, username, pwd, host=None, port=None, dbname='stat_db', create_script='../stat_server_db/metadata.sql', clear_script='../stat_server_db/clear.sql'):
         super(PgDbManager, self).__init__()
-        self.connection_string = self._create_connection_string(host, port, username, pwd)
-        self._create_db_args = self._create_metascript_args('../stat_server_db/metadata.sql', host, port, username)
-        self._clear_db_args = self._create_metascript_args('../stat_server_db/clear.sql', host, port, username)
+        self.connection_string = self._create_connection_string(dbname, host, port, username, pwd)
+        self._create_db_args = self._create_metascript_args(create_script, host, port, username)
+        self._clear_db_args = self._create_metascript_args(clear_script, host, port, username)
         self._pwd = pwd
 
     # spec: None -> None
@@ -27,9 +27,9 @@ class PgDbManager(db_manager.DbManager):
     def _clear_db(self):
         self._execute_metascript(self._clear_db_args)
 
-    # spec: None -> str
-    def _create_connection_string(self, host, port, user, pwd):
-        storage = ['dbname=stat_db', 'user={0:s}'.format(user), 'password={0:s}'.format(pwd)]
+    # spec: str, str, int, str, str -> str
+    def _create_connection_string(self, dbname, host, port, user, pwd):
+        storage = ['dbname={0:s}'.format(dbname), 'user={0:s}'.format(user), 'password={0:s}'.format(pwd)]
         if host is not None:
             storage.append('host={0:s}'.format(host))
         if host is not None:

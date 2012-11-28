@@ -109,8 +109,7 @@ class TestSqliteStorage(TestCase):
             self.assertEqual(expected[index][1], actual[index][1])
             self.assertEqual(expected[index][2], actual[index][2])
             self.assertEqual(expected[index][3], actual[index][4])
-            time_str = time.strptime(actual[index][3], '%Y-%m-%d %H:%M:%S')
-            actualDateTime = datetime(year=time_str.tm_yday, month=time_str.tm_mon, day=time_str.tm_mday, hour=time_str.tm_hour, minute=time_str.tm_min, second=time_str.tm_sec)
+            actualDateTime = datetime.strptime(actual[index][3], '%Y-%m-%d %H:%M:%S')
             self.assertTrue(actualDateTime-self._now < timedelta(seconds = 10))
             index += 1
 

@@ -27,7 +27,7 @@ class PgStorageImpl(Storage):
         finally:
             connection.close()
 
-    # spec: Cursor, UUID, StatDataItem -> None
+    # spec: Cursor, str, StatDataItem -> None
     def _save_item(self, cursor, user_id, item):
         try:
             self._log_info('save_item(cursor, {user_id!s}, {item!s}) enter'.format(user_id=user_id, item=item))

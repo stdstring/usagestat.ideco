@@ -17,10 +17,12 @@ class DbSourceCollector(object):
         try:
             data_collector = DataCollector(self._source_connection_factory, self._logger.getChild('data_collector'))
             data_collector.collect_data(self._collect_task_list)
+            collect_task_logger = self._logger.getChild('collect_task')
             for collect_task in self._collect_task_list:
-                data_item_list = collect_task.process_data()
+                data_item_list = collect_task.process_data(collect_task_logger)
                 self._dest_storage.save_data(self._source_id, data_item_list)
-        except Exception:
+        except Exception as e:
+            print e
             self._logger.exception('exception in collect()')
             raise
         self._logger.info('collect() exit')

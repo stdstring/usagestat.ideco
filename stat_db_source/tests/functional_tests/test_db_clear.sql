@@ -1,0 +1,1 @@
+drop database if exists stat_db_source_test;

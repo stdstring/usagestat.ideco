@@ -59,16 +59,17 @@ class DbManager(object):
             conn.close()
 
     # spec: str, tuple -> None
-    def execute_nonquery(self, query, params=()):
+    def execute_nonquery(self, query, params=None):
         if not self._ready:
             raise InvalidOperationException()
         conn = self._create_connection()
         try:
             cursor = conn.cursor()
-            if params == ():
+            if params is None:
                 cursor.execute(query)
             else:
                 cursor.executemany(query, params)
+                #cursor.execute(query, params)
             conn.commit()
         finally:
             conn.close()
