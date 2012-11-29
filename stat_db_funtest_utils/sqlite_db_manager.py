@@ -14,8 +14,6 @@ class SqliteDbManager(db_manager.DbManager):
         self._initial_working_dir = os.getcwd()
         self._db_create_script_path = db_create_script_path
         self._db_create_script_name = 'create.sh'
-        #db_dirname = 'usage_stat_db'
-        #db_filename = 'usage_stat.db'
         self._db_dirname = os.path.join(tempfile.gettempdir(), db_dirname)
         self._db_filename = os.path.join(tempfile.gettempdir(), db_dirname, db_filename)
         self.connection_string = self._db_filename

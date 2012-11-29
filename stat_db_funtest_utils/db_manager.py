@@ -69,7 +69,6 @@ class DbManager(object):
                 cursor.execute(query)
             else:
                 cursor.executemany(query, params)
-                #cursor.execute(query, params)
             conn.commit()
         finally:
             conn.close()

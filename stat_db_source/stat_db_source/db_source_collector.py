@@ -3,12 +3,12 @@ from stat_db_source.storage.data_collector import DataCollector
 
 class DbSourceCollector(object):
 
-    # spec: str, [CollectTask], (None -> ?DbConnection?), Storage, Logger -> DbSourceCollector
-    def __init__(self, source_id, collect_task_list, source_connection_factory, dest_storage, logger):
+    # spec: str, [CollectTask], (None -> ?DbConnection?), (Logger -> Storage), Logger -> DbSourceCollector
+    def __init__(self, source_id, collect_task_list, source_connection_factory, dest_storage_factory, logger):
         self._source_id = source_id
         self._collect_task_list = collect_task_list
         self._source_connection_factory = source_connection_factory
-        self._dest_storage = dest_storage
+        self._dest_storage_factory = dest_storage_factory
         self._logger = logger
 
     # spec: None -> None
@@ -18,11 +18,11 @@ class DbSourceCollector(object):
             data_collector = DataCollector(self._source_connection_factory, self._logger.getChild('data_collector'))
             data_collector.collect_data(self._collect_task_list)
             collect_task_logger = self._logger.getChild('collect_task')
+            dest_storage = self._dest_storage_factory(self._logger.getChild('dest_storage'))
             for collect_task in self._collect_task_list:
                 data_item_list = collect_task.process_data(collect_task_logger)
-                self._dest_storage.save_data(self._source_id, data_item_list)
-        except Exception as e:
-            print e
+                dest_storage.save_data(self._source_id, data_item_list)
+        except Exception:
             self._logger.exception('exception in collect()')
             raise
         self._logger.info('collect() exit')
