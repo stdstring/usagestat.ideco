@@ -35,7 +35,8 @@ class CollectTask(object):
         logger.info('_collect_data_item({query:s}) enter'.format(query=query))
         try:
             data = query_executer(query)
-        except Exception:
+        except Exception as e:
+            print e
             logger.exception('exception in _collect_data_item({query:s})'.format(query=query))
             raise
         logger.info('_collect_data_item({query:s}) exit'.format(query=query))
