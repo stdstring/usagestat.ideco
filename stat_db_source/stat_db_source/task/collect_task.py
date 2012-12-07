@@ -23,12 +23,17 @@ class CollectTask(object):
         logger.info('process_data() enter')
         try:
             processed_data = self._process_task.process(self._intermediate_data)
-            self._intermediate_data = None
         except Exception:
             logger.exception('exception in process_data()')
             raise
+        finally:
+            self._intermediate_data = None
         logger.info('process_data() exit')
         return processed_data
+
+    # spec: None -> bool
+    def contains_data(self):
+        return self._intermediate_data is not None
 
     # spec: (str -> [(...)]), str, Logger -> [(...)]
     def _collect_data_item(self, query_executer, query, logger):
