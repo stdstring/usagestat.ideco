@@ -4,6 +4,7 @@ from mox import Mox
 from unittest.case import TestCase
 from stat_source_common.entity.data_item import DataItem
 from stat_source_common.storage.sqlite_storage import SqliteStorage
+from tests.common.custom_test_exception import CustomTestException
 from tests.common.data_portion import DataPortion
 
 class TestSqliteStorage(TestCase):
@@ -46,13 +47,13 @@ class TestSqliteStorage(TestCase):
         self._logger.info("save_item({source:s}, {data_item!s}) enter".format(source=data_portion.source_id, data_item=data_portion.data))
         self._connection.cursor().AndReturn(self._cursor)
         self._logger.info("_save_item_impl({source:s}, {data_item!s}) enter".format(source=data_portion.source_id, data_item=data_portion.data))
-        self._cursor.execute(self._query_str, (data_portion.source_id, data_portion.data.category, data_portion.data.data)).AndRaise(Exception())
+        self._cursor.execute(self._query_str, (data_portion.source_id, data_portion.data.category, data_portion.data.data)).AndRaise(CustomTestException())
         self._logger.exception("exception in _save_item_impl({source:s}, {data_item!s})".format(source=data_portion.source_id, data_item=data_portion.data))
         self._connection.close()
         self._logger.exception("exception in save_item({source:s}, {data_item!s})".format(source=data_portion.source_id, data_item=data_portion.data))
         self._mox.ReplayAll()
         storage = SqliteStorage(lambda: self._connection, self._logger)
-        storage.save_item(data_portion.source_id, data_portion.data)
+        self.assertRaises(CustomTestException, lambda: storage.save_item(data_portion.source_id, data_portion.data))
         self._mox.VerifyAll()
 
     def test_save_data_with_exception(self):
@@ -61,13 +62,15 @@ class TestSqliteStorage(TestCase):
         self._logger.info('save_data({0:s}, data_list) enter'.format(data_portion.source_id))
         self._connection.cursor().AndReturn(self._cursor)
         self._logger.info("_save_item_impl({source:s}, {data_item!s}) enter".format(source=data_portion.source_id, data_item=data_item))
-        self._cursor.execute(self._query_str, (data_portion.source_id, data_item.category, data_item.data)).AndRaise(Exception())
+        #noinspection PyUnresolvedReferences
+        self._cursor.execute(self._query_str, (data_portion.source_id, data_item.category, data_item.data)).AndRaise(CustomTestException())
+        #inspection PyUnresolvedReferences
         self._logger.exception("exception in _save_item_impl({source:s}, {data_item!s})".format(source=data_portion.source_id, data_item=data_item))
         self._connection.close()
         self._logger.exception('exception in save_data({0:s}, data_list)'.format(data_portion.source_id))
         self._mox.ReplayAll()
         storage = SqliteStorage(lambda: self._connection, self._logger)
-        storage.save_data(data_portion.source_id, data_portion.data)
+        self.assertRaises(CustomTestException, lambda: storage.save_data(data_portion.source_id, data_portion.data))
         self._mox.VerifyAll()
 
     # spec: [DataPortion] -> None
@@ -84,8 +87,7 @@ class TestSqliteStorage(TestCase):
         self._mox.ReplayAll()
         storage = SqliteStorage(lambda: self._connection, self._logger)
         for data_portion in data_portion_list:
-            result = storage.save_item(data_portion.source_id, data_portion.data)
-            self.assertTrue(result)
+            storage.save_item(data_portion.source_id, data_portion.data)
         self._mox.VerifyAll()
 
     # spec: [DataPortion] -> None
@@ -103,8 +105,7 @@ class TestSqliteStorage(TestCase):
         self._mox.ReplayAll()
         storage = SqliteStorage(lambda: self._connection, self._logger)
         for data_portion in data_portion_list:
-            result = storage.save_data(data_portion.source_id, data_portion.data)
-            self.assertTrue(result)
+            storage.save_data(data_portion.source_id, data_portion.data)
         self._mox.VerifyAll()
 
 __author__ = 'andrey.ushakov'

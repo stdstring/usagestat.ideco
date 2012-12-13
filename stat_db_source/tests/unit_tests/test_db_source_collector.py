@@ -3,6 +3,7 @@ from logging import Logger
 from mox import Mox
 from unittest.case import TestCase
 from stat_source_common.entity.data_item import DataItem
+from stat_source_common.storage.storage import Storage
 from stat_db_source.db_source_collector import DbSourceCollector
 from stat_db_source.task.collect_task import CollectTask
 from stat_db_source.task.simple_process_task import SimpleProcessTask
@@ -28,7 +29,7 @@ class TestDbSourceCollector(TestCase):
         self._mox = Mox()
         self._source_connection = self._mox.CreateMockAnything()
         self._source_cursor = self._mox.CreateMockAnything()
-        self._dest_storage = self._mox.CreateMockAnything()
+        self._dest_storage = self._mox.CreateMock(Storage)
         self._logger = self._mox.CreateMock(Logger)
         self._data_collector_logger = self._mox.CreateMock(Logger)
         self._collect_task_logger = self._mox.CreateMock(Logger)

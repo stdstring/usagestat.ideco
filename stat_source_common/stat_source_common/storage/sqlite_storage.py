@@ -12,7 +12,7 @@ class SqliteStorage(storage.Storage):
             self._conn_factory = conn_param
         self._logger = logger
 
-    # spec: str, [DataItem] -> bool
+    # spec: str, [DataItem] -> None
     def save_data(self, source_id, data_item_list):
         self._log_info('save_data({0:s}, data_list) enter'.format(source_id))
         connection = self._conn_factory()
@@ -22,14 +22,13 @@ class SqliteStorage(storage.Storage):
                 self._save_item_impl(cursor, source_id, data_item)
             connection.commit()
             self._log_info('save_data({0:s}, data_list) exit'.format(source_id))
-            return True
         except Exception:
             self._log_exception('exception in save_data({0:s}, data_list)'.format(source_id))
-            return False
+            raise
         finally:
             connection.close()
 
-    # spec: str, DataItem -> bool
+    # spec: str, DataItem -> None
     def save_item(self, source_id, data_item):
         self._log_info('save_item({source:s}, {data_item!s}) enter'.format(source=source_id, data_item=data_item))
         connection = self._conn_factory()
@@ -38,10 +37,9 @@ class SqliteStorage(storage.Storage):
             self._save_item_impl(cursor, source_id, data_item)
             connection.commit()
             self._log_info('save_item({source:s}, {data_item!s}) exit'.format(source=source_id, data_item=data_item))
-            return True
         except Exception:
             self._log_exception('exception in save_item({source:s}, {data_item!s})'.format(source=source_id, data_item=data_item))
-            return False
+            raise
         finally:
             connection.close()
 

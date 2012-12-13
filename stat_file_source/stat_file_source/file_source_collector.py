@@ -10,7 +10,9 @@ class FileSourceCollector(object):
 
     # spec: [str] -> {str:[object]}
     def collect(self, source):
+        #noinspection PyUnresolvedReferences
         state = common.state.State(None, None, {})
+        #inspection PyUnresolvedReferences
         for source_item in source:
             state = self._collect_item(source_item, state)
         return state.items

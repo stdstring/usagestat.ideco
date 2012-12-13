@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 import logging
 from stat_source_common.entity import data_item
-from stat_file_source.common import logger_helper
 
 class FileSourceCollectTaskImpl(object):
 
@@ -19,13 +18,12 @@ class FileSourceCollectTaskImpl(object):
         try:
             source_data = self._read_file_content()
             dest_data = self._collector.collect(source_data)
-            write_result = self._write_data(dest_data)
-            str_write_result = logger_helper.bool_result_to_str(write_result)
-            self._logger.info('execute() exit with result {0:s}'.format(str_write_result))
-            return write_result
+            self._write_data(dest_data)
         except Exception:
             self._logger.exception('exception in execute()')
             return False
+        self._logger.info('execute() exit')
+        return True
 
     # spec: None -> [str]
     def _read_file_content(self):
@@ -38,14 +36,12 @@ class FileSourceCollectTaskImpl(object):
             self._logger.exception('exception in _read_file_content()')
             raise
 
-    # spec: {str: object | [object]} -> bool
+    # spec: {str: object | [object]} -> None
     def _write_data(self, data_dict):
         self._logger.info('_write_data(data_dict) enter')
         data_list = self._prepare_data(data_dict)
-        result = self._storage.save_data(self._source_id, data_list)
-        str_result = logger_helper.bool_result_to_str(result)
-        self._logger.info('_write_data(data_dict) exit with result {0:s}'.format(str_result))
-        return result
+        self._storage.save_data(self._source_id, data_list)
+        self._logger.info('_write_data(data_dict) exit')
 
     # spec: {str: object | [object]} -> [(str, object)]
     def _prepare_data(self, data_dict):

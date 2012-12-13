@@ -2,7 +2,10 @@ from __future__ import unicode_literals
 from datetime import datetime, timedelta
 from logging import Logger
 from mox import Mox
+import os
 from unittest.case import TestCase
+from stat_db_funtest_utils import sqlite_db_manager
+from stat_source_common.entity.data_item import DataItem
 from stat_file_source.file_source_collect_task import FileSourceCollectTask
 from stat_file_source.filter.comment_filter import CommentFilter
 from stat_file_source.filter.spaces_filter import SpacesFilter
@@ -11,13 +14,6 @@ from stat_file_source.handler.simple_key_value_handler import SimpleKeyValueHand
 from stat_file_source.handler.standard_config_section_handler import StandardConfigSectionHandler
 from stat_file_source.handler.transform_key_value_handler import TransformKeyValueHandler
 from stat_file_source.utils.standard_key_transformer import StandardKeyTransformer
-# TODO (andrey.ushakov) : think because this is very dirty hack
-import os
-import sys
-sys.path.append(os.path.abspath('../stat_db_funtest_utils'))
-import sqlite_db_manager
-sys.path.append(os.path.abspath('../stat_source_common/stat_source_common/entity'))
-import data_item
 
 # spec: str -> str
 def transform_user_fun(source_value):
@@ -59,15 +55,15 @@ class TestFileSourceCollectTask(TestCase):
         self._db_manager.__exit__(None, None, None)
 
     def test_execute(self):
-        data_list = [data_item.DataItem('wins.ip', 1),
-                     data_item.DataItem('services.http', '80'),
-                     data_item.DataItem('gate.ip', 3),
-                     data_item.DataItem('users.user', 'ivanov,*******'),
-                     data_item.DataItem('users.user', 'petrov,***'),
-                     data_item.DataItem('users.user', 'sydorov,*********'),
-                     data_item.DataItem('users.user', 'kozlov,*********'),
-                     data_item.DataItem('dns.ip', 2),
-                     data_item.DataItem('services.ftp', '21')]
+        data_list = [DataItem('wins.ip', 1),
+                     DataItem('services.http', '80'),
+                     DataItem('gate.ip', 3),
+                     DataItem('users.user', 'ivanov,*******'),
+                     DataItem('users.user', 'petrov,***'),
+                     DataItem('users.user', 'sydorov,*********'),
+                     DataItem('users.user', 'kozlov,*********'),
+                     DataItem('dns.ip', 2),
+                     DataItem('services.ftp', '21')]
         self._main_logger.getChild('sqlite_storage').AndReturn(self._storage_logger)
         self._main_logger.info('execute() enter')
         self._main_logger.info('_read_file_content() enter')
@@ -78,8 +74,8 @@ class TestFileSourceCollectTask(TestCase):
             self._storage_logger.info('_save_item_impl(some_source, {0!s}) enter'.format(data))
             self._storage_logger.info('_save_item_impl(some_source, {0!s}) exit'.format(data))
         self._storage_logger.info('save_data(some_source, data_list) exit')
-        self._main_logger.info('_write_data(data_dict) exit with result successfully')
-        self._main_logger.info('execute() exit with result successfully')
+        self._main_logger.info('_write_data(data_dict) exit')
+        self._main_logger.info('execute() exit')
         self._mox.ReplayAll()
         now = datetime.now()
         result = self._collect_task.execute()

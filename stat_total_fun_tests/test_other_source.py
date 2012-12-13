@@ -1,9 +1,6 @@
 from __future__ import unicode_literals
-# TODO (andrey.ushakov) : think because this is very dirty hack
-import os
-import sys
-sys.path.append(os.path.abspath('../stat_source_common/stat_source_common/storage'))
-import sqlite_storage
+from stat_source_common.entity.data_item import DataItem
+from stat_source_common.storage import sqlite_storage
 
 class TestOtherSource(object):
 
@@ -13,9 +10,9 @@ class TestOtherSource(object):
         self._storage = sqlite_storage.SqliteStorage(db_file_path, storage_logger)
 
     def collect_stat_data(self):
-        stat_data = [('bad_packet_count', str(10)),
-            ('good_packet_count', str(13)),
-            ('false_positive_antivirus_count', str(4))]
+        stat_data = [DataItem('bad_packet_count', 10),
+            DataItem('good_packet_count', 13),
+            DataItem('false_positive_antivirus_count', 4)]
         self._storage.save_data(self._source, stat_data)
 
     _source = 'other_source'
