@@ -64,6 +64,7 @@ class TestFileSourceCollectTaskImpl(TestCase):
         self._logger.exception('exception in execute()')
         self._test_common_body(False)
 
+    # spec: bool -> None
     def _test_common_body(self, expected_result):
         self._mox.ReplayAll()
         task_impl = FileSourceCollectTaskImpl('test', self._collector, self._source_provider, self._storage, self._logger)

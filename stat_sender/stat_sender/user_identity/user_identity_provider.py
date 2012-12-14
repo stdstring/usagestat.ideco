@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+import io
 import os
 import uuid
 
@@ -21,17 +22,17 @@ class UserIdentityProvider(object):
             user_identity = uuid.UUID(self._read_from_source())
         else:
             user_identity = uuid.uuid1()
-            self._create_source(str(user_identity))
+            self._create_source('{0!s}'.format(user_identity))
         return user_identity
 
     # spec: None -> str
     def _read_from_source(self):
-        with open(self._user_identity_source, 'r') as source:
+        with io.open(self._user_identity_source, 'r') as source:
             return source.read()
 
     # spec: str -> None
     def _create_source(self, user_identity):
-        with open(self._user_identity_source, 'w') as source:
+        with io.open(self._user_identity_source, 'w') as source:
             source.write(user_identity)
 
 __author__ = 'andrey.ushakov'

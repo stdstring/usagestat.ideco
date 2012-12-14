@@ -1,20 +1,14 @@
 import httplib
-import urlparse
 from stat_sender.common import logger_helper
 from stat_sender.endpoint.endpoint import Endpoint
 
 class HttpEndpoint(Endpoint):
 
-    # spec: str, Logger, {...} -> HttpEndpoint
-    def __init__(self, remote_host, logger, **kwargs):
+    # spec (None -> HttpConnection), str, Logger -> HttpEndpoint
+    def __init__(self, connection_factory, path, logger):
+        self._connection_factory = connection_factory
+        self._path = path
         self._logger = logger
-        parse_result = urlparse.urlparse(remote_host)
-        if parse_result.scheme != 'http':
-            raise ValueError()
-        hostname = parse_result.hostname
-        port = parse_result.port
-        self._path = parse_result.path
-        self._connection_factory = lambda: httplib.HTTPConnection(host=hostname, port=port)
 
     # spec: str -> bool
     def send(self, data):

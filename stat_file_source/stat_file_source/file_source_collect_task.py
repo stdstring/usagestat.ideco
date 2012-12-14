@@ -1,13 +1,9 @@
 from __future__ import unicode_literals
 import io
 import logging
+from stat_source_common.storage import sqlite_storage
 import file_source_collect_task_impl
 import file_source_collector
-# TODO (andrey.ushakov) : think because this is very dirty hack
-import os
-import sys
-sys.path.append(os.path.abspath('../stat_source_common/stat_source_common/storage'))
-import sqlite_storage
 
 # spec: str -> [str]
 def read_file_content(source_filename):

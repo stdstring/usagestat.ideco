@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
-from stat_sender.endpoint.http_endpoint import HttpEndpoint
-from stat_sender.endpoint.https_endpoint import HttpsEndpoint
+from stat_sender.endpoint.http_endpoint_factory import HttpEndpointFactory
+from stat_sender.endpoint.https_endpoint_factory import HttpsEndpointFactory
 
 # storage
 DB_FILE = '/tmp/usage_stat.db'
@@ -11,10 +11,10 @@ USER_IDENTITY_SOURCE = '/tmp/user.id'
 # endpoint
 USED_ENDPOINT = 'http'
 
-ENDPOINTS_DEF = {'http':  {'endpoint_impl': HttpEndpoint,
+ENDPOINTS_DEF = {'http':  {'endpoint_factory': HttpEndpointFactory,
                            'remote_host': 'http://localhost:8000/statserver/api/v1/collect/',
                            'params': {}},
-                 'https': {'endpoint_impl': HttpsEndpoint,
+                 'https': {'endpoint_factory': HttpsEndpointFactory,
                            'remote_host': 'http://localhost:8000/statserver/api/v1/collect/',
                            'params': {'key_file': '', 'cert_file': ''}}}
 

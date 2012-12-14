@@ -3,12 +3,8 @@ from datetime import datetime
 from logging import Logger
 from mox import Mox
 from unittest.case import TestCase
+from stat_db_funtest_utils import sqlite_db_manager
 from stat_sender.storage.sqlite_storage import SqliteStorage
-# TODO (andrey.ushakov) : think because this is very dirty hack
-import os
-import sys
-sys.path.append(os.path.abspath('../stat_db_funtest_utils'))
-import sqlite_db_manager
 
 class TestSqliteStorage(TestCase):
 
