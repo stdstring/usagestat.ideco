@@ -50,7 +50,8 @@ class SqliteStorage(storage.Storage):
             query = "insert into STAT_DATA(ID, SOURCE, CATEGORY, TIMEMARKER, DATA) values(NULL, ?, ?, datetime('now', 'localtime'), ?)"
             cursor.execute(query, (source_id, data_item.category, data_item.data))
             self._log_info('_save_item_impl({source:s}, {data_item!s}) exit'.format(source=source_id, data_item=data_item))
-        except Exception:
+        except Exception as e:
+            print e
             self._log_exception('exception in _save_item_impl({source:s}, {data_item!s})'.format(source=source_id, data_item=data_item))
             raise
 

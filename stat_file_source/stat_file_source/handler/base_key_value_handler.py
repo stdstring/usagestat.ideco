@@ -23,10 +23,8 @@ class BaseKeyValueHandler(Handler):
                 key_values = new_items.setdefault(final_key, self._item_init_value)
                 new_items[final_key] = self._define_value(key_values, value)
                 return (True, State(state.state_id, state.state_data, new_items))
-            else:
-                return (False, state)
-        else:
             return (False, state)
+        return (False, state)
 
     # spec: str -> int
     def _get_delimiter_position(self, source):

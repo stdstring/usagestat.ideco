@@ -9,14 +9,14 @@ class AggregateKeyValueHandler(BaseKeyValueHandler):
         self._aggregate_fun = aggregate_fun
 
     # spec: str, [str], (str, State -> str), (object, str -> object) -> AggregateKeyValueHandler
-    @staticmethod
-    def create_with_known_key_list(key_value_delimiter, known_key_list, key_transformer, aggregate_fun, item_init_value):
-        return AggregateKeyValueHandler(key_value_delimiter, lambda key, state: key in known_key_list, key_transformer, aggregate_fun, item_init_value)
+    @classmethod
+    def create_with_known_key_list(cls, key_value_delimiter, known_key_list, key_transformer, aggregate_fun, item_init_value):
+        return cls(key_value_delimiter, lambda key, state: key in known_key_list, key_transformer, aggregate_fun, item_init_value)
 
     # spec: str, (str, State -> bool), (str, State -> str), (object, str -> object) -> AggregateKeyValueHandler
-    @staticmethod
-    def create_with_known_key_predicate(key_value_delimiter, known_key_predicate, key_transformer, aggregate_fun, item_init_value):
-        return AggregateKeyValueHandler(key_value_delimiter, known_key_predicate, key_transformer, aggregate_fun, item_init_value)
+    @classmethod
+    def create_with_known_key_predicate(cls, key_value_delimiter, known_key_predicate, key_transformer, aggregate_fun, item_init_value):
+        return cls(key_value_delimiter, known_key_predicate, key_transformer, aggregate_fun, item_init_value)
 
     # spec: object, str -> object
     def _define_value(self, old_value, item_value):

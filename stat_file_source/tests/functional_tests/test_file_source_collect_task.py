@@ -11,6 +11,7 @@ from stat_file_source.filter.comment_filter import CommentFilter
 from stat_file_source.filter.spaces_filter import SpacesFilter
 from stat_file_source.handler.aggregate_key_value_handler import AggregateKeyValueHandler
 from stat_file_source.handler.simple_key_value_handler import SimpleKeyValueHandler
+from stat_file_source.handler.single_key_handler import SingleKeyHandler
 from stat_file_source.handler.standard_config_section_handler import StandardConfigSectionHandler
 from stat_file_source.handler.transform_key_value_handler import TransformKeyValueHandler
 from stat_file_source.utils.standard_key_transformer import StandardKeyTransformer
@@ -48,7 +49,9 @@ class TestFileSourceCollectTask(TestCase):
         handlers = [StandardConfigSectionHandler(),
                     SimpleKeyValueHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'services', standard_key_transformer),
                     TransformKeyValueHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'users', standard_key_transformer, transform_user_fun),
-                    AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], ip_key_transformer, lambda old_value, item: old_value + 1, 0)]
+                    AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], ip_key_transformer, lambda old_value, item: old_value + 1, 0),
+                    SimpleKeyValueHandler.create_with_known_key_list('=', ['use_local_mail', 'use_remote_mail', 'use_jabber'], standard_key_transformer),
+                    SingleKeyHandler.create_with_known_key_list('=', ['use_local_mail', 'use_remote_mail', 'use_jabber'], standard_key_transformer, '0')]
         self._collect_task = FileSourceCollectTask('some_source', filters, handlers, source_filename, self._db_manager.db_filename, self._main_logger)
 
     def tearDown(self):
@@ -56,13 +59,16 @@ class TestFileSourceCollectTask(TestCase):
 
     def test_execute(self):
         data_list = [DataItem('wins.ip', 1),
+                     DataItem('options.use_jabber', '0'),
                      DataItem('services.http', '80'),
                      DataItem('gate.ip', 3),
                      DataItem('users.user', 'ivanov,*******'),
                      DataItem('users.user', 'petrov,***'),
                      DataItem('users.user', 'sydorov,*********'),
                      DataItem('users.user', 'kozlov,*********'),
+                     DataItem('options.use_remote_mail', '0'),
                      DataItem('dns.ip', 2),
+                     DataItem('options.use_local_mail', '1'),
                      DataItem('services.ftp', '21')]
         self._main_logger.getChild('sqlite_storage').AndReturn(self._storage_logger)
         self._main_logger.info('execute() enter')
@@ -89,7 +95,10 @@ class TestFileSourceCollectTask(TestCase):
             ('users.user', 'sydorov,*********'),
             ('users.user', 'kozlov,*********'),
             ('services.http', '80'),
-            ('services.ftp', '21')]
+            ('services.ftp', '21'),
+            ('options.use_local_mail', '1'),
+            ('options.use_remote_mail', '0'),
+            ('options.use_jabber', '0')]
         self._check_data(now, 'some_source', expected, actual)
         self._mox.VerifyAll()
 

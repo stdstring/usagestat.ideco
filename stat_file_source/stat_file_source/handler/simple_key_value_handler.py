@@ -8,14 +8,14 @@ class SimpleKeyValueHandler(BaseKeyValueHandler):
         super(SimpleKeyValueHandler, self).__init__(key_value_delimiter, known_key_predicate, key_transformer, [])
 
     # spec: str, [str], (str, State -> str) -> SimpleKeyValueHandler
-    @staticmethod
-    def create_with_known_key_list(key_value_delimiter, known_key_list, key_transformer):
-        return SimpleKeyValueHandler(key_value_delimiter, lambda key, state: key in known_key_list, key_transformer)
+    @classmethod
+    def create_with_known_key_list(cls, key_value_delimiter, known_key_list, key_transformer):
+        return cls(key_value_delimiter, lambda key, state: key in known_key_list, key_transformer)
 
     # spec: str, (str, State -> bool), (str, State -> str) -> SimpleKeyValueHandler
-    @staticmethod
-    def create_with_known_key_predicate(key_value_delimiter, known_key_predicate, key_transformer):
-        return SimpleKeyValueHandler(key_value_delimiter, known_key_predicate, key_transformer)
+    @classmethod
+    def create_with_known_key_predicate(cls, key_value_delimiter, known_key_predicate, key_transformer):
+        return cls(key_value_delimiter, known_key_predicate, key_transformer)
 
     # spec: [str], str -> [str]
     def _define_value(self, old_value, item_value):
