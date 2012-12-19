@@ -13,7 +13,7 @@ from stat_file_source.handler.aggregate_key_value_handler import AggregateKeyVal
 from stat_file_source.handler.simple_key_value_handler import SimpleKeyValueHandler
 from stat_file_source.handler.single_key_handler import SingleKeyHandler
 from stat_file_source.handler.standard_config_section_handler import StandardConfigSectionHandler
-from stat_file_source.handler.transform_key_value_handler import TransformKeyValueHandler
+from stat_file_source.handler.transform_key_list_handler import TransformKeyListHandler
 from stat_file_source.utils.standard_key_transformer import StandardKeyTransformer
 
 # spec: str -> str
@@ -48,7 +48,7 @@ class TestFileSourceCollectTask(TestCase):
         ip_key_transformer = lambda key, state: '{category:s}.ip'.format(category=state.state_id)
         handlers = [StandardConfigSectionHandler(),
                     SimpleKeyValueHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'services', standard_key_transformer),
-                    TransformKeyValueHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'users', standard_key_transformer, transform_user_fun),
+                    TransformKeyListHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'users', standard_key_transformer, transform_user_fun),
                     AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], ip_key_transformer, lambda old_value, item: old_value + 1, 0),
                     SimpleKeyValueHandler.create_with_known_key_list('=', ['use_local_mail', 'use_remote_mail', 'use_jabber'], standard_key_transformer),
                     SingleKeyHandler.create_with_known_key_list('=', ['use_local_mail', 'use_remote_mail', 'use_jabber'], standard_key_transformer, '0')]

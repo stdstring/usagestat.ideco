@@ -4,7 +4,7 @@ from stat_file_source.file_source_collector import FileSourceCollector
 from stat_file_source.filter.comment_filter import CommentFilter
 from stat_file_source.filter.spaces_filter import SpacesFilter
 from stat_file_source.handler.aggregate_key_value_handler import AggregateKeyValueHandler
-from stat_file_source.handler.simple_key_value_handler import SimpleKeyValueHandler
+from stat_file_source.handler.simple_key_list_handler import SimpleKeyListHandler
 from stat_file_source.handler.standard_config_section_handler import StandardConfigSectionHandler
 from stat_file_source.utils.standard_key_transformer import StandardKeyTransformer
 
@@ -15,7 +15,7 @@ class TestFileSourceCollector(TestCase):
         key_transformer = StandardKeyTransformer()
         filters = [CommentFilter('#'), SpacesFilter()]
         handlers = [StandardConfigSectionHandler(),
-                    SimpleKeyValueHandler.create_with_known_key_list('=', ['key13', 'key666'], key_transformer),
+                    SimpleKeyListHandler.create_with_known_key_list('=', ['key13', 'key666'], key_transformer),
                     AggregateKeyValueHandler.create_with_known_key_list('=', ['key555', 'key999'], key_transformer, lambda old_value, item: old_value + 1, 0),
                     AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], lambda key, state: state.state_id + '_ip', lambda old_value, item: old_value + 1, 0)]
         self._collector = FileSourceCollector(filters, handlers)
