@@ -58,18 +58,18 @@ class TestFileSourceCollectTask(TestCase):
         self._db_manager.__exit__(None, None, None)
 
     def test_execute(self):
-        data_list = [DataItem('wins.ip', 1),
-                     DataItem('options.use_jabber', '0'),
-                     DataItem('services.http', '80'),
-                     DataItem('gate.ip', 3),
+        data_list = [DataItem('gate.ip', 3),
+                     DataItem('dns.ip', 2),
+                     DataItem('wins.ip', 1),
                      DataItem('users.user', 'ivanov,*******'),
                      DataItem('users.user', 'petrov,***'),
                      DataItem('users.user', 'sydorov,*********'),
                      DataItem('users.user', 'kozlov,*********'),
-                     DataItem('options.use_remote_mail', '0'),
-                     DataItem('dns.ip', 2),
+                     DataItem('services.http', '80'),
+                     DataItem('services.ftp', '21'),
                      DataItem('options.use_local_mail', '1'),
-                     DataItem('services.ftp', '21')]
+                     DataItem('options.use_remote_mail', '0'),
+                     DataItem('options.use_jabber', '0')]
         self._main_logger.getChild('sqlite_storage').AndReturn(self._storage_logger)
         self._main_logger.info('execute() enter')
         self._main_logger.info('_read_file_content() enter')

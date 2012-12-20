@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from collections import OrderedDict
 from logging import Logger
 from mox import Mox
 from unittest.case import TestCase
@@ -29,9 +30,9 @@ class TestFileSourceCollectTaskImpl(TestCase):
         self._logger.info('_read_file_content() enter')
         self._source_provider().AndReturn(['key1=value1', 'key2=value2'])
         self._logger.info('_read_file_content() exit')
-        self._collector.collect(['key1=value1', 'key2=value2']).AndReturn({'key1': 'value1', 'key2': 'value2'})
+        self._collector.collect(['key1=value1', 'key2=value2']).AndReturn(OrderedDict([('key1', 'value1'), ('key2', 'value2')]))
         self._logger.info('_write_data(data_dict) enter')
-        self._storage.save_data('test', [(u'key2', u'value2'), (u'key1', u'value1')])
+        self._storage.save_data('test', [('key1', 'value1'), ('key2', 'value2')])
         self._logger.info('_write_data(data_dict) exit')
         self._logger.info(u'execute() exit')
         self._test_common_body(True)
@@ -58,9 +59,9 @@ class TestFileSourceCollectTaskImpl(TestCase):
         self._logger.info('_read_file_content() enter')
         self._source_provider().AndReturn(['key1=value1', 'key2=value2'])
         self._logger.info('_read_file_content() exit')
-        self._collector.collect(['key1=value1', 'key2=value2']).AndReturn({'key1': 'value1', 'key2': 'value2'})
+        self._collector.collect(['key1=value1', 'key2=value2']).AndReturn(OrderedDict([('key1', 'value1'), ('key2', 'value2')]))
         self._logger.info('_write_data(data_dict) enter')
-        self._storage.save_data('test', [(u'key2', u'value2'), (u'key1', u'value1')]).AndRaise(CustomTestException())
+        self._storage.save_data('test', [('key1', 'value1'), ('key2', 'value2')]).AndRaise(CustomTestException())
         self._logger.exception('exception in execute()')
         self._test_common_body(False)
 

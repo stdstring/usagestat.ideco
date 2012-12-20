@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from collections import OrderedDict
 import common.state
 
 class FileSourceCollector(object):
@@ -11,7 +12,7 @@ class FileSourceCollector(object):
     # spec: [str] -> {str:[object]}
     def collect(self, source):
         #noinspection PyUnresolvedReferences
-        state = common.state.State(None, None, {})
+        state = common.state.State(None, None, OrderedDict())
         #inspection PyUnresolvedReferences
         for source_item in source:
             state = self._collect_item(source_item, state)

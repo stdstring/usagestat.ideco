@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from collections import OrderedDict
 from unittest.case import TestCase
 from stat_file_source.file_source_collector import FileSourceCollector
 from stat_file_source.filter.comment_filter import CommentFilter
@@ -28,7 +29,7 @@ class TestFileSourceCollector(TestCase):
                  '# second comment',
                  'key999=11',
                  'key555=999 # BFG some other characteristic']
-        expected = {'key13': ['IDDQD', 'IDKFA'], 'key555': 2, 'key999': 1}
+        expected = OrderedDict([('key13', ['IDDQD', 'IDKFA']), ('key555', 2), ('key999', 1)])
         actual = self._collector.collect(source)
         self.assertDictEqual(expected, actual)
 
@@ -45,7 +46,7 @@ class TestFileSourceCollector(TestCase):
                  'key13=IDKFA\t\t\t',
                  'key555=777 # yet one some strange value',
                  'key555=11']
-        expected = {'section_number_1.key13': ['IDDQD'], 'section_number_3.key13': ['IDKFA'], 'section_number_1.key555': 1, 'section_number_3.key555': 2}
+        expected = OrderedDict([('section_number_1.key13', ['IDDQD']), ('section_number_1.key555', 1), ('section_number_3.key13', ['IDKFA']), ('section_number_3.key555', 2)])
         actual = self._collector.collect(source)
         self.assertDictEqual(expected, actual)
 
@@ -57,7 +58,7 @@ class TestFileSourceCollector(TestCase):
                  '[section_number_2',
                  '# yet one comment',
                  'key555=1111']
-        expected = {'section_1.key555': 1}
+        expected = OrderedDict([('section_1.key555', 1)])
         actual = self._collector.collect(source)
         self.assertDictEqual(expected, actual)
 
@@ -73,7 +74,7 @@ class TestFileSourceCollector(TestCase):
                  'ip9=192.168.166.66',
                  '[wins]',
                  'ip0=192.168.111.11']
-        expected = {'gate_ip': 2, 'dns_ip':3, 'wins_ip':1}
+        expected = OrderedDict([('gate_ip', 2), ('dns_ip', 3), ('wins_ip', 1)])
         actual = self._collector.collect(source)
         self.assertDictEqual(expected, actual)
 

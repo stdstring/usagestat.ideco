@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from collections import OrderedDict
 from stat_file_source.common.state import State
 from stat_file_source.handler.handler import Handler
 
@@ -28,7 +29,7 @@ class SingleKeyHandler(Handler):
             key = source
             if self._known_key_predicate(key, state):
                 final_key = self._key_transformer(key, state)
-                new_items = dict(state.items)
+                new_items = OrderedDict(state.items)
                 new_items[final_key] = self._value
                 return (True, State(state.state_id, state.state_data, new_items))
             return (False, state)
