@@ -14,11 +14,13 @@ class TestFileSourceCollector(TestCase):
     def __init__(self, methodName='runTest'):
         super(TestFileSourceCollector, self).__init__(methodName)
         key_transformer = StandardKeyTransformer()
+        ip_key_transformer = lambda key, value, state: state.state_id + '_ip'
+        aggregate_fun = lambda old_value, item: old_value + 1
         filters = [CommentFilter('#'), SpacesFilter()]
         handlers = [StandardConfigSectionHandler(),
                     SimpleKeyListHandler.create_with_known_key_list('=', ['key13', 'key666'], key_transformer),
-                    AggregateKeyValueHandler.create_with_known_key_list('=', ['key555', 'key999'], key_transformer, lambda old_value, item: old_value + 1, 0),
-                    AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], lambda key, state: state.state_id + '_ip', lambda old_value, item: old_value + 1, 0)]
+                    AggregateKeyValueHandler.create_with_known_key_list('=', ['key555', 'key999'], key_transformer, aggregate_fun, 0),
+                    AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], ip_key_transformer, aggregate_fun, 0)]
         self._collector = FileSourceCollector(filters, handlers)
 
     def test_simple_collect(self):

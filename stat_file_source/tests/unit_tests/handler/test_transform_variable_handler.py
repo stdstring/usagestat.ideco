@@ -8,8 +8,9 @@ class TestTransformVariableHandler(TestCase):
 
     def __init__(self, methodName='runTest'):
         super(TestTransformVariableHandler, self).__init__(methodName)
-        transform_fun = lambda data: int(data)
-        self._handler = TransformVariableHandler.create_with_known_key_list('=', ['key13', 'key666'], lambda key, state: key, transform_fun, 0)
+        key_transformer = lambda key, value, state: key
+        value_transformer = lambda data: int(data)
+        self._handler = TransformVariableHandler.create_with_known_key_list('=', ['key13', 'key666'], key_transformer, value_transformer, 0)
 
     def test_handle_known_key_with_value(self):
         state = State(None, None, OrderedDict())

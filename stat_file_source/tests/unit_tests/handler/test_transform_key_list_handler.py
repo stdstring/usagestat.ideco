@@ -8,7 +8,9 @@ class TestTransformKeyListHandler(TestCase):
 
     def __init__(self, methodName='runTest'):
         super(TestTransformKeyListHandler, self).__init__(methodName)
-        self._handler = TransformKeyListHandler.create_with_known_key_list('=', ['key13', 'key666'], lambda key, state: key, lambda value: '__' + str(value) + '__')
+        key_transformer = lambda key, value, state: key
+        value_transformer = lambda value: '__' + str(value) + '__'
+        self._handler = TransformKeyListHandler.create_with_known_key_list('=', ['key13', 'key666'], key_transformer, value_transformer)
 
     def test_handle_known_key(self):
         state = State(None, None, OrderedDict())

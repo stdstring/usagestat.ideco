@@ -8,7 +8,9 @@ class TestAggregateKeyValueHandler(TestCase):
 
     def __init__(self, methodName='runTest'):
         super(TestAggregateKeyValueHandler, self).__init__(methodName)
-        self._handler = AggregateKeyValueHandler.create_with_known_key_list('=', ['key13', 'key666'], lambda key, state: key, lambda old_value, item: old_value + 1, 0)
+        key_transformer = lambda key, value, state: key
+        aggregate_fun = lambda old_value, item: old_value + 1
+        self._handler = AggregateKeyValueHandler.create_with_known_key_list('=', ['key13', 'key666'], key_transformer, aggregate_fun, 0)
 
     def test_handle_known_key(self):
         state = State(None, None, OrderedDict())
@@ -45,7 +47,9 @@ class TestAggregateKeyValueHandler(TestCase):
         self.assertFalse(new_state is old_state)
 
     def test_handle_aggegate_by_one_key(self):
-        handler = AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], lambda key, state: 'ip', lambda old_value, item: old_value + 1, 0)
+        key_transformer = lambda key, value, state: 'ip'
+        aggregate_fun = lambda old_value, item: old_value + 1
+        handler = AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], key_transformer, aggregate_fun, 0)
         state = State(None, None, {})
         result = handler.process('ip0=192.168.0.1', state)
         self.assertEqual((True, State(None, None, OrderedDict({'ip': 1}))), result)

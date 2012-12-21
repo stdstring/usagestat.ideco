@@ -10,9 +10,9 @@ class TestStandardKeyTransformer(TestCase):
         self._transformer = StandardKeyTransformer()
 
     def test_transform_with_state_id(self):
-        self.assertEqual('category.key', self._transformer('key', State('category', 'category', {'key666': ['data']})))
+        self.assertEqual('category.key', self._transformer('key', 'data', State('category', 'category', {'key666': ['data666']})))
 
     def test_transform_without_state_id(self):
-        self.assertEqual('key', self._transformer('key', State(None, None, {'key666': ['data']})))
+        self.assertEqual('key', self._transformer('key', 'data', State(None, None, {'key666': ['data666']})))
 
 __author__ = 'andrey.ushakov'

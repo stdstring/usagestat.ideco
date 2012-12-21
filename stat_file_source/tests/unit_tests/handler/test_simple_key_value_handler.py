@@ -8,7 +8,8 @@ class TestSimpleKeyValueHandler(TestCase):
 
     def __init__(self, methodName='runTest'):
         super(TestSimpleKeyValueHandler, self).__init__(methodName)
-        self._handler = SimpleKeyValueHandler.create_with_known_key_list('=', ['key13', 'key666'], lambda key, state: key)
+        key_transformer = lambda key, value, state: key
+        self._handler = SimpleKeyValueHandler.create_with_known_key_list('=', ['key13', 'key666'], key_transformer)
 
     def test_handle_known_key(self):
         state = State(None, None, OrderedDict())

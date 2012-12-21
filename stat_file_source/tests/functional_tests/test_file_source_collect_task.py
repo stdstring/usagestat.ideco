@@ -45,7 +45,7 @@ class TestFileSourceCollectTask(TestCase):
         self._db_manager.__enter__()
         filters = [CommentFilter('#'), SpacesFilter()]
         standard_key_transformer = StandardKeyTransformer()
-        ip_key_transformer = lambda key, state: '{category:s}.ip'.format(category=state.state_id)
+        ip_key_transformer = lambda key, value, state: '{category:s}.ip'.format(category=state.state_id)
         handlers = [StandardConfigSectionHandler(),
                     SimpleKeyValueHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'services', standard_key_transformer),
                     TransformKeyListHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'users', standard_key_transformer, transform_user_fun),

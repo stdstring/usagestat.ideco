@@ -10,7 +10,6 @@ class StandardConfigSectionHandler(Handler):
 
     # spec: str, State -> (bool, State)
     def process(self, source, state):
-        #result = re.match('\[(?P<section_name>.+)\]', source)
         result = self._rexpr.match(source)
         if result is None:
             return (False, state)

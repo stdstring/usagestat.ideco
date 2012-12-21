@@ -5,7 +5,12 @@ from stat_file_source.handler.handler import Handler
 
 class BaseKeyValueHandler(Handler):
 
-    # spec: str, (str, State -> bool), (str, State -> str), object -> BaseKeyValueHandler
+    # spec:
+    # key_value_delimiter: str
+    # known_key_predicate: str, State -> bool
+    # key_transformer: str, str, State -> str
+    # item_initial_value: object
+    # rt: BaseKeyValueHandler
     def __init__(self, key_value_delimiter, known_key_predicate, key_transformer, item_init_value):
         self._key_value_delimiter = key_value_delimiter
         self._known_key_predicate = known_key_predicate
@@ -19,7 +24,7 @@ class BaseKeyValueHandler(Handler):
             key = source[0: delimiter_position]
             value = source[delimiter_position + len(self._key_value_delimiter): len(source)]
             if self._known_key_predicate(key, state):
-                final_key = self._key_transformer(key, state)
+                final_key = self._key_transformer(key, value, state)
                 new_items = OrderedDict(state.items)
                 key_values = new_items.setdefault(final_key, self._item_init_value)
                 new_items[final_key] = self._define_value(key_values, value)
