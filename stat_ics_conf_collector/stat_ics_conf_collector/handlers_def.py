@@ -8,7 +8,7 @@ KEY_VALUE_DELIMITER = '='
 def _create_net_type_count_handler():
     prepared_re = re.compile('^NET_IF\d+_TYPE$')
     known_key_predicate = lambda key, state: prepared_re.match(key) is not None
-    key_transformer = lambda key, value, state: value.strip("'")
+    key_transformer = lambda key, value, state: 'net_type.{0:s}'.format(value.strip("'"))
     aggregate_fun = lambda old_value, item: old_value + 1
     return AggregateKeyValueHandler(KEY_VALUE_DELIMITER, known_key_predicate, key_transformer, aggregate_fun, 0)
 
@@ -18,9 +18,10 @@ def _create_enable_variable_handler(variable_name, key_name):
     UNKNOWN = 'unknown'
 
     def transform_number(number_value):
-        if number_value == 1:
+        number_value = number_value.strip("'")
+        if number_value == '1':
             return ENABLED
-        if number_value == 0:
+        if number_value == '0' or number_value == '':
             return DISABLED
         return UNKNOWN
 

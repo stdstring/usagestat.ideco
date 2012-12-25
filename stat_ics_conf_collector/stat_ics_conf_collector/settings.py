@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 # ics.conf source
+ICS_CONF_ENCODING = 'koi8-r'
 ICS_CONF_SOURCE = '/etc/ics/ics.conf'
 
 # db connection string

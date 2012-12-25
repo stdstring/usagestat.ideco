@@ -34,6 +34,7 @@ class SqliteDbManager(db_manager.DbManager):
         create_result = subprocess.call([os.path.join(self._db_dirname, self._db_create_script_name)])
         if create_result:
             raise db_manager.DbCreationException()
+        os.chdir(self._initial_working_dir)
 
     # spec: None -> None
     def _clear_db(self):
