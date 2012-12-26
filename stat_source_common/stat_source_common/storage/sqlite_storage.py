@@ -43,7 +43,7 @@ class SqliteStorage(storage.Storage):
         finally:
             connection.close()
 
-    # spec: Sqlite3Cursor, str, DataItem -> None
+    # spec: sqlite3.Cursor, str, DataItem -> None
     def _save_item_impl(self, cursor, source_id, data_item):
         try:
             self._log_info('_save_item_impl({source:s}, {data_item!s}) enter'.format(source=source_id, data_item=data_item))
