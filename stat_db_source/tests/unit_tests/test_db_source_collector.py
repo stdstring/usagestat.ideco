@@ -38,11 +38,8 @@ class TestDbSourceCollector(TestCase):
         data_transformer = lambda row: '{0!s}:{1!s}'.format(row[1], row[2])
         self._collect_task_list = [CollectTask(['q1', 'q2'], SimpleProcessTask()),
                                    CollectTask(['q3'], TransformProcessTask(category_transformer, data_transformer))]
-        self._collector = DbSourceCollector(self._source_id,
-            self._collect_task_list,
-            lambda: self._source_connection,
-            lambda logger: self._dest_storage,
-            self._logger)
+        source_conn_factory = lambda: self._source_connection
+        self._collector = DbSourceCollector(self._source_id, self._collect_task_list, source_conn_factory, self._dest_storage, self._logger)
 
     def test_normal_collect(self):
         self._logger.info('collect() enter')
@@ -61,7 +58,6 @@ class TestDbSourceCollector(TestCase):
         self._source_connection.close()
         self._data_collector_logger.info(u'collect_data(collect_task_list) exit')
         self._logger.getChild('collect_task').AndReturn(self._collect_task_logger)
-        self._logger.getChild('dest_storage').AndReturn(self._dest_storage_logger)
         save_items_list = [[DataItem(category='cat1', data='data1'), DataItem(category='cat2', data='data2'), DataItem(category='cat1', data='data3')],
             [DataItem(category='category.cat1', data='data1:subdata1'), DataItem(category='category.cat2', data='data2:subdata2'), DataItem(category='category.cat1', data='data3:subdata3')]]
         set_process_data_expectations(self._collect_task_logger, self._dest_storage, self._source_id, save_items_list)
@@ -105,7 +101,6 @@ class TestDbSourceCollector(TestCase):
         self._source_connection.close()
         self._data_collector_logger.info(u'collect_data(collect_task_list) exit')
         self._logger.getChild('collect_task').AndReturn(self._collect_task_logger)
-        self._logger.getChild('dest_storage').AndReturn(self._dest_storage_logger)
         self._collect_task_logger.info('process_data() enter')
         self._collect_task_logger.exception('exception in process_data()')
         self._logger.exception(u'exception in collect()')
@@ -130,7 +125,6 @@ class TestDbSourceCollector(TestCase):
         self._source_connection.close()
         self._data_collector_logger.info(u'collect_data(collect_task_list) exit')
         self._logger.getChild('collect_task').AndReturn(self._collect_task_logger)
-        self._logger.getChild('dest_storage').AndReturn(self._dest_storage_logger)
         self._collect_task_logger.info('process_data() enter')
         self._collect_task_logger.info('process_data() exit')
         save_data = [DataItem(category='cat1', data='data1'), DataItem(category='cat2', data='data2'), DataItem(category='cat1', data='data3')]

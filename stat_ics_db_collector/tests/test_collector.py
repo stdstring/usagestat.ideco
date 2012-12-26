@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
+from unittest.case import TestCase
 
-def _create_license_type_handler():
+class TestCollector(TestCase):
     pass
 
 __author__ = 'andrey.ushakov'

@@ -4,7 +4,7 @@ from stat_db_source.task.process_task import ProcessTask
 
 class TransformProcessTask(ProcessTask):
 
-    # spec:
+    # spec: ((...) -> str), ((...) -> object) -> TransformProcessTask
     def __init__(self, category_transformer, data_transformer):
         self._category_transformer = category_transformer
         self._data_transformer = data_transformer

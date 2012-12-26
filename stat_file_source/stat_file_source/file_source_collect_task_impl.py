@@ -1,11 +1,10 @@
 from __future__ import unicode_literals
-import logging
 from stat_source_common.entity import data_item
 
 class FileSourceCollectTaskImpl(object):
 
     # spec: str, FileSourceCollector, callable, Storage, Logger -> FileSourceCollectTask
-    def __init__(self, source_id, collector, source_provider, storage, logger = logging.getLogger('stat_file_source.file_source_collect_task')):
+    def __init__(self, source_id, collector, source_provider, storage, logger):
         self._source_id = source_id
         self._collector = collector
         self._source_provider = source_provider
