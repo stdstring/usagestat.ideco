@@ -57,6 +57,7 @@ class TestCollector(TestCase):
         self._check_data('ics.conf', expected, actual)
         self._db_manager.execute_nonquery('DELETE FROM STAT_DATA')
 
+    # TODO (aushakov) : move 2 stat_db_funtest_utils
     # spec: str, [(str, str)], [(int, str, str, str, str)] -> None
     def _check_data(self, source_id, expected, actual):
         self.assertEqual(len(expected), len(actual))
@@ -65,6 +66,7 @@ class TestCollector(TestCase):
             self.assertIsNotNone(actual_row)
             self.assertEqual(source_id, actual_row[1])
 
+    # TODO (aushakov) : move 2 stat_db_funtest_utils
     # spec: str, (str, str), [(int, str, str, str, str)] -> (int, str, str, str, str)
     def _get_actual_row(self, expected_row, actual_rows):
         expected_category = expected_row[0]

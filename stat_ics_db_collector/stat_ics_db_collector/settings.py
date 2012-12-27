@@ -15,9 +15,9 @@ LOG_CONF = {
     'handlers': {'console':{'level': 'DEBUG',
                             'class': 'logging.StreamHandler',
                             'formatter': 'default'}},
-    'loggers': {'stat_ics_conf_collector.entry_point': {'handlers': ['console'],
-                                                        'level': 'INFO',
-                                                        'propagate': True}}
+    'loggers': {'stat_ics_db_collector.entry_point': {'handlers': ['console'],
+                                                      'level': 'INFO',
+                                                      'propagate': True}}
 }
 
 __author__ = 'andrey.ushakov'

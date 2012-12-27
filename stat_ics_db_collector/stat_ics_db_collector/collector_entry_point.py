@@ -15,7 +15,7 @@ def execute():
     # source
     ics_db_conn_str = settings.ICS_DB_CONN_STR
     prepared_conn_str = dict(map(lambda k: (k, str(ics_db_conn_str[k])), ics_db_conn_str))
-    source_connect_factory = lambda: kinterbasdb.connect(prepared_conn_str)
+    source_connect_factory = lambda: kinterbasdb.connect(**prepared_conn_str)
     # dest
     dest_db_conn_str = settings.DEST_DB_CONN_STR
     dest_storage = SqliteStorage(dest_db_conn_str, root_logger.getChild('dest_storage'))
@@ -24,6 +24,5 @@ def execute():
     # db source collect task
     task = DbSourceCollectTask(source_id, collect_task_list, source_connect_factory, dest_storage, root_logger)
     return task.execute()
-    pass
 
 __author__ = 'andrey.ushakov'

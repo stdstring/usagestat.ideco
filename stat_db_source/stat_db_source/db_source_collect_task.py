@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-import logging
 from stat_db_source.db_source_collector import DbSourceCollector
 
 class DbSourceCollectTask(object):
