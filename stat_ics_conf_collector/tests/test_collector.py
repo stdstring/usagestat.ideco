@@ -23,22 +23,28 @@ class TestCollector(TestCase):
         expected = [('net_type.Ethernet', 2),
             ('net_type.OpenVPN', 1),
             ('net_type.', 2),
-            ('antivirus.KAV4WEB', 'disabled'),
-            ('antivirus.KAV4MAIL', 'disabled'),
+            ('antivirus.KAV.WEB', 'disabled'),
+            ('antivirus.KAV.MAIL', 'disabled'),
+            ('antivirus.ClamAV.WEB', 'disabled'),
+            ('antivirus.ClamAV.MAIL', 'disabled'),
+            ('firewall.BA', 'disabled'),
             ('dlp.WEB', 'disabled'),
             ('dlp.MAIL', 'disabled'),
+            ('dlp.ICQ', 'disabled'),
             ('mail.POSTFIX', 'enabled'),
             ('mail.POP3', 'enabled'),
             ('mail.IMAP', 'enabled'),
             ('mail.FETCHMAIL', 'disabled'),
-            ('mail.WEBMAIL_External', 'enabled'),
-            ('mail.WEBMAIL_Local', 'enabled'),
-            ('antispam.KSP4MAIL', 'enabled'),
+            ('mail.WEBMAIL.External', 'enabled'),
+            ('mail.WEBMAIL.Local', 'enabled'),
+            ('antispam.KSP.MAIL', 'enabled'),
             ('antispam.DSPAM', 'disabled'),
             ('server.WEB', 'enabled'),
+            ('server.FTP', 'disabled'),
             ('server.JABBER', 'disabled'),
             ('server.PPTP', 'enabled'),
             ('server.DHCP', 'disabled'),
+            ('server.WINS', 'disabled'),
             ('server.SNMP', 'enabled'),
             ('server.DNS', 'enabled')]
         self._test_common_body(ics_conf_source, expected)
@@ -66,6 +72,6 @@ class TestCollector(TestCase):
         find_result = filter(lambda (id, source_id, category, timemarker, data): category == expected_category and data == expected_data, actual_rows)
         if len(find_result) == 1:
             return find_result[0]
-        raise KeyError()
+        raise KeyError("row with category = '{0:s}', data = '{1!s}' not found".format(expected_row[0], expected_row[1]))
 
 __author__ = 'andrey.ushakov'

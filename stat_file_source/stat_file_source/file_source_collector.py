@@ -4,15 +4,16 @@ import common.state
 
 class FileSourceCollector(object):
 
-    # spec: [Filter], [Handler] -> FileSourceCollector
-    def __init__(self, filters, handlers):
+    # spec: [Filter], [Handler], OrderedDict -> FileSourceCollector
+    def __init__(self, filters, handlers, initial_state):
         self._filters = filters
         self._handlers = handlers
+        self._initial_state = initial_state
 
     # spec: [str] -> {str:[object]}
     def collect(self, source):
         #noinspection PyUnresolvedReferences
-        state = common.state.State(None, None, OrderedDict())
+        state = common.state.State(None, None, OrderedDict(self._initial_state))
         #inspection PyUnresolvedReferences
         for source_item in source:
             state = self._collect_item(source_item, state)

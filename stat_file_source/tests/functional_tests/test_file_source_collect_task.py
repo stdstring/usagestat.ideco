@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+from collections import OrderedDict
 from datetime import datetime, timedelta
 from logging import Logger
 from mox import Mox
@@ -52,7 +53,7 @@ class TestFileSourceCollectTask(TestCase):
                     AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], ip_key_transformer, lambda old_value, item: old_value + 1, 0),
                     SimpleKeyValueHandler.create_with_known_key_list('=', ['use_local_mail', 'use_remote_mail', 'use_jabber'], standard_key_transformer),
                     SingleKeyHandler.create_with_known_key_list('=', ['use_local_mail', 'use_remote_mail', 'use_jabber'], standard_key_transformer, '0')]
-        self._collect_task = FileSourceCollectTask('some_source', filters, handlers, source_filename, 'utf8', self._db_manager.db_filename, self._main_logger)
+        self._collect_task = FileSourceCollectTask('some_source', filters, handlers, OrderedDict(), source_filename, 'utf8', self._db_manager.db_filename, self._main_logger)
 
     def tearDown(self):
         self._db_manager.__exit__(None, None, None)

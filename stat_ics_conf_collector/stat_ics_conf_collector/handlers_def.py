@@ -3,7 +3,36 @@ import re
 from stat_file_source.handler.aggregate_key_value_handler import AggregateKeyValueHandler
 from stat_file_source.handler.transform_variable_handler import TransformVariableHandler
 
+# common
 KEY_VALUE_DELIMITER = '='
+ENABLED = 'enabled'
+DISABLED = 'disabled'
+UNKNOWN = 'unknown'
+# categories
+KAV4Web = 'antivirus.KAV.WEB'
+KAV4Mail = 'antivirus.KAV.MAIL'
+Clam4Web = 'antivirus.ClamAV.WEB'
+Clam4Mail = 'antivirus.ClamAV.MAIL'
+Firewall = 'firewall.BA'
+DLPWeb = 'dlp.WEB'
+DLPMail = 'dlp.MAIL'
+DLPIcq = 'dlp.ICQ'
+Postfix = 'mail.POSTFIX'
+POP3 = 'mail.POP3'
+IMAP = 'mail.IMAP'
+FetchMail = 'mail.FETCHMAIL'
+ExternalWebMail = 'mail.WEBMAIL.External'
+LocalWebMail = 'mail.WEBMAIL.Local'
+KSP4Mail = 'antispam.KSP.MAIL'
+DSpam = 'antispam.DSPAM'
+WebServer = 'server.WEB'
+FtpServer = 'server.FTP'
+JabberServer = 'server.JABBER'
+PPTPServer = 'server.PPTP'
+DHCPServer = 'server.DHCP'
+WinsServer = 'server.WINS'
+SNMPServer = 'server.SNMP'
+DNSServer = 'server.DNS'
 
 def _create_net_type_count_handler():
     prepared_re = re.compile('^NET_IF\d+_TYPE$')
@@ -13,9 +42,6 @@ def _create_net_type_count_handler():
     return AggregateKeyValueHandler(KEY_VALUE_DELIMITER, known_key_predicate, key_transformer, aggregate_fun, 0)
 
 def _create_enable_variable_handler(variable_name, key_name):
-    ENABLED = 'enabled'
-    DISABLED = 'disabled'
-    UNKNOWN = 'unknown'
 
     def transform_number(number_value):
         number_value = number_value.strip("'")
@@ -29,30 +55,55 @@ def _create_enable_variable_handler(variable_name, key_name):
     return TransformVariableHandler.create_with_known_key_list(KEY_VALUE_DELIMITER, [variable_name], key_transformer, transform_number, DISABLED)
 
 handlers_def = [_create_net_type_count_handler(),
-                _create_enable_variable_handler('KAV4WEB_ENABLED', 'antivirus.KAV4WEB'), # antivirus
-                _create_enable_variable_handler('KAV4MAIL_ENABLED', 'antivirus.KAV4MAIL'), # antivirus
-                _create_enable_variable_handler('CLAM4WEB_ENABLED', 'antivirus.ClamAV4WEB'), # antivirus
-                _create_enable_variable_handler('CLAM4MAIL_ENABLED', 'antivirus.ClamAV4MAIL'), # antivirus
-                _create_enable_variable_handler('BA_ON', 'firewall.BA'), # firewall
-                _create_enable_variable_handler('DLP_WEB_ON', 'dlp.WEB'), # dlp
-                _create_enable_variable_handler('DLP_MAIL_ON', 'dlp.MAIL'), # dlp
-                _create_enable_variable_handler('DLP_ICQ_ENABLED', 'dlp.ICQ'), # dlp
-                _create_enable_variable_handler('POSTFIX_ENABLED', 'mail.POSTFIX'), # mail
-                _create_enable_variable_handler('POP3D_ENABLED', 'mail.POP3'), # mail
-                _create_enable_variable_handler('IMAPD_ENABLED', 'mail.IMAP'), # mail
-                _create_enable_variable_handler('MAIL_FETCHMAIL', 'mail.FETCHMAIL'), # mail
-                _create_enable_variable_handler('WEBMAIL_E_ENABLED', 'mail.WEBMAIL_External'), #mail
-                _create_enable_variable_handler('WEBMAIL_L_ENABLED', 'mail.WEBMAIL_Local'), # mail
-                _create_enable_variable_handler('KSP4MAIL_ENABLED', 'antispam.KSP4MAIL'), # antispam
-                _create_enable_variable_handler('DSPAM_ENABLED', 'antispam.DSPAM'), # antispam
-                _create_enable_variable_handler('THTTPD_E_ENABLED', 'server.WEB'), # web-server
-                _create_enable_variable_handler('FTP_ENABLED', 'server.FTP'), # ftp-server
-                _create_enable_variable_handler('JABBERD2_ENABLED', 'server.JABBER'), # jabber-server
-                _create_enable_variable_handler('PPTPD_ENABLED', 'server.PPTP'), # pptp-server
-                _create_enable_variable_handler('DHCPD_ENABLED', 'server.DHCP'), # dhcp-server
-                _create_enable_variable_handler('WINS_ENABLED', 'server.WINS'), # wins-server
-                _create_enable_variable_handler('SNMPD_ENABLED', 'server.SNMP'), # snmp-server
-                _create_enable_variable_handler('BIND_ENABLED', 'server.DNS') # dns-server
+                _create_enable_variable_handler('KAV4WEB_ENABLED', KAV4Web), # antivirus
+                _create_enable_variable_handler('KAV4MAIL_ENABLED', KAV4Mail), # antivirus
+                _create_enable_variable_handler('CLAM4WEB_ENABLED', Clam4Web), # antivirus
+                _create_enable_variable_handler('CLAM4MAIL_ENABLED', Clam4Mail), # antivirus
+                _create_enable_variable_handler('BA_ON', Firewall), # firewall
+                _create_enable_variable_handler('DLP_WEB_ON', DLPWeb), # dlp
+                _create_enable_variable_handler('DLP_MAIL_ON', DLPMail), # dlp
+                _create_enable_variable_handler('DLP_ICQ_ENABLED', DLPIcq), # dlp
+                _create_enable_variable_handler('POSTFIX_ENABLED', Postfix), # mail
+                _create_enable_variable_handler('POP3D_ENABLED', POP3), # mail
+                _create_enable_variable_handler('IMAPD_ENABLED', IMAP), # mail
+                _create_enable_variable_handler('MAIL_FETCHMAIL', FetchMail), # mail
+                _create_enable_variable_handler('WEBMAIL_E_ENABLED', ExternalWebMail), #mail
+                _create_enable_variable_handler('WEBMAIL_L_ENABLED', LocalWebMail), # mail
+                _create_enable_variable_handler('KSP4MAIL_ENABLED', KSP4Mail), # antispam
+                _create_enable_variable_handler('DSPAM_ENABLED', DSpam), # antispam
+                _create_enable_variable_handler('THTTPD_E_ENABLED', WebServer), # web-server
+                _create_enable_variable_handler('FTP_ENABLED', FtpServer), # ftp-server
+                _create_enable_variable_handler('JABBERD2_ENABLED', JabberServer), # jabber-server
+                _create_enable_variable_handler('PPTPD_ENABLED', PPTPServer), # pptp-server
+                _create_enable_variable_handler('DHCPD_ENABLED', DHCPServer), # dhcp-server
+                _create_enable_variable_handler('WINS_ENABLED', WinsServer), # wins-server
+                _create_enable_variable_handler('SNMPD_ENABLED', SNMPServer), # snmp-server
+                _create_enable_variable_handler('BIND_ENABLED', DNSServer) # dns-server
                 ]
+
+initial_state_def = [(KAV4Web, DISABLED),
+                     (KAV4Mail, DISABLED),
+                     (Clam4Web, DISABLED),
+                     (Clam4Mail, DISABLED),
+                     (Firewall, DISABLED),
+                     (DLPWeb, DISABLED),
+                     (DLPMail, DISABLED),
+                     (DLPIcq, DISABLED),
+                     (Postfix, DISABLED),
+                     (POP3, DISABLED),
+                     (IMAP, DISABLED),
+                     (FetchMail, DISABLED),
+                     (ExternalWebMail, DISABLED),
+                     (LocalWebMail, DISABLED),
+                     (KSP4Mail, DISABLED),
+                     (DSpam, DISABLED),
+                     (WebServer, DISABLED),
+                     (FtpServer, DISABLED),
+                     (JabberServer, DISABLED),
+                     (PPTPServer, DISABLED),
+                     (DHCPServer, DISABLED),
+                     (WinsServer, DISABLED),
+                     (SNMPServer, DISABLED),
+                     (DNSServer, DISABLED)]
 
 __author__ = 'andrey.ushakov'

@@ -21,7 +21,7 @@ class TestFileSourceCollector(TestCase):
                     SimpleKeyListHandler.create_with_known_key_list('=', ['key13', 'key666'], key_transformer),
                     AggregateKeyValueHandler.create_with_known_key_list('=', ['key555', 'key999'], key_transformer, aggregate_fun, 0),
                     AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], ip_key_transformer, aggregate_fun, 0)]
-        self._collector = FileSourceCollector(filters, handlers)
+        self._collector = FileSourceCollector(filters, handlers, OrderedDict())
 
     def test_simple_collect(self):
         source =[' # first comment',

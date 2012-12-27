@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 import io
-import logging
 from stat_source_common.storage import sqlite_storage
 import file_source_collect_task_impl
 import file_source_collector
@@ -17,10 +16,10 @@ def read_file_content(source_filename, encoding):
 
 class FileSourceCollectTask(object):
 
-    # spec: str, [Filter], [Handler], str, str, str, Logger -> FileSourceCollectTask
-    def __init__(self, source_id, filters, handlers, source_filename, source_encoding, db_dest_filename, logger):
+    # spec: str, [Filter], [Handler], OrderedDict, str, str, str, Logger -> FileSourceCollectTask
+    def __init__(self, source_id, filters, handlers, initial_state, source_filename, source_encoding, db_dest_filename, logger):
         self._source_id = source_id
-        self._collector = file_source_collector.FileSourceCollector(filters, handlers)
+        self._collector = file_source_collector.FileSourceCollector(filters, handlers, initial_state)
         self._source_filename = source_filename
         self._source_encoding = source_encoding
         self._db_dest_filename = db_dest_filename
