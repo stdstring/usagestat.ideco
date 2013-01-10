@@ -1,0 +1,6 @@
+# ics.conf statistics collector
+0,30 * * * * /usr/bin/stat_ics_conf_collector
+# ics_main.gdb statistics collector
+10,40 * * * * /usr/bin/stat_ics_db_collector
+# statistics sender
+20,50 * * * * /usr/bin/stat_sender
