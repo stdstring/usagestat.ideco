@@ -3,19 +3,19 @@ from stat_sender.endpoint.http_endpoint_factory import HttpEndpointFactory
 from stat_sender.endpoint.https_endpoint_factory import HttpsEndpointFactory
 
 # storage
-DB_FILE = '/tmp/usage_stat.db'
+DB_FILE = '/var/lib/usage_stat/usage_stat.db'
 
 # user_identity source
-USER_IDENTITY_SOURCE = '/tmp/user.id'
+USER_IDENTITY_SOURCE = '/var/lib/usage_stat/user.id'
 
 # endpoint
 USED_ENDPOINT = 'http'
 
 ENDPOINTS_DEF = {'http':  {'endpoint_factory': HttpEndpointFactory,
-                           'remote_host': 'http://localhost:8000/statserver/api/v1/collect/',
+                           'remote_host': 'http://10.80.1.222:8000/statserver/api/v1/collect/',
                            'params': {}},
                  'https': {'endpoint_factory': HttpsEndpointFactory,
-                           'remote_host': 'http://localhost:8000/statserver/api/v1/collect/',
+                           'remote_host': 'https://10.80.1.222:8000/statserver/api/v1/collect/',
                            'params': {'key_file': '', 'cert_file': ''}}}
 
 # task execution
@@ -24,15 +24,11 @@ SEND_ATTEMPT_COUNT = 2
 # logs
 LOG_CONF = {
     'version': 1,
-    'formatters': {'default': {'format': '%(asctime)s %(levelname)-8s %(name)-15s %(message)s',
-                               'datefmt': '%Y-%m-%d %H:%M:%S'}},
+    'formatters': {'default': {'format': '%(asctime)s %(levelname)-8s %(name)-15s %(message)s', 'datefmt': '%Y-%m-%d %H:%M:%S'}},
     'filters': {},
-    'handlers': {'console':{'level': 'DEBUG',
-                            'class': 'logging.StreamHandler',
-                            'formatter': 'default'}},
-    'loggers': {'stat_sender.entry_point': {'handlers': ['console'],
-                                            'level': 'INFO',
-                                            'propagate': True}}
+    'handlers': {'console': {'level': 'INFO', 'class': 'logging.StreamHandler', 'formatter': 'default'},
+                 'syslog': {'level': 'INFO', 'class': 'logging.handlers.SysLogHandler', 'formatter': 'default', 'address':('localhost', 514)}},
+    'loggers': {'stat_sender.entry_point': {'handlers': ['console', 'syslog'], 'level': 'INFO', 'propagate': True}}
 }
 
 __author__ = 'andrey.ushakov'
