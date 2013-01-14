@@ -1,0 +1,14 @@
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/X11R6/bin:/root/bin
+MAILTO=root
+HOME=/
+LANG=ru_RU.UTF-8
+
+## ics statistic section begin
+# ics.conf statistics collector
+0,30 * * * *    root  python /usr/bin/stat_ics_conf_collector
+# ics_main.gdb statistics collector
+10,40 * * * *    root  python /usr/bin/stat_ics_db_collector
+# statistics sender
+20,50 * * * *    root  python /usr/bin/stat_sender
+## ics statistic section end

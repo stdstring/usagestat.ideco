@@ -34,17 +34,24 @@ _known_libs = ['stat_db_source', 'stat_file_source', 'stat_ics_conf_collector', 
 # known apps
 _known_apps = ['stat_ics_conf_collector', 'stat_ics_db_collector', 'stat_sender']
 
+_CRON_DEST_DIR = '/etc/cron.d'
+_CRON_DEST = os.path.join(_CRON_DEST_DIR, 'usage_stat')
 # crontab definition section begin
 CRONTAB_DEF_BEGIN = '## ics statistic section begin'
 # crontab definition section end
 CRONTAB_DEF_END = '## ics statistic section end'
 
+# 4 chattr command
+_chattr_dest_list = ['/etc/group', '/etc/passwd', _CRON_DEST_DIR, _LIB_DEST, _APP_DEST, '/var/lib/']
+
 def _remove_dir_tree_if_exist(root_path):
     if os.path.exists(root_path):
+        subprocess.call(['chattr','-iR', root_path])
         shutil.rmtree(root_path)
 
 def _remove_file_if_exist(file_path):
     if os.path.exists(file_path):
+        subprocess.call(['chattr','-i', file_path])
         os.unlink(file_path)
 
 def _remove_known_libs():
@@ -158,6 +165,15 @@ def _cleanup_crontab():
 def _setup_crontab():
     _modify_crontab(_USER_NAME, lambda content_before: _add_crontab_defs(content_before))
 
+def _alt_cleanup_crontab():
+    _remove_file_if_exist(_CRON_DEST)
+
+def _alt_setup_crontab():
+    with io.open(os.path.abspath('alt_crontab_defs')) as crontab_defs_file:
+        content= crontab_defs_file.readlines()
+    with io.open(_CRON_DEST, 'wt') as cron_dest_file:
+        cron_dest_file.writelines(content)
+
 def _add_line_if_not_exist(file_name, source_line):
     with io.open(file_name, 'rt') as rfile:
         content = rfile.readlines()
@@ -167,6 +183,10 @@ def _add_line_if_not_exist(file_name, source_line):
         lastline = content[len(content) - 1] if content != [] else ''
     with io.open(file_name, 'at') as wfile:
         wfile.writelines([source_line] if lastline.endswith('\n') else ['\n', source_line])
+
+def _setup_preparation():
+    for chattr_dest in _chattr_dest_list:
+        subprocess.call(['chattr','-i', chattr_dest])
 
 def _setup_credentials():
     # etc/group
@@ -194,7 +214,8 @@ def _set_right_for_usage_stat_db():
     os.chmod(_STAT_DB_DEST, rx_rights)
 
 def cleanup():
-    _cleanup_crontab()
+    #_cleanup_crontab()
+    _alt_cleanup_crontab()
     _remove_usage_stat_db()
     _remove_known_apps()
     _remove_known_libs()
@@ -208,7 +229,6 @@ def build():
     _remove_source_for_known_libs()
 
 def setup():
-    _setup_credentials()
     _copy_known_libs()
     _copy_known_apps()
     _copy_usage_stat_db()
@@ -217,9 +237,14 @@ def setup():
     _set_right_for_known_apps()
     _set_right_for_usage_stat_db()
     # setup crontab
-    _setup_crontab()
+    #_setup_crontab()
+    _alt_setup_crontab()
 
 def main():
+    # preparation
+    _setup_preparation()
+    _setup_credentials()
+    # actions
     cleanup()
     build()
     setup()
