@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 import logging
 import psycopg2
-from stat_server.storage.storage import Storage
+from storage import Storage
 
 class PgStorageImpl(Storage):
 
