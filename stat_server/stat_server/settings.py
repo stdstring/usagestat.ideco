@@ -4,8 +4,8 @@ from __future__ import unicode_literals
 DB_CONN_STR = 'dbname=stat_db user=postgres password=31415926 host=localhost port=5432'
 
 # endpoint
-ENDPOINT = {'HOST': 'localhost', 'PORT': 8000}
-#ENDPOINT = {'HOST': 'localhost', 'PORT': 8000, 'KEY': '', 'CERT':''}
+#ENDPOINT = {'HOST': 'localhost', 'PORT': 8000}
+ENDPOINT = {'HOST': 'localhost', 'PORT': 8000, 'KEY': '~/test.server.ideco.usagestat.key', 'CERT':'~/test.server.ideco.usagestat.crt'}
 
 # logs
 LOG_CONF = {

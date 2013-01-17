@@ -1,0 +1,2 @@
+#!/bin/bash
+curl --insecure --dump-header - -H "Content-Type: application/xml" -X POST --data '<data_packet user_id="83cf01c6-2284-11e2-9494-08002703af71"><data_item><source>source1</source><category>cat1</category><timemarker>2012-12-21 23:59:59</timemarker><data>IDDQD</data></data_item><data_item><source>source666</source><category>cat999</category><timemarker>2012-12-21 23:59:59</timemarker><data>IDKFA</data></data_item></data_packet>' https://localhost:8000/statserver/api/v1/collect/

@@ -19,8 +19,8 @@ _group_entry = '{group_name:s}::{gid!s}:\n'.format(group_name=_GROUP_NAME, gid=_
 # common path
 _LIB_DEST = '/usr/local/lib/python2.7/site-packages/'
 _APP_DEST = '/usr/bin/'
-_STAT_DB_DEST_DIR = '/var/lib/usage_stat'
-_STAT_DB_DEST = os.path.join(_STAT_DB_DEST_DIR, 'usage_stat.db')
+_DATA_DEST_DIR = '/var/lib/usage_stat'
+_STAT_DB_DEST = os.path.join(_DATA_DEST_DIR, 'usage_stat.db')
 _STAT_DB_TEMP = '/tmp/usage_stat'
 
 # app source name
@@ -43,6 +43,9 @@ CRONTAB_DEF_END = '## ics statistic section end'
 
 # 4 chattr command
 _chattr_dest_list = ['/etc/group', '/etc/passwd', _CRON_DEST_DIR, _LIB_DEST, _APP_DEST, '/var/lib/']
+
+# for ssl
+_certificates = ['test.client.ideco.usagestat.key', 'test.client.ideco.usagestat.crt']
 
 def _remove_dir_tree_if_exist(root_path):
     if os.path.exists(root_path):
@@ -97,7 +100,7 @@ def _copy_known_apps():
         shutil.copy(src_full_path, dest_full_path)
 
 def _remove_usage_stat_db():
-    _remove_dir_tree_if_exist(_STAT_DB_DEST_DIR)
+    _remove_dir_tree_if_exist(_DATA_DEST_DIR)
 
 def _compile_usage_stat_db():
     _remove_dir_tree_if_exist(_STAT_DB_TEMP)
@@ -107,8 +110,8 @@ def _compile_usage_stat_db():
     os.chdir(_current_dir)
 
 def _copy_usage_stat_db():
-    if not os.path.exists(_STAT_DB_DEST_DIR):
-        os.mkdir(_STAT_DB_DEST_DIR)
+    if not os.path.exists(_DATA_DEST_DIR):
+        os.mkdir(_DATA_DEST_DIR)
     shutil.copy(os.path.join(_STAT_DB_TEMP, 'usage_stat.db'), _STAT_DB_DEST)
 
 def _clear_crontab_defs(source):
@@ -213,12 +216,31 @@ def _set_right_for_usage_stat_db():
     os.chown(_STAT_DB_DEST, _USER_ID, _GROUP_ID)
     os.chmod(_STAT_DB_DEST, rx_rights)
 
+def _remove_ssl_certificates():
+    for cert in _certificates:
+        full_path = os.path.join(_DATA_DEST_DIR, cert)
+        _remove_file_if_exist(full_path)
+
+def _copy_ssl_certificates():
+    for cert in _certificates:
+        full_path = os.path.join(_current_dir, 'ssl', cert)
+        shutil.copy(full_path, _DATA_DEST_DIR)
+
+def _set_right_for_ssl_certificates():
+    for cert in _certificates:
+        full_path = os.path.join(_DATA_DEST_DIR, cert)
+        # set owner
+        subprocess.call(['chown','{uid!s}:{gid!s}'.format(uid=_USER_ID, gid=_GROUP_ID), full_path])
+        # set rights
+        subprocess.call(['chmod', '444', full_path])
+
 def cleanup():
     #_cleanup_crontab()
     _alt_cleanup_crontab()
     _remove_usage_stat_db()
     _remove_known_apps()
     _remove_known_libs()
+    _remove_ssl_certificates()
 
 def build():
     # compile new
@@ -232,10 +254,12 @@ def setup():
     _copy_known_libs()
     _copy_known_apps()
     _copy_usage_stat_db()
+    _copy_ssl_certificates()
     # set rights
     _set_right_for_known_libs()
     _set_right_for_known_apps()
     _set_right_for_usage_stat_db()
+    _set_right_for_ssl_certificates()
     # setup crontab
     #_setup_crontab()
     _alt_setup_crontab()

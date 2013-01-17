@@ -9,14 +9,14 @@ DB_FILE = '/var/lib/usage_stat/usage_stat.db'
 USER_IDENTITY_SOURCE = '/var/lib/usage_stat/user.id'
 
 # endpoint
-USED_ENDPOINT = 'http'
+USED_ENDPOINT = 'https'
 
 ENDPOINTS_DEF = {'http':  {'endpoint_factory': HttpEndpointFactory,
                            'remote_host': 'http://10.80.1.222:8000/statserver/api/v1/collect/',
                            'params': {}},
                  'https': {'endpoint_factory': HttpsEndpointFactory,
                            'remote_host': 'https://10.80.1.222:8000/statserver/api/v1/collect/',
-                           'params': {'key_file': '', 'cert_file': ''}}}
+                           'params': {'key_file': '/var/lib/usage_stat/test.client.ideco.usagestat.key', 'cert_file': '/var/lib/usage_stat/test.client.ideco.usagestat.crt'}}}
 
 # task execution
 SEND_ATTEMPT_COUNT = 2
