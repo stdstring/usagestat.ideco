@@ -1,9 +1,9 @@
 from __future__ import unicode_literals
 import logging, logging.config
 from tornado.ioloop import IOLoop
-from stat_collector import settings
-from stat_collector.deserializer import simple_json_deserializer
-from stat_collector.handler.collect_handler import CollectHandler
+import settings
+from deserializer import simple_json_deserializer
+from handler.collect_handler import CollectHandler
 from stat_source_common.storage.sqlite_storage import SqliteStorage
 from tornado.web import Application
 
