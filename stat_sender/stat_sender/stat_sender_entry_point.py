@@ -18,7 +18,7 @@ def execute():
     endpoint_factory_class = endpoint_data['endpoint_factory']
     remote_host = endpoint_data['remote_host']
     add_params = endpoint_data['params']
-    endpoint = endpoint_factory_class().create(remote_host, root_logger.getChild(settings.USED_ENDPOINT + '_endpoint'), kwargs = add_params)
+    endpoint = endpoint_factory_class().create(remote_host, root_logger.getChild(settings.USED_ENDPOINT + '_endpoint'), **add_params)
     # storage
     db_file = os.path.abspath(settings.DB_FILE)
     storage = SqliteStorage(db_file, root_logger.getChild('sqlite_storage_impl'))
