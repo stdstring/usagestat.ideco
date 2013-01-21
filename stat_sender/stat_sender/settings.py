@@ -10,7 +10,7 @@ USER_IDENTITY_SOURCE = '/var/lib/usage_stat/user.id'
 
 # endpoint
 USED_ENDPOINT = 'https'
-
+# endpoint defs
 ENDPOINTS_DEF = {'http':  {'endpoint_factory': HttpEndpointFactory,
                            'remote_host': 'http://10.80.1.222:8000/statserver/api/v1/collect/',
                            'params': {}},
