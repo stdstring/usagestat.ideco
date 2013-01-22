@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 import os
+import stat
 import shutil
 from unittest.case import TestCase
 import kinterbasdb
@@ -16,6 +17,8 @@ class BadFirebirdDbManager:
 
     def __enter__(self):
         shutil.copy(self._source_location, self._dest_location)
+        mode = stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IWUSR | stat.S_IWGRP | stat.S_IWOTH
+        os.chmod(self._dest_location, mode)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
