@@ -54,12 +54,14 @@ class TestCollector(TestCase):
         settings.ICS_DB_CONN_STR = {'host': str('localhost'),
                                     'database': str('/tmp/ics_main.gdb'),
                                     'user': str('SYSDBA'),
-                                    'password': str('SYSDBA')}
+                                    'password': str('masterkey')}
         source_location = os.path.abspath('tests/ics_main.gdb')
         self._source_db_manager = BadFirebirdDbManager(source_location, '/tmp/ics_main.gdb', settings.ICS_DB_CONN_STR)
         # dest db
         self._dest_db_manager = sqlite_db_manager.SqliteDbManager('../stat_sender_db')
         settings.DEST_DB_CONN_STR = self._dest_db_manager.connection_string
+        settings.LOG_CONF['handlers'] = {'console': {'level': 'INFO', 'class': 'logging.StreamHandler', 'formatter': 'default'}}
+        settings.LOG_CONF['loggers'] = {'stat_ics_conf_collector.entry_point': {'handlers': ['console'], 'level': 'INFO', 'propagate': True}}
 
     def setUp(self):
         self._source_db_manager.__enter__()

@@ -10,6 +10,8 @@ class TestCollector(TestCase):
         super(TestCollector, self).__init__(methodName)
         self._db_manager = sqlite_db_manager.SqliteDbManager('../stat_sender_db')
         settings.DEST_DB_CONN_STR = self._db_manager.connection_string
+        settings.LOG_CONF['handlers'] = {'console': {'level': 'INFO', 'class': 'logging.StreamHandler', 'formatter': 'default'}}
+        settings.LOG_CONF['loggers'] = {'stat_ics_conf_collector.entry_point': {'handlers': ['console'], 'level': 'INFO', 'propagate': True}}
 
     def setUp(self):
         self._db_manager.__enter__()
