@@ -1,53 +1,9 @@
 from __future__ import unicode_literals
 import os
-import stat
-import shutil
 from unittest.case import TestCase
-import kinterbasdb
 from stat_db_funtest_utils import sqlite_db_manager
+from stat_db_funtest_utils.firebird_db_manager import FirebirdDbManager
 from stat_ics_db_collector import settings, collector_entry_point
-
-# TODO (aushakov) : move 2 stat_db_funtest_utils
-class BadFirebirdDbManager:
-
-    def __init__(self, source_location, dest_location, conn_str):
-        self._source_location = source_location
-        self._dest_location = dest_location
-        self._conn_str = conn_str
-
-    def __enter__(self):
-        shutil.copy(self._source_location, self._dest_location)
-        mode = stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH | stat.S_IWUSR | stat.S_IWGRP | stat.S_IWOTH
-        os.chmod(self._dest_location, mode)
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        os.unlink(self._dest_location)
-        return True
-
-    def execute_query(self, query, params=None):
-        conn = kinterbasdb.connect(**self._conn_str)
-        try:
-            cursor = conn.cursor()
-            if params is None:
-                cursor.execute(query)
-            else:
-                cursor.execute(query, params)
-            return cursor.fetchall()
-        finally:
-            conn.close()
-
-    def execute_non_query(self, query, params=None):
-        conn = kinterbasdb.connect(**self._conn_str)
-        try:
-            cursor = conn.cursor()
-            if params is None:
-                cursor.execute(query)
-            else:
-                cursor.executemany(query, params)
-            conn.commit()
-        finally:
-            conn.close()
 
 class TestCollector(TestCase):
 
@@ -59,7 +15,11 @@ class TestCollector(TestCase):
                                     'user': str('SYSDBA'),
                                     'password': str('masterkey')}
         source_location = os.path.abspath('tests/ics_main.gdb')
-        self._source_db_manager = BadFirebirdDbManager(source_location, '/tmp/ics_main.gdb', settings.ICS_DB_CONN_STR)
+        self._source_db_manager = FirebirdDbManager(source_location,
+            settings.ICS_DB_CONN_STR['database'],
+            settings.ICS_DB_CONN_STR['user'],
+            settings.ICS_DB_CONN_STR['password'],
+            settings.ICS_DB_CONN_STR['host'])
         # dest db
         self._dest_db_manager = sqlite_db_manager.SqliteDbManager('../stat_sender_db')
         settings.DEST_DB_CONN_STR = self._dest_db_manager.connection_string
@@ -110,12 +70,12 @@ class TestCollector(TestCase):
 
 
     def _prepare_data(self, reg_ver=None):
-        self._source_db_manager.execute_non_query('DELETE FROM REG')
+        self._source_db_manager.execute_nonquery('DELETE FROM REG')
         # ID, REG_VER
         reg_data = [(1, reg_ver)]
         insert_reg_query = 'INSERT INTO REG(ID, REG_VER) VALUES(?, ?)'
-        self._source_db_manager.execute_non_query(insert_reg_query, reg_data)
-        self._source_db_manager.execute_non_query('DELETE FROM USERS')
+        self._source_db_manager.execute_nonquery(insert_reg_query, reg_data)
+        self._source_db_manager.execute_nonquery('DELETE FROM USERS')
         # ID, PARID, EMAIL, LOGIN, ENABLED, DELETED, END_USER, SERVER, AUTH_TYPE, AD_IS
         user_data = [(1, None, 'root@gmail.com', 'root', 1, 0, 0, 0, None, 0),
             (2, 1, 'subroot@gmail.com', 'subroot', 1, 0, 0, 0, None, 0),
@@ -137,7 +97,7 @@ class TestCollector(TestCase):
             (502, 3, 'kiberdemon 777@gmail.com', 'kiberdemon 777', 1, 1, 1, 0, 1, 1),
             (504, 3, 'kakodemon13@gmail.com', 'kakodemon13', 1, 0, 1, 0, 1, 0)]
         insert_user_query = 'INSERT INTO USERS(ID, PARID, EMAIL, LOGIN, ENABLED, DELETED, END_USER, SERVER, AUTH_TYPE, AD_IS) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        self._source_db_manager.execute_non_query(insert_user_query, user_data)
+        self._source_db_manager.execute_nonquery(insert_user_query, user_data)
 
     # TODO (aushakov) : move 2 stat_db_funtest_utils
     # spec: str, [(str, str)], [(int, str, str, str, str)] -> None
