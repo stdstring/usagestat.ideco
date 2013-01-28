@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 ICS_DB_CONN_STR = {'host':'localhost', 'database':'/tmp/usagestat_test/data/ics_main.gdb', 'user':'SYSDBA', 'password':'masterkey'}
 
 # dest db connection string
-DEST_DB_CONN_STR = '/tmp/usagestat_test/data/usage_stat.db'
+DEST_DB_CONN_STR = '/tmp/usagestat_test/data/usage_stat_db/usage_stat.db'
 
 # logs
 LOG_CONF = {

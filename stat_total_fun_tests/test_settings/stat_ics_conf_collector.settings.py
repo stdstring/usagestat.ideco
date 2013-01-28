@@ -5,7 +5,7 @@ ICS_CONF_ENCODING = 'koi8-r'
 ICS_CONF_SOURCE = '/tmp/usagestat_test/data/ics.conf'
 
 # db connection string
-DEST_DB_CONN_STR = '/tmp/usagestat_test/data/usage_stat.db'
+DEST_DB_CONN_STR = '/tmp/usagestat_test/data/usage_stat_db/usage_stat.db'
 
 # logs
 LOG_CONF = {

@@ -5,7 +5,7 @@ from stat_sender.endpoint.http_endpoint_factory import HttpEndpointFactory
 from stat_sender.endpoint.https_endpoint_factory import HttpsEndpointFactory
 
 # storage
-DB_FILE = '/tmp/usagestat_test/data/usage_stat.db'
+DB_FILE = '/tmp/usagestat_test/data/usage_stat_db/usage_stat.db'
 
 # user_identity source
 USER_IDENTITY_SOURCE = '/tmp/usagestat_test/data/user.id'

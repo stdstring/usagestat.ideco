@@ -1,8 +1,5 @@
 from __future__ import unicode_literals
-# TODO (andrey.ushakov) : think because this is very dirty hack
-import os
-import sys
-sys.path.append(os.path.abspath('../stat_file_source'))
+from collections import OrderedDict
 #noinspection PyUnresolvedReferences
 from stat_file_source.file_source_collect_task import FileSourceCollectTask
 #noinspection PyUnresolvedReferences
@@ -40,7 +37,9 @@ class TestFileSource(object):
                     SimpleKeyValueHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'services', standard_key_transformer),
                     TransformKeyValueHandler.create_with_known_key_predicate('=', lambda key, state: state.state_id == 'users', standard_key_transformer, transform_user_fun),
                     AggregateKeyValueHandler.create_with_known_key_list('=', ['ip0', 'ip1', 'ip2', 'ip3', 'ip4'], ip_key_transformer, lambda old_value, item: old_value + 1, 0)]
-        self._collect_task = FileSourceCollectTask(self._source, filters, handlers, source_filename, db_file_path, logger)
+        init_state = OrderedDict()
+        encoding = 'utf-8'
+        self._collect_task = FileSourceCollectTask(self._source, filters, handlers, init_state, source_filename, encoding, db_file_path, logger)
 
     def collect_stat_data(self):
         self._collect_task.execute()
