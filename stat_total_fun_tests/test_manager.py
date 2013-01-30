@@ -7,6 +7,7 @@ from stat_db_funtest_utils.sqlite_db_manager import SqliteDbManager
 
 TEST_BASE_DIR = '/tmp/usagestat_test/'
 DATA_DEST_DIR = os.path.join(TEST_BASE_DIR, 'data/')
+PERSIST_DATA_DEST_DIR = os.path.join(TEST_BASE_DIR, 'persist_data/')
 CODE_DEST_DIR = os.path.join(TEST_BASE_DIR, 'code/')
 PYTHONPATH_ENV = 'PYTHONPATH'
 
@@ -44,6 +45,7 @@ class TestManager(object):
         create_dir_if_not_exist(TEST_BASE_DIR)
         os.mkdir(CODE_DEST_DIR)
         os.mkdir(DATA_DEST_DIR)
+        create_dir_if_not_exist(PERSIST_DATA_DEST_DIR)
         self._copy_data()
         self._copy_code()
         self._prepare_code()
@@ -54,8 +56,6 @@ class TestManager(object):
 
     def _copy_data(self):
         # copy key and cert files
-        #shutil.copy2(os.path.abspath('../ssl/test.client.ideco.usagestat.crt'), os.path.join(DATA_DEST_DIR, 'test.client.ideco.usagestat.crt'))
-        #shutil.copy2(os.path.abspath('../ssl/test.client.ideco.usagestat.key'), os.path.join(DATA_DEST_DIR, 'test.client.ideco.usagestat.key'))
         shutil.copy2(os.path.abspath('../ssl/test.server.ideco.usagestat.crt'), os.path.join(DATA_DEST_DIR, 'test.server.ideco.usagestat.crt'))
         shutil.copy2(os.path.abspath('../ssl/test.server.ideco.usagestat.key'), os.path.join(DATA_DEST_DIR, 'test.server.ideco.usagestat.key'))
         # copy test_data.conf

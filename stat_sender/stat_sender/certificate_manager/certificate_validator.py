@@ -14,7 +14,7 @@ class CertificateValidator(object):
     # spec: str -> bool
     def is_valid(self, cert_filename):
         command = [os.path.join(self._container_dir, 'get_cert_enddate.sh'), cert_filename]
-        result = subprocess.check_output(command)
+        result = subprocess.check_output(command).rstrip('\n')
         cert_enddate = datetime.strptime(result, '%Y-%m-%d')
         today = datetime.today()
         days_rest = (cert_enddate - today).days
