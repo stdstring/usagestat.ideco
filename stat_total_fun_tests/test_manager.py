@@ -54,8 +54,8 @@ class TestManager(object):
 
     def _copy_data(self):
         # copy key and cert files
-        shutil.copy2(os.path.abspath('../ssl/test.client.ideco.usagestat.crt'), os.path.join(DATA_DEST_DIR, 'test.client.ideco.usagestat.crt'))
-        shutil.copy2(os.path.abspath('../ssl/test.client.ideco.usagestat.key'), os.path.join(DATA_DEST_DIR, 'test.client.ideco.usagestat.key'))
+        #shutil.copy2(os.path.abspath('../ssl/test.client.ideco.usagestat.crt'), os.path.join(DATA_DEST_DIR, 'test.client.ideco.usagestat.crt'))
+        #shutil.copy2(os.path.abspath('../ssl/test.client.ideco.usagestat.key'), os.path.join(DATA_DEST_DIR, 'test.client.ideco.usagestat.key'))
         shutil.copy2(os.path.abspath('../ssl/test.server.ideco.usagestat.crt'), os.path.join(DATA_DEST_DIR, 'test.server.ideco.usagestat.crt'))
         shutil.copy2(os.path.abspath('../ssl/test.server.ideco.usagestat.key'), os.path.join(DATA_DEST_DIR, 'test.server.ideco.usagestat.key'))
         # copy test_data.conf

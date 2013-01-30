@@ -18,7 +18,7 @@ ENDPOINTS_DEF = {'http':  {'endpoint_factory': HttpEndpointFactory,
                            'params': {}},
                  'https': {'endpoint_factory': HttpsEndpointFactory,
                            'remote_host': 'https://localhost:8000/statserver/api/v1/collect/',
-                           'params': {'key_file': '/tmp/usagestat_test/data/test.client.ideco.usagestat.key', 'cert_file': '/tmp/usagestat_test/data/test.client.ideco.usagestat.crt'}}}
+                           'params': {'cert_dest_dir': '/tmp/usagestat_test/data/', 'cert_name': 'test.client.ideco.usagestat', 'lifetime_days':200, 'expiration_days':30}}}
 
 # task execution
 SEND_ATTEMPT_COUNT = 2

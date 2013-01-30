@@ -46,7 +46,7 @@ class PgDbManager(db_manager.DbManager):
             args.append('--host={0:d}'.format(port))
         return args
 
-    # spec: None -> int
+    # spec: str -> int
     def _execute_metascript(self, metascript_args):
         metascript_process = subprocess.Popen(args=metascript_args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         metascript_process.communicate(self._pwd)
