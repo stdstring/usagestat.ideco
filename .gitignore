@@ -1,6 +1,7 @@
-# ignoring *.pyc, .idea, stat_sender/.idea, stat_sender_db/usage_stat.db, stat_db_source/.idea, stat_file_source/.idea, stat_source_common/.idea, stat_collector/.idea, stat_ics_conf_collector/.idea, stat_ics_db_collector/.idea, stat_db_funtest_utils/.idea, stat_server/.idea, stat_total_fun_tests/.idea
+# ignoring *.pyc, prerequisites/.idea, .idea, stat_sender/.idea, stat_sender_db/usage_stat.db, stat_db_source/.idea, stat_file_source/.idea, stat_source_common/.idea, stat_collector/.idea, stat_ics_conf_collector/.idea, stat_ics_db_collector/.idea, stat_db_funtest_utils/.idea, stat_server/.idea, stat_total_fun_tests/.idea
 *.pyc
 .idea
+prerequisites/.idea
 stat_sender/.idea
 stat_sender_db/usage_stat.db
 stat_db_source/.idea
