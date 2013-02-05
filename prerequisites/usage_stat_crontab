@@ -5,8 +5,8 @@ HOME=/
 LANG=ru_RU.UTF-8
 
 # ics.conf statistics collector
-0 0 * * *    usage_stat  usage_stat_component_runner.sh /usr/bin/stat_ics_conf_collector
+0 0 * * *    usage_stat  usage_stat_component_runner.sh /usr/local/bin/stat_ics_conf_collector
 # ics_main.gdb statistics collector
-30 0 * * *    usage_stat  usage_stat_component_runner.sh /usr/bin/stat_ics_db_collector
+30 0 * * *    usage_stat  usage_stat_component_runner.sh /usr/local/bin/stat_ics_db_collector
 # statistics sender
-0 1 * * *    usage_stat  usage_stat_component_runner.sh /usr/bin/stat_sender
+0 1 * * *    usage_stat  usage_stat_component_runner.sh /usr/local/bin/stat_sender
