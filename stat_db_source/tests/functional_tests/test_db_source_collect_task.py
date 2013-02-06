@@ -22,7 +22,7 @@ class TestDbSourceCollectTask(TestCase):
             dbname='stat_db_source_test',
             create_script='tests/functional_tests/test_db_metadata.sql',
             clear_script='tests/functional_tests/test_db_clear.sql')
-        self._dest_db_manager = sqlite_db_manager.SqliteDbManager(db_create_script_path='../stat_sender_db')
+        self._dest_db_manager = sqlite_db_manager.SqliteDbManager(db_create_script='../stat_sender_db/create.py')
         self._now = datetime.now()
         self._source_id = 'test_db_source'
         self._mox = None

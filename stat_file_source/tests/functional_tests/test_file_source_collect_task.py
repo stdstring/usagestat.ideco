@@ -36,7 +36,7 @@ class TestFileSourceCollectTask(TestCase):
         self._main_logger = None
         self._storage_logger = None
         self._collect_task = None
-        self._db_manager = sqlite_db_manager.SqliteDbManager('../stat_sender_db')
+        self._db_manager = sqlite_db_manager.SqliteDbManager('../stat_sender_db/create.py')
 
     def setUp(self):
         self._mox = Mox()

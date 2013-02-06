@@ -14,7 +14,7 @@ PYTHONPATH_ENV = 'PYTHONPATH'
 class TestManager(object):
 
     def __init__(self):
-        self._stat_sender_db_manager = SqliteDbManager(os.path.abspath('../stat_sender_db'), os.path.join(DATA_DEST_DIR, 'usage_stat_db/'))
+        self._stat_sender_db_manager = SqliteDbManager(os.path.abspath('../stat_sender_db/create.py'), os.path.join(DATA_DEST_DIR, 'usage_stat_db/'))
         self._server_db_manager = PgDbManager('postgres', '31415926')
         self._ics_db_manager = FirebirdDbManager(os.path.abspath('../stat_ics_db_collector/tests/ics_main.gdb'), '/tmp/usagestat_test/data/ics_main.gdb', 'SYSDBA', 'masterkey')
 

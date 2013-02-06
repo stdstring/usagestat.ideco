@@ -21,7 +21,7 @@ class TestCollector(TestCase):
             settings.ICS_DB_CONN_STR['password'],
             settings.ICS_DB_CONN_STR['host'])
         # dest db
-        self._dest_db_manager = sqlite_db_manager.SqliteDbManager('../stat_sender_db')
+        self._dest_db_manager = sqlite_db_manager.SqliteDbManager('../stat_sender_db/create.py')
         settings.DEST_DB_CONN_STR = self._dest_db_manager.connection_string
         settings.LOG_CONF['handlers'] = {'console': {'level': 'INFO', 'class': 'logging.StreamHandler', 'formatter': 'default'}}
         settings.LOG_CONF['loggers'] = {'stat_ics_conf_collector.entry_point': {'handlers': ['console'], 'level': 'INFO', 'propagate': True}}

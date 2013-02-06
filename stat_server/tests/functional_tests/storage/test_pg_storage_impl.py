@@ -9,10 +9,11 @@ from stat_server.entity.stat_data_item import StatDataItem
 from stat_server.entity.stat_data_packet import StatDataPacket
 from stat_server.storage.pg_storage_impl import PgStorageImpl
 # TODO (andrey.ushakov) : think because this is very dirty hack
-import os
-import sys
-sys.path.append(os.path.abspath('../stat_db_funtest_utils'))
-import pg_db_manager
+#import os
+#import sys
+#sys.path.append(os.path.abspath('../stat_db_funtest_utils'))
+#import pg_db_manager
+from stat_db_funtest_utils import pg_db_manager
 
 class TestPgStorageImpl(TestCase):
 

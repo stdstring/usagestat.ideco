@@ -12,7 +12,7 @@ class TestSqliteStorage(TestCase):
         super(TestSqliteStorage, self).__init__(methodName)
         self._mox = None
         self._logger = None
-        self._db_manager = sqlite_db_manager.SqliteDbManager('../stat_sender_db')
+        self._db_manager = sqlite_db_manager.SqliteDbManager('../stat_sender_db/create.py')
         self._now = datetime.now()
         self._str_now = str(self._now)
 

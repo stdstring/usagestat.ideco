@@ -15,7 +15,7 @@ class TestSqliteStorage(TestCase):
         self._mox = None
         self._logger = None
         self._now = datetime.now()
-        self._db_manager = sqlite_db_manager.SqliteDbManager('../stat_sender_db')
+        self._db_manager = sqlite_db_manager.SqliteDbManager('../stat_sender_db/create.py')
         self._query = 'select ID, SOURCE, CATEGORY, TIMEMARKER, DATA from STAT_DATA order by ID'
 
     def setUp(self):
